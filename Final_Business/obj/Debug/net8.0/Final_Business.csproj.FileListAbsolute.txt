@@ -1,0 +1,17 @@
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Business\bin\Debug\net8.0\Final_Business.deps.json
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Business\bin\Debug\net8.0\Final_Business.dll
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Business\bin\Debug\net8.0\Final_Business.pdb
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Business\bin\Debug\net8.0\Final_Core.dll
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Business\bin\Debug\net8.0\Final_Data.dll
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Business\bin\Debug\net8.0\Final_Data.pdb
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Business\bin\Debug\net8.0\Final_Core.pdb
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Business\obj\Debug\net8.0\Final_Business.csproj.AssemblyReference.cache
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Business\obj\Debug\net8.0\Final_Business.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Business\obj\Debug\net8.0\Final_Business.AssemblyInfoInputs.cache
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Business\obj\Debug\net8.0\Final_Business.AssemblyInfo.cs
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Business\obj\Debug\net8.0\Final_Business.csproj.CoreCompileInputs.cache
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Business\obj\Debug\net8.0\Final_Business.csproj.CopyComplete
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Business\obj\Debug\net8.0\Final_Business.dll
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Business\obj\Debug\net8.0\refint\Final_Business.dll
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Business\obj\Debug\net8.0\Final_Business.pdb
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Business\obj\Debug\net8.0\ref\Final_Business.dll

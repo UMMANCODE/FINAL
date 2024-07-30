@@ -1,0 +1,61 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\features\\3727a17a-867a-405b-9c81-c32d22aea3c51_44KZRAupREHKCL1zIjjDig.png",
+      "PackagePath": "staticwebassets\\images\\features\\3727a17a-867a-405b-9c81-c32d22aea3c51_44KZRAupREHKCL1zIjjDig.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\features\\a54c6039-9bad-4985-8257-c95c9c9dda631_44KZRAupREHKCL1zIjjDig.png",
+      "PackagePath": "staticwebassets\\images\\features\\a54c6039-9bad-4985-8257-c95c9c9dda631_44KZRAupREHKCL1zIjjDig.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\features\\bdbb174d-f358-4f05-99e1-60310c73b6a41_44KZRAupREHKCL1zIjjDig.png",
+      "PackagePath": "staticwebassets\\images\\features\\bdbb174d-f358-4f05-99e1-60310c73b6a41_44KZRAupREHKCL1zIjjDig.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\163395f0-7ec9-44eb-b05d-203ace2306101699359402394.jpg",
+      "PackagePath": "staticwebassets\\images\\houses\\163395f0-7ec9-44eb-b05d-203ace2306101699359402394.jpg"
+    },
+    {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\214abd65-5975-43fc-8cc3-7fb0306c392e1701709855027-min.jpg",
+      "PackagePath": "staticwebassets\\images\\houses\\214abd65-5975-43fc-8cc3-7fb0306c392e1701709855027-min.jpg"
+    },
+    {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\7699754e-ca35-4d08-b32e-71488eb5a22b1_44KZRAupREHKCL1zIjjDig.png",
+      "PackagePath": "staticwebassets\\images\\houses\\7699754e-ca35-4d08-b32e-71488eb5a22b1_44KZRAupREHKCL1zIjjDig.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\f7b0c28f-a301-4967-802e-b81c94f3da771_44KZRAupREHKCL1zIjjDig.png",
+      "PackagePath": "staticwebassets\\images\\houses\\f7b0c28f-a301-4967-802e-b81c94f3da771_44KZRAupREHKCL1zIjjDig.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\fdc0c711-fe38-456e-8124-91a8c4e34f281699359402394.jpg",
+      "PackagePath": "staticwebassets\\images\\houses\\fdc0c711-fe38-456e-8124-91a8c4e34f281699359402394.jpg"
+    },
+    {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\sliders\\7b5fd12f-bd1d-47ad-94e2-2329ad0d56cb1_44KZRAupREHKCL1zIjjDig.png",
+      "PackagePath": "staticwebassets\\images\\sliders\\7b5fd12f-bd1d-47ad-94e2-2329ad0d56cb1_44KZRAupREHKCL1zIjjDig.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\sliders\\89b48dae-b414-402c-b85a-0329c3ebf12a1699359402385.jpg",
+      "PackagePath": "staticwebassets\\images\\sliders\\89b48dae-b414-402c-b85a-0329c3ebf12a1699359402385.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Final_API.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.Final_API.props",
+      "PackagePath": "build\\Final_API.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.Final_API.props",
+      "PackagePath": "buildMultiTargeting\\Final_API.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.Final_API.props",
+      "PackagePath": "buildTransitive\\Final_API.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

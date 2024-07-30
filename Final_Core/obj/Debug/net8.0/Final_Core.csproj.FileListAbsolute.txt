@@ -1,0 +1,12 @@
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Core\bin\Debug\net8.0\Final_Core.deps.json
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Core\bin\Debug\net8.0\Final_Core.dll
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Core\bin\Debug\net8.0\Final_Core.pdb
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Core\obj\Debug\net8.0\Final_Core.csproj.AssemblyReference.cache
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Core\obj\Debug\net8.0\Final_Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Core\obj\Debug\net8.0\Final_Core.AssemblyInfoInputs.cache
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Core\obj\Debug\net8.0\Final_Core.AssemblyInfo.cs
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Core\obj\Debug\net8.0\Final_Core.csproj.CoreCompileInputs.cache
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Core\obj\Debug\net8.0\Final_Core.dll
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Core\obj\Debug\net8.0\refint\Final_Core.dll
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Core\obj\Debug\net8.0\Final_Core.pdb
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Core\obj\Debug\net8.0\ref\Final_Core.dll
