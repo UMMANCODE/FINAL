@@ -116,16 +116,33 @@ public static class EmailTemplates {
     return htmlContent;
   }
 
-  public static string GetDiscountInfoEmail(string? email, string? flowerName, decimal oldPrice, decimal newPrice, string? url) {
-    var htmlContent = $@"<td>
-                              <p>Hi {email},</p>
-                              <p>Good news!</p>
-                              <p>We want to inform you that the flower named <b>{flowerName}</b> is in discount</p>
-                              <p>Old price: {oldPrice:#.##}</p>
-                              <p>New price: {newPrice:#.##}</p>
-                              <p>You can visit it <a href={url}>here!</a></p>
-                              <p>- Umman Mammadov, CEO</p>
-                            </td>";
-    return GetBaseTemplate(htmlContent);
+  public static string GetForgetPasswordTemplate(string url) {
+    var content = $@"
+<td class='content-block'>
+  <h2>Reset Password</h2>
+</td>
+<td class='content-block'>
+  <p>Click the button below to reset your password.</p>
+</td>
+<td class='content-block'>
+  <a href='{url}' class='btn btn-primary'>Reset Password</a>
+</td>
+";
+    return GetBaseTemplate(content);
+  }
+
+  public static string GetVerifyEmailTemplate(string url) {
+    var content = $@"
+<td class='content-block'>
+<span class='apple-link'>Email Verification</span>
+</td>
+<td class='content-block'>
+<p>Click the button below to verify your email.</p>
+</td>
+<td class='content-block'>
+<a href='{url}' class='btn btn-primary'>Verify Email</a>
+</td>
+";
+    return GetBaseTemplate(content);
   }
 }

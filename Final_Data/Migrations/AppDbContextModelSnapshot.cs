@@ -38,14 +38,17 @@ namespace Final_Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
                     b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -77,8 +80,9 @@ namespace Final_Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -123,7 +127,7 @@ namespace Final_Data.Migrations
 
                     b.HasIndex("HouseId");
 
-                    b.ToTable("Comments", (string)null);
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("Final_Core.Entities.Feature", b =>
@@ -159,7 +163,7 @@ namespace Final_Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Features", (string)null);
+                    b.ToTable("Features");
                 });
 
             modelBuilder.Entity("Final_Core.Entities.House", b =>
@@ -234,7 +238,7 @@ namespace Final_Data.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Houses", (string)null);
+                    b.ToTable("Houses");
                 });
 
             modelBuilder.Entity("Final_Core.Entities.HouseFeature", b =>
@@ -257,7 +261,7 @@ namespace Final_Data.Migrations
 
                     b.HasIndex("HouseId");
 
-                    b.ToTable("HouseFeatures", (string)null);
+                    b.ToTable("HouseFeatures");
                 });
 
             modelBuilder.Entity("Final_Core.Entities.HouseImage", b =>
@@ -282,7 +286,7 @@ namespace Final_Data.Migrations
 
                     b.HasIndex("HouseId");
 
-                    b.ToTable("HouseImages", (string)null);
+                    b.ToTable("HouseImages");
                 });
 
             modelBuilder.Entity("Final_Core.Entities.Slider", b =>
@@ -348,7 +352,7 @@ namespace Final_Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Sliders", (string)null);
+                    b.ToTable("Sliders");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -15,3 +15,4 @@ C:\Users\user\Desktop\Code Academy\FInal App\Final_Data\obj\Debug\net8.0\refint\
 C:\Users\user\Desktop\Code Academy\FInal App\Final_Data\obj\Debug\net8.0\Final_Data.pdb
 C:\Users\user\Desktop\Code Academy\FInal App\Final_Data\obj\Debug\net8.0\Final_Data.genruntimeconfig.cache
 C:\Users\user\Desktop\Code Academy\FInal App\Final_Data\obj\Debug\net8.0\ref\Final_Data.dll
+C:\Users\user\Desktop\Code Academy\FInal App\Final_Data\obj\Debug\net8.0\Final_Data.sourcelink.json

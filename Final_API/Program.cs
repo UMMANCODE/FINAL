@@ -66,6 +66,11 @@ builder.Services.AddSwaggerGen(c => {
     Version = "v1"
   });
 
+  c.SwaggerDoc("auth", new OpenApiInfo {
+    Title = "Auth API",
+    Version = "v1"
+  });
+
   c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme {
     In = ParameterLocation.Header,
     Description = "Please insert JWT with Bearer into field",
@@ -91,6 +96,7 @@ builder.Services.AddSwaggerGen(c => {
   // Apply the document filters
   c.DocumentFilter<AdminDocumentFilter>();
   c.DocumentFilter<UserDocumentFilter>();
+  c.DocumentFilter<AuthDocumentFilter>();
 });
 
 
@@ -101,7 +107,7 @@ builder.Services.AddFluentValidationClientsideAdapters();
 builder.Services.AddValidatorsFromAssemblyContaining<SliderCreateValidator>();
 
 //Custom Services
-//builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserAuthService, UserAuthService>();
 
 builder.Services.AddScoped<IUserHouseService, UserHouseService>();
 builder.Services.AddScoped<IAdminHouseService, AdminHouseService>();
@@ -158,6 +164,7 @@ if (app.Environment.IsDevelopment()) {
   app.UseSwaggerUI(c => {
     c.SwaggerEndpoint("/swagger/user/swagger.json", "User API V1");
     c.SwaggerEndpoint("/swagger/admin/swagger.json", "Admin API V1");
+    c.SwaggerEndpoint("/swagger/auth/swagger.json", "Auth API V1");
 
     // Customize the Swagger UI
     c.UseRequestInterceptor("(request) => { request.headers.Authorization = 'Bearer ' + request.headers.Authorization; return request; }");

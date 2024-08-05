@@ -1,7 +1,7 @@
 ﻿namespace Final_Business.DTOs.User;
 
 public record UserLoginDto(
-  string Email, string Password
+  string UserName, string Password
 );
 
 public record UserRegisterDto(
@@ -12,7 +12,7 @@ public record UserVerifyEmailDto(
   string Email, string Token
 );
 
-public record UserForgotPasswordDto(
+public record UserForgetPasswordDto(
    string Email
 );
 
