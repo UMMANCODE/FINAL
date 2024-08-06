@@ -1,12 +1,12 @@
-﻿using Final_Business.DTOs;
-using Final_Business.DTOs.Admin;
+﻿using Final_Business.DTOs.Admin;
+using Final_Business.Helpers;
 
 namespace Final_Business.Services.Interfaces;
 public interface IAdminHouseService {
-  public Task<int> Create(AdminHouseCreateDto createDto);
-  public Task<PaginatedList<AdminHouseGetAllDto>> GetPaginated(int pageNumber = 1, int pageSize = 1);
-  public Task<List<AdminHouseGetAllDto>> GetAll();
-  public Task<AdminHouseGetOneDto> GetById(int id);
-  public Task Update(int id, AdminHouseUpdateDto updateDto);
-  public Task Delete(int id);
+  public Task<BaseResponse> Create(AdminHouseCreateDto createDto);
+  public Task<BaseResponse> GetPaginated(int pageNumber = 1, int pageSize = 1);
+  public Task<BaseResponse> GetAll();
+  public Task<BaseResponse> GetById(int id);
+  public Task<BaseResponse> Update(int id, AdminHouseUpdateDto updateDto);
+  public Task<BaseResponse> Delete(int id);
 }

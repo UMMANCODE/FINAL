@@ -1,13 +1,13 @@
-﻿using Final_Business.DTOs;
-using Final_Business.DTOs.General;
+﻿using Final_Business.DTOs.General;
+using Final_Business.Helpers;
 
 namespace Final_Business.Services.Interfaces;
 
 public interface IFeatureService {
-  public Task<int> Create(FeatureCreateDto createDto);
-  public Task<PaginatedList<FeatureGetAllDto>> GetPaginated(int pageNumber = 1, int pageSize = 1);
-  public Task<List<FeatureGetAllDto>> GetAll();
-  public Task<FeatureGetOneDto> GetById(int id);
-  public Task Update(int id, FeatureUpdateDto updateDto);
-  public Task Delete(int id);
+  public Task<BaseResponse> Create(FeatureCreateDto createDto);
+  public Task<BaseResponse> GetPaginated(int pageNumber = 1, int pageSize = 1);
+  public Task<BaseResponse> GetAll();
+  public Task<BaseResponse> GetById(int id);
+  public Task<BaseResponse> Update(int id, FeatureUpdateDto updateDto);
+  public Task<BaseResponse> Delete(int id);
 }

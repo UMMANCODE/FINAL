@@ -1,6 +1,6 @@
-﻿using Final_Business.DTOs.General;
+﻿using Final_Business.Helpers;
 
 namespace Final_Business.Services.Interfaces;
 public interface IHouseImageService {
-  public Task<HouseImageGetDto> GetById(int id);
+  public Task<BaseResponse> GetById(int id);
 }

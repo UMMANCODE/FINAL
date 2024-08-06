@@ -29,7 +29,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\images\houses\" />
     <Folder Include="wwwroot\images\features\" />
-    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\images\users\" />
     <Folder Include="wwwroot\images\sliders\" />
   </ItemGroup>
 

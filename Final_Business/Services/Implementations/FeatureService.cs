@@ -13,7 +13,7 @@ using Final_Business.DTOs.General;
 namespace Final_Business.Services.Implementations {
   public class FeatureService(IFeatureRepository featureRepository, IMapper mapper, IWebHostEnvironment env)
     : IFeatureService {
-    public async Task<int> Create(FeatureCreateDto createDto) {
+    public async Task<BaseResponse> Create(FeatureCreateDto createDto) {
       string? uploadedFilePath = null;
 
       using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
@@ -30,7 +30,7 @@ namespace Final_Business.Services.Implementations {
 
         scope.Complete();
 
-        return feature.Id;
+        return new BaseResponse(201, "Created successfully", mapper.Map<FeatureGetOneDto>(feature), []);
       }
       catch {
 
@@ -42,7 +42,7 @@ namespace Final_Business.Services.Implementations {
       }
     }
 
-    public async Task Delete(int id) {
+    public async Task<BaseResponse> Delete(int id) {
       var feature = await featureRepository.GetAsync(x => x.Id == id && !x.IsDeleted)
         ?? throw new RestException(StatusCodes.Status404NotFound, "Feature not found");
 
@@ -50,32 +50,37 @@ namespace Final_Business.Services.Implementations {
       feature.UpdatedAt = DateTime.Now;
 
       await featureRepository.SaveAsync();
+
+      return new BaseResponse(204, "Deleted successfully", null, []);
     }
 
-    public async Task<PaginatedList<FeatureGetAllDto>> GetPaginated(int pageNumber = 1, int pageSize = 1) {
+    public async Task<BaseResponse> GetPaginated(int pageNumber = 1, int pageSize = 1) {
       if (pageNumber <= 0 || pageSize <= 0) {
         throw new RestException(StatusCodes.Status400BadRequest, "Invalid parameters for paging");
       }
 
       var features = await featureRepository.GetPaginatedAsync(x => !x.IsDeleted, pageNumber, pageSize);
       var paginated = PaginatedList<Feature>.Create(features, pageNumber, pageSize);
-      return new PaginatedList<FeatureGetAllDto>(mapper.Map<List<FeatureGetAllDto>>(paginated.Items), paginated.TotalPages, pageNumber, pageSize);
+      var data =  new PaginatedList<FeatureGetAllDto>(mapper.Map<List<FeatureGetAllDto>>(paginated.Items), paginated.TotalPages, pageNumber, pageSize);
+
+      return new BaseResponse(200, "Success", data, []);
     }
 
-    public async Task<FeatureGetOneDto> GetById(int id) {
+    public async Task<BaseResponse> GetById(int id) {
       var feature = await featureRepository.GetAsync(x => x.Id == id && !x.IsDeleted);
 
       return feature == null
         ? throw new RestException(StatusCodes.Status404NotFound, "Feature not found")
-        : mapper.Map<FeatureGetOneDto>(feature);
+        : new BaseResponse(200, "Success", mapper.Map<FeatureGetOneDto>(feature), []);
     }
 
-    public async Task<List<FeatureGetAllDto>> GetAll() {
+    public async Task<BaseResponse> GetAll() {
       var features = await featureRepository.GetAllAsync(x => !x.IsDeleted);
-      return mapper.Map<List<FeatureGetAllDto>>(features);
+
+      return new BaseResponse(200, "Success", mapper.Map<List<FeatureGetAllDto>>(features), []);
     }
 
-    public async Task Update(int id, FeatureUpdateDto updateDto) {
+    public async Task<BaseResponse> Update(int id, FeatureUpdateDto updateDto) {
       string? newUploadedFilePath = null;
 
       var feature = await featureRepository.GetAsync(x => x.Id == id && !x.IsDeleted)
@@ -107,6 +112,8 @@ namespace Final_Business.Services.Implementations {
         }
 
         scope.Complete();
+
+        return new BaseResponse(204, "Updated successfully", null, []);
       }
       catch {
 

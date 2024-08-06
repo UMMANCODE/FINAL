@@ -108,6 +108,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<SliderCreateValidator>();
 
 //Custom Services
 builder.Services.AddScoped<IUserAuthService, UserAuthService>();
+builder.Services.AddScoped<IUserProfileService, UserProfileService>();
 
 builder.Services.AddScoped<IUserHouseService, UserHouseService>();
 builder.Services.AddScoped<IAdminHouseService, AdminHouseService>();

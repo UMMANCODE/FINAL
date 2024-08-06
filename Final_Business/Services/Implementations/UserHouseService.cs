@@ -18,7 +18,7 @@ namespace Final_Business.Services.Implementations {
     IHouseImageRepository houseImageRepository)
     : IUserHouseService {
 
-    public async Task<int> Create(UserHouseCreateDto createDto) {
+    public async Task<BaseResponse> Create(UserHouseCreateDto createDto) {
       var uploadedFiles = new List<string>();
 
       using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
@@ -49,7 +49,7 @@ namespace Final_Business.Services.Implementations {
 
         scope.Complete();
 
-        return house.Id;
+        return new BaseResponse(201, "Created successfully", mapper.Map<UserHouseGetOneDto>(house), []);
       }
       catch {
 
@@ -61,7 +61,7 @@ namespace Final_Business.Services.Implementations {
       }
     }
 
-    public async Task Delete(int id) {
+    public async Task<BaseResponse> Delete(int id) {
       var house = await houseRepository.GetAsync(x => x.Id == id && !x.IsDeleted)
         ?? throw new RestException(StatusCodes.Status404NotFound, "House not found");
 
@@ -69,32 +69,36 @@ namespace Final_Business.Services.Implementations {
       house.UpdatedAt = DateTime.Now;
 
       await houseRepository.SaveAsync();
+
+      return new BaseResponse(204, "Deleted successfully", null, []);
     }
 
-    public async Task<PaginatedList<UserHouseGetAllDto>> GetPaginated(int pageNumber = 1, int pageSize = 1) {
+    public async Task<BaseResponse> GetPaginated(int pageNumber = 1, int pageSize = 1) {
       if (pageNumber <= 0 || pageSize <= 0) {
         throw new RestException(StatusCodes.Status400BadRequest, "Invalid parameters for paging");
       }
 
       var houses = await houseRepository.GetPaginatedAsync(x => !x.IsDeleted, pageNumber, pageSize, "Images");
       var paginated = PaginatedList<House>.Create(houses, pageNumber, pageSize);
-      return new PaginatedList<UserHouseGetAllDto>(mapper.Map<List<UserHouseGetAllDto>>(paginated.Items), paginated.TotalPages, pageNumber, pageSize);
+      var data = new PaginatedList<UserHouseGetAllDto>(mapper.Map<List<UserHouseGetAllDto>>(paginated.Items), paginated.TotalPages, pageNumber, pageSize);
+
+      return new BaseResponse(200, "Success", data, []);
     }
 
-    public async Task<UserHouseGetOneDto> GetById(int id) {
+    public async Task<BaseResponse> GetById(int id) {
       var house = await houseRepository.GetAsync(x => x.Id == id && !x.IsDeleted, "Images");
 
       return house == null
         ? throw new RestException(StatusCodes.Status404NotFound, "House not found")
-        : mapper.Map<UserHouseGetOneDto>(house);
+        : new BaseResponse(200, "Success", mapper.Map<UserHouseGetOneDto>(house), []);
     }
 
-    public async Task<List<UserHouseGetAllDto>> GetAll() {
+    public async Task<BaseResponse> GetAll() {
       var houses = await houseRepository.GetAllAsync(x => !x.IsDeleted);
-      return mapper.Map<List<UserHouseGetAllDto>>(houses);
+      return new BaseResponse(200, "Success", mapper.Map<List<UserHouseGetAllDto>>(houses), []);
     }
 
-    public async Task Update(int id, UserHouseUpdateDto updateDto) {
+    public async Task<BaseResponse> Update(int id, UserHouseUpdateDto updateDto) {
       var uploadedNewFiles = new List<string>();
 
       var house = await houseRepository.GetAsync(x => x.Id == id && !x.IsDeleted, "Images")
@@ -147,6 +151,8 @@ namespace Final_Business.Services.Implementations {
         }
 
         scope.Complete();
+
+        return new BaseResponse(204, "Updated successfully", null, []);
       }
       catch {
         foreach (var filePath in uploadedNewFiles) {

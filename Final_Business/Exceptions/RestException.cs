@@ -25,6 +25,5 @@ public class RestExceptionError {
   public RestExceptionError(string key, string message) {
     Key = key;
     Message = message;
-
   }
 }

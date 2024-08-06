@@ -6,9 +6,9 @@ namespace Final_Business.Validators;
 
 public class UserChangeDetailsValidator : AbstractValidator<UserChangeDetailsDto> {
   public UserChangeDetailsValidator() {
-    RuleFor(x => x.Email).NotEmpty().EmailAddress().MaximumLength(50);
-    RuleFor(x => x.FullName).NotEmpty().MaximumLength(100);
-    RuleFor(x => x.UserName).NotEmpty().MaximumLength(50);
+    RuleFor(x => x.Email).EmailAddress().MaximumLength(50);
+    RuleFor(x => x.FullName).MaximumLength(100);
+    RuleFor(x => x.UserName).MaximumLength(50);
     RuleFor(x => x.Avatar)
       .Must(BeAValidImage).WithMessage("Only JPEG and PNG images are allowed")
       .Must(BeAValidImageSize).WithMessage("Image must be less than or equal to 2MB");

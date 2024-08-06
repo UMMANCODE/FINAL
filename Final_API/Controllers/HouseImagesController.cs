@@ -1,4 +1,5 @@
-﻿using Final_Business.Services.Interfaces;
+﻿using Azure;
+using Final_Business.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,13 +10,13 @@ public class HouseImagesController(IHouseImageService houseImageService) : Contr
   [Authorize(Roles = "Admin")]
   [HttpGet("admin/{id:int}")]
   public async Task<IActionResult> AdminGetById(int id) {
-    var data = await houseImageService.GetById(id);
-    return StatusCode(StatusCodes.Status200OK, data);
+    var response = await houseImageService.GetById(id);
+    return StatusCode(response.StatusCode, response);
   }
 
   [HttpGet("user/{id:int}")]
   public async Task<IActionResult> UserGetById(int id) {
-    var data = await houseImageService.GetById(id);
-    return StatusCode(StatusCodes.Status200OK, data);
+    var response = await houseImageService.GetById(id);
+    return StatusCode(response.StatusCode, response);
   }
 }

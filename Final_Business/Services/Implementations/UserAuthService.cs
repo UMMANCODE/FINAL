@@ -16,7 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Final_Business.Services.Implementations;
 public class UserAuthService(UserManager<AppUser> userManager, IConfiguration configuration, IEmailService emailService) : IUserAuthService {
-  public async Task<string> Login(UserLoginDto loginDto) {
+  public async Task<BaseResponse> Login(UserLoginDto loginDto) {
     var user = await userManager.FindByNameAsync(loginDto.UserName!);
 
     if (user == null || !await userManager.CheckPasswordAsync(user, loginDto.Password!))
@@ -47,10 +47,10 @@ public class UserAuthService(UserManager<AppUser> userManager, IConfiguration co
 
     var token = new JwtSecurityTokenHandler().WriteToken(securityToken);
 
-    return token;
+    return new BaseResponse(200, "Login successful!", token, []);
   }
 
-  public async Task<string> Register(UserRegisterDto registerDto) {
+  public async Task<BaseResponse> Register(UserRegisterDto registerDto) {
     var user = new AppUser {
       UserName = registerDto.UserName,
       FullName = registerDto.FullName,
@@ -69,10 +69,10 @@ public class UserAuthService(UserManager<AppUser> userManager, IConfiguration co
     // Send url to user email
     var url = new Uri($"{configuration.GetSection("JWT:Audience").Value}api/Auth/verify-email?email={user.Email}&token={WebUtility.UrlEncode(token)}");
     emailService.Send(user.Email, "Email Verification", EmailTemplates.GetVerifyEmailTemplate(url.ToString()));
-    return "Please verify your email!";
+    return new BaseResponse(201, "User registered successfully!", user.Id, []);
   }
 
-  public async Task<string> ForgetPassword(UserForgetPasswordDto forgetPasswordDto) {
+  public async Task<BaseResponse> ForgetPassword(UserForgetPasswordDto forgetPasswordDto) {
     if (string.IsNullOrEmpty(forgetPasswordDto.Email))
       throw new RestException(StatusCodes.Status400BadRequest, "Email is required!");
     var user = await userManager.FindByEmailAsync(forgetPasswordDto.Email)
@@ -81,28 +81,38 @@ public class UserAuthService(UserManager<AppUser> userManager, IConfiguration co
     // Send url to user email
     var url = new Uri($"{configuration.GetSection("JWT:Audience").Value}api/Auth/reset-password?email={user.Email}&token={WebUtility.UrlEncode(token)}");
     emailService.Send(user.Email!, "Password Reset", EmailTemplates.GetForgetPasswordTemplate(url.ToString()));
-    return "Email sent successfully!";
+
+    return new BaseResponse(200, "Password reset link sent to your email!", token, []);
   }
 
-  public async Task<string> ResetPassword(UserResetPasswordDto resetPasswordDto) {
+  public async Task<BaseResponse> ResetPassword(UserResetPasswordDto resetPasswordDto) {
     var user = await userManager.FindByEmailAsync(resetPasswordDto.Email!)
                ?? throw new RestException(StatusCodes.Status404NotFound, "User not found!");
     var result = await userManager.ResetPasswordAsync(user, resetPasswordDto.Token!, resetPasswordDto.Password!);
-    if (result.Succeeded) return JsonSerializer.Serialize(new { message = "Password reset successfully!" });
+    if (result.Succeeded) return new BaseResponse(200, "Password reset successfully!", null, []);
     var errors = string.Join(", ", result.Errors.Select(x => x.Description));
     throw new RestException(StatusCodes.Status400BadRequest, errors);
   }
 
-  public async Task<string> VerifyEmail(UserVerifyEmailDto verifyEmailDto) {
+  public async Task<BaseResponse> VerifyEmail(UserVerifyEmailDto verifyEmailDto) {
     var user = await userManager.FindByEmailAsync(verifyEmailDto.Email!)
                ?? throw new RestException(StatusCodes.Status404NotFound, "User not found!");
     var result = await userManager.ConfirmEmailAsync(user, verifyEmailDto.Token!);
-    if (result.Succeeded) return JsonSerializer.Serialize(new { message = "Email verified successfully!" });
+    if (result.Succeeded) return new BaseResponse(200, "Email verified successfully!", null, []);
     var errors = string.Join(", ", result.Errors.Select(x => x.Description));
     throw new RestException(StatusCodes.Status400BadRequest, errors);
   }
 
-  public async Task<List<AppUser>> GetUsers() {
-    return await userManager.Users.ToListAsync();
+  public async Task<BaseResponse> GetUsers() {
+    var users = await userManager.Users.ToListAsync();
+    var usersDto = users.Select(x => new {
+      x.Id,
+      x.UserName,
+      x.FullName,
+      x.Email,
+      x.AvatarLink,
+      Roles = userManager.GetRolesAsync(x).Result.ToList()
+    }).ToList();
+    return new BaseResponse(200, "Users fetched successfully!", usersDto, []);
   }
 }
