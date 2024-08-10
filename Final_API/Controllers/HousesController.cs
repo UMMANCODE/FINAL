@@ -89,4 +89,10 @@ public class HousesController(IAdminHouseService adminHouseService, IUserHouseSe
     var response = await userHouseService.Delete(id);
     return StatusCode(response.StatusCode, response);
   }
+
+  [HttpPost("user/{id:int}/buy")]
+  public async Task<IActionResult> UserBuyHouse(int id, string ownerId) {
+    var response = await userHouseService.Buy(id, ownerId);
+    return StatusCode(response.StatusCode, response);
+  }
 }

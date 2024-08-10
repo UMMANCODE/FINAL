@@ -1,5 +1,4 @@
-﻿using Azure;
-using Final_Business.DTOs.General;
+﻿using Final_Business.DTOs.General;
 using Final_Business.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,13 +27,6 @@ public class CommentsController(ICommentService commentService) : ControllerBase
   [HttpGet("admin/{id:int}")]
   public async Task<IActionResult> AdminGetById(int id) {
     var response = await commentService.GetById(id);
-    return StatusCode(response.StatusCode, response);
-  }
-
-  [Authorize(Roles = "Admin")]
-  [HttpPost("admin")]
-  public async Task<IActionResult> AdminCreateComment([FromForm] CommentCreateDto commentDto) {
-    var response = await commentService.Create(commentDto);
     return StatusCode(response.StatusCode, response);
   }
 

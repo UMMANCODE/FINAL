@@ -1,9 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Net;
-using System.Security.Claims;
-using System.Text;
-using System.Text.Json;
-using Final_Business.DTOs.User;
+﻿using Final_Business.DTOs.User;
 using Final_Business.Exceptions;
 using Final_Business.Helpers;
 using Final_Business.Services.Interfaces;
@@ -13,6 +8,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Net;
+using System.Security.Claims;
+using System.Text;
 
 namespace Final_Business.Services.Implementations;
 public class UserAuthService(UserManager<AppUser> userManager, IConfiguration configuration, IEmailService emailService) : IUserAuthService {

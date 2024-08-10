@@ -20,6 +20,8 @@ public record UserHouseGetOneDto(
   int BuiltYear,
   List<HouseImageGetDto> Images,
   List<CommentGetDto> Comments,
+  List<UserBidGetDto> Bids,
+  List<DiscountGetDto> Discounts,
   PropertyStatus Status,
   PropertyType Type,
   PropertyState State
@@ -27,6 +29,7 @@ public record UserHouseGetOneDto(
 
 public record UserHouseGetAllDto(
   int Id,
+  string OwnerId,
   string Name,
   string Location,
   float HomeArea,
@@ -37,6 +40,7 @@ public record UserHouseGetAllDto(
 
 public record UserHouseCreateDto(
   string Name,
+  string OwnerId,
   string Description,
   string Location,
   decimal Price,
@@ -49,11 +53,13 @@ public record UserHouseCreateDto(
   PropertyStatus Status,
   PropertyType Type,
   PropertyState State,
-  List<IFormFile> Images
+  List<IFormFile> Images,
+  bool IsAdmin = false
 );
 
 public record UserHouseUpdateDto(
   string Name,
+  string OwnerId,
   string Description,
   string Location,
   decimal Price,
@@ -67,5 +73,6 @@ public record UserHouseUpdateDto(
   PropertyType Type,
   PropertyState State,
   List<IFormFile>? Images,
-  List<int>? IdsToDelete
+  List<int>? IdsToDelete,
+  bool IsAdmin = false
 );

@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.Transactions;
 using Final_Business.Services.Interfaces;
+using Final_Core.Enums;
+using Org.BouncyCastle.Math.EC.Rfc7748;
 
 namespace Final_Business.Services.Implementations {
   public class UserHouseService(
@@ -73,6 +75,22 @@ namespace Final_Business.Services.Implementations {
       return new BaseResponse(204, "Deleted successfully", null, []);
     }
 
+    public async Task<BaseResponse> Buy(int id, string ownerId) {
+      var house = await houseRepository.GetAsync(x => x.Id == id && !x.IsDeleted)
+        ?? throw new RestException(StatusCodes.Status404NotFound, "House not found");
+
+      if (house.Status == PropertyStatus.Sold)
+        throw new RestException(StatusCodes.Status400BadRequest, "House is already sold");
+
+      house.Status = PropertyStatus.Sold;
+      house.OwnerId = ownerId;
+      house.UpdatedAt = DateTime.Now;
+
+      await houseRepository.SaveAsync();
+
+      return new BaseResponse(204, "Bought successfully", null, []);
+    }
+
     public async Task<BaseResponse> GetPaginated(int pageNumber = 1, int pageSize = 1) {
       if (pageNumber <= 0 || pageSize <= 0) {
         throw new RestException(StatusCodes.Status400BadRequest, "Invalid parameters for paging");
@@ -86,7 +104,7 @@ namespace Final_Business.Services.Implementations {
     }
 
     public async Task<BaseResponse> GetById(int id) {
-      var house = await houseRepository.GetAsync(x => x.Id == id && !x.IsDeleted, "Images");
+      var house = await houseRepository.GetAsync(x => x.Id == id && !x.IsDeleted, "Images", "Comments", "Bids", "Discounts");
 
       return house == null
         ? throw new RestException(StatusCodes.Status404NotFound, "House not found")

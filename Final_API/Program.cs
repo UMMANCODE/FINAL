@@ -66,6 +66,11 @@ builder.Services.AddSwaggerGen(c => {
     Version = "v1"
   });
 
+  c.SwaggerDoc("trait", new OpenApiInfo {
+    Title = "Trait API",
+    Version = "v1"
+  });
+
   c.SwaggerDoc("auth", new OpenApiInfo {
     Title = "Auth API",
     Version = "v1"
@@ -97,6 +102,7 @@ builder.Services.AddSwaggerGen(c => {
   c.DocumentFilter<AdminDocumentFilter>();
   c.DocumentFilter<UserDocumentFilter>();
   c.DocumentFilter<AuthDocumentFilter>();
+  c.DocumentFilter<TraitDocumentFilter>();
 });
 
 
@@ -111,17 +117,21 @@ builder.Services.AddScoped<IUserAuthService, UserAuthService>();
 builder.Services.AddScoped<IUserProfileService, UserProfileService>();
 
 builder.Services.AddScoped<IUserHouseService, UserHouseService>();
+builder.Services.AddScoped<IUserBidService, UserBidService>();
 builder.Services.AddScoped<IAdminHouseService, AdminHouseService>();
 builder.Services.AddScoped<ISliderService, SliderService>();
 builder.Services.AddScoped<IFeatureService, FeatureService>();
 builder.Services.AddScoped<IHouseImageService, HouseImageService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<IDiscountService, DiscountService>();
 
 builder.Services.AddScoped<IHouseRepository, HouseRepository>();
 builder.Services.AddScoped<ISliderRepository, SliderRepository>();
 builder.Services.AddScoped<IFeatureRepository, FeatureRepository>();
 builder.Services.AddScoped<IHouseImageRepository, HouseImageRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddScoped<IBidRepository, BidRepository>();
+builder.Services.AddScoped<IDiscountRepository, DiscountRepository>();
 
 builder.Services.AddScoped<IEmailService, EmailService>();
 
@@ -166,6 +176,7 @@ if (app.Environment.IsDevelopment()) {
     c.SwaggerEndpoint("/swagger/user/swagger.json", "User API V1");
     c.SwaggerEndpoint("/swagger/admin/swagger.json", "Admin API V1");
     c.SwaggerEndpoint("/swagger/auth/swagger.json", "Auth API V1");
+    c.SwaggerEndpoint("/swagger/trait/swagger.json", "Trait API V1");
 
     // Customize the Swagger UI
     c.UseRequestInterceptor("(request) => { request.headers.Authorization = 'Bearer ' + request.headers.Authorization; return request; }");
@@ -183,9 +194,9 @@ app.UseStaticFiles();
 app.UseHangfireDashboard();
 
 // Schedule the daily email job
-//RecurringJob.AddOrUpdate<EmailService>("send-daily-flower-email",
-//  service => service.SendFlowerEmail(),
-//  "0 4 * * *"); // Cron expression for 08:00 AM daily
+RecurringJob.AddOrUpdate<EmailService>("send-discount-notification-email",
+ service => service.SendNotificationEmail(),
+  "00 12 * * *"); // Cron expression for 16:00 PM daily
 
 app.UseStaticFiles();
 

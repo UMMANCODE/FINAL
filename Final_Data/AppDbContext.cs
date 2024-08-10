@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 namespace Final_Data {
   public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<AppUser>(options) {
     public DbSet<Comment> Comments { get; set; }
+    public DbSet<Discount> Discounts { get; set; }
+    public DbSet<Bid> Bids { get; set; }
     public DbSet<Slider> Sliders { get; set; }
     public DbSet<Feature> Features { get; set; }
     public DbSet<House> Houses { get; set; }

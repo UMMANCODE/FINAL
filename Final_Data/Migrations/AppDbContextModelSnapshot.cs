@@ -97,6 +97,35 @@ namespace Final_Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Final_Core.Entities.Bid", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("HouseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HouseId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Bids");
+                });
+
             modelBuilder.Entity("Final_Core.Entities.Comment", b =>
                 {
                     b.Property<int>("Id")
@@ -128,6 +157,35 @@ namespace Final_Data.Migrations
                     b.HasIndex("HouseId");
 
                     b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("Final_Core.Entities.Discount", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("ExpiryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("HouseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HouseId");
+
+                    b.ToTable("Discounts");
                 });
 
             modelBuilder.Entity("Final_Core.Entities.Feature", b =>
@@ -194,6 +252,9 @@ namespace Final_Data.Migrations
                     b.Property<float>("HomeArea")
                         .HasColumnType("real");
 
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -217,6 +278,7 @@ namespace Final_Data.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("PropertyId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte>("Rooms")
@@ -488,6 +550,23 @@ namespace Final_Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Final_Core.Entities.Bid", b =>
+                {
+                    b.HasOne("Final_Core.Entities.House", "House")
+                        .WithMany("Bids")
+                        .HasForeignKey("HouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Final_Core.Entities.AppUser", "User")
+                        .WithMany("Bids")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("House");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Final_Core.Entities.Comment", b =>
                 {
                     b.HasOne("Final_Core.Entities.AppUser", "AppUser")
@@ -501,6 +580,17 @@ namespace Final_Data.Migrations
                         .IsRequired();
 
                     b.Navigation("AppUser");
+
+                    b.Navigation("House");
+                });
+
+            modelBuilder.Entity("Final_Core.Entities.Discount", b =>
+                {
+                    b.HasOne("Final_Core.Entities.House", "House")
+                        .WithMany("Discounts")
+                        .HasForeignKey("HouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("House");
                 });
@@ -597,6 +687,8 @@ namespace Final_Data.Migrations
 
             modelBuilder.Entity("Final_Core.Entities.AppUser", b =>
                 {
+                    b.Navigation("Bids");
+
                     b.Navigation("Comments");
 
                     b.Navigation("Houses");
@@ -604,7 +696,11 @@ namespace Final_Data.Migrations
 
             modelBuilder.Entity("Final_Core.Entities.House", b =>
                 {
+                    b.Navigation("Bids");
+
                     b.Navigation("Comments");
+
+                    b.Navigation("Discounts");
 
                     b.Navigation("Images");
                 });

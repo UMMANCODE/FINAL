@@ -46,6 +46,12 @@ public class MapProfile : Profile {
     CreateMap<Comment, CommentGetDto>().ReverseMap();
     CreateMap<Comment, CommentCreateDto>().ReverseMap();
 
+    CreateMap<Bid, UserBidGetDto>().ReverseMap();
+    CreateMap<Bid, UserBidCreateDto>().ReverseMap();
+
+    CreateMap<Discount, DiscountGetDto>().ReverseMap();
+    CreateMap<Discount, DiscountCreateDto>().ReverseMap();
+
     CreateMap<HouseImage, HouseImageGetDto>().ReverseMap();
 
     CreateMap<HouseImage, HouseImageGetDto>()

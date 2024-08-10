@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Ks7DSCk0k92Kw8kmvQ8ammrL3RF3nEEncl4sLst4Z+M=",
+  "Hash": "32GIelRguJ6s012qi4g3diHE8A70kmnxqBIHHs5zupU=",
   "Source": "Final_API",
   "BasePath": "_content/Final_API",
   "Mode": "Default",
@@ -74,6 +74,25 @@
       "OriginalItemSpec": "wwwroot\\images\\features\\bdbb174d-f358-4f05-99e1-60310c73b6a41_44KZRAupREHKCL1zIjjDig.png"
     },
     {
+      "Identity": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\features\\c28cf624-eba5-4e3b-a3ab-2c82253be5f0Ayaz CV.png",
+      "SourceId": "Final_API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\",
+      "BasePath": "_content/Final_API",
+      "RelativePath": "images/features/c28cf624-eba5-4e3b-a3ab-2c82253be5f0Ayaz CV.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\features\\c28cf624-eba5-4e3b-a3ab-2c82253be5f0Ayaz CV.png"
+    },
+    {
       "Identity": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\163395f0-7ec9-44eb-b05d-203ace2306101699359402394.jpg",
       "SourceId": "Final_API",
       "SourceType": "Discovered",
@@ -129,6 +148,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\houses\\7699754e-ca35-4d08-b32e-71488eb5a22b1_44KZRAupREHKCL1zIjjDig.png"
+    },
+    {
+      "Identity": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\ec2a2e65-5531-4447-a7e4-a74880f4563cAyaz CV.png",
+      "SourceId": "Final_API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\",
+      "BasePath": "_content/Final_API",
+      "RelativePath": "images/houses/ec2a2e65-5531-4447-a7e4-a74880f4563cAyaz CV.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\houses\\ec2a2e65-5531-4447-a7e4-a74880f4563cAyaz CV.png"
     },
     {
       "Identity": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\f7b0c28f-a301-4967-802e-b81c94f3da771_44KZRAupREHKCL1zIjjDig.png",

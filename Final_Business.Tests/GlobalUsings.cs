@@ -1,0 +1,10 @@
+global using Xunit;
+global using System.Linq.Expressions;
+global using AutoMapper;
+global using Final_Business.Exceptions;
+global using Final_Business.Services.Implementations;
+global using Final_Core.Entities;
+global using Final_Core.Enums;
+global using Final_Data.Repositories.Interfaces;
+global using Microsoft.AspNetCore.Http;
+global using Moq;

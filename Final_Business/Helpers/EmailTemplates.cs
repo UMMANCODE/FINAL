@@ -145,4 +145,26 @@ public static class EmailTemplates {
 ";
     return GetBaseTemplate(content);
   }
+
+  public static string GetDiscountInfoEmail(string email, List<NotificationData> data) {
+    var content = $@"
+<td class='content-block'>
+  <h2>Discounts Expiring Soon</h2>
+</td>
+<td class='content-block'>
+  <p>Dear {email},</p>
+  <p>Don't miss out on these discounts expiring soon!</p>
+</td>
+";
+    content = data.Aggregate(content, (current, itemData) => current + $@"
+<td class='content-block'>
+  <h3>{itemData?.HouseName}</h3>
+  <p>Old Price: {itemData?.OldPrice}</p>
+  <p>New Price: {itemData?.NewPrice}</p>
+  <a href='{itemData?.Url}' class='btn btn-primary'>View House</a>
+</td>
+");
+
+    return GetBaseTemplate(content);
+  }
 }
