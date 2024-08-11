@@ -1,0 +1,52 @@
+﻿<div class="col-md-auto">
+  <nav aria-label="Pagination" style="text-align: center;">
+    <ul class="pagination d-flex" style="display: inline-block;">
+      @if (Model.PageIndex > 1) {
+        <li class="page-item">
+          <a class="page-link" style="color: white;" asp-route-page="@(Model.PageIndex - 1)">Prev</a>
+        </li>
+      }
+
+      @if (Model.PageIndex > 3) {
+        <li class="page-item">
+          <a class="page-link" style="color: white;" asp-route-page="1">1</a>
+        </li>
+        @if (Model.PageIndex > 4) {
+          <li class="page-item disabled">
+            <span class="page-link" style="color: #191c24;">...</span>
+          </li>
+        }
+      }
+
+      @for (int i = Math.Max(1, Model.PageIndex - 2); i <= Math.Min(Model.TotalPages, Model.PageIndex + 2); i++) {
+        if (Model.PageIndex == i) {
+          <li class="page-item active" aria-current="page">
+            <span class="page-link" style="color: white; background-color: #0090e7;">@i</span>
+          </li>
+        }
+        else {
+          <li class="page-item">
+            <a class="page-link" style="color: white;" asp-route-page="@i">@i</a>
+          </li>
+        }
+      }
+
+      @if (Model.PageIndex < Model.TotalPages - 2) {
+        @if (Model.PageIndex < Model.TotalPages - 3) {
+          <li class="page-item disabled">
+            <span class="page-link" style="color: #191c24;">...</span>
+          </li>
+        }
+        <li class="page-item">
+          <a class="page-link" style="color: white;" asp-route-page="@Model.TotalPages">@Model.TotalPages</a>
+        </li>
+      }
+
+      @if (Model.PageIndex < Model.TotalPages) {
+        <li class="page-item">
+          <a class="page-link" style="color: white;" asp-route-page="@(Model.PageIndex + 1)">Next</a>
+        </li>
+      }
+    </ul>
+  </nav>
+</div>

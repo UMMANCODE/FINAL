@@ -1,0 +1,111 @@
+﻿@model SliderUpdateRequest
+
+@{
+  ViewData["Title"] = "Edit";
+}
+
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="col-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Edit</h4>
+          <form class="forms-sample" asp-action="Edit" method="post" enctype="multipart/form-data">
+
+            <div class="form-group">
+              <label asp-for="Title">Title</label>
+              <input asp-for="Title" class="form-control" id="Title" placeholder="Title">
+              <span class="text-danger" asp-validation-for="Title"></span>
+            </div>
+
+            <div class="form-group">
+              <label asp-for="SubTitle1">SubTitle1</label>
+              <input asp-for="SubTitle1" class="form-control" id="SubTitle1" placeholder="SubTitle1">
+              <span class="text-danger" asp-validation-for="SubTitle1"></span>
+            </div>
+
+            <div class="form-group">
+              <label asp-for="SubTitle2">SubTitle2</label>
+              <input asp-for="SubTitle2" class="form-control" id="SubTitle2" placeholder="SubTitle2">
+              <span class="text-danger" asp-validation-for="SubTitle2"></span>
+            </div>
+
+            <div class="form-group">
+              <label asp-for="Description">Description</label>
+              <textarea asp-for="Description" class="form-control" id="Description" rows="4"></textarea>
+              <span class="text-danger" asp-validation-for="Description"></span>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-6">
+                <label asp-for="BtnText1">BtnText1</label>
+                <input asp-for="BtnText1" class="form-control" id="BtnText1" placeholder="BtnText1">
+                <span class="text-danger" asp-validation-for="BtnText1"></span>
+              </div>
+
+              <div class="form-group col-6">
+                <label asp-for="BtnLink1">BtnLink1</label>
+                <input asp-for="BtnLink1" class="form-control" id="BtnLink1" placeholder="BtnLink1">
+                <span class="text-danger" asp-validation-for="BtnLink1"></span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-6">
+                <label asp-for="BtnText2">BtnText2</label>
+                <input asp-for="BtnText2" class="form-control" id="BtnText2" placeholder="BtnText2">
+                <span class="text-danger" asp-validation-for="BtnText2"></span>
+              </div>
+
+              <div class="form-group col-6">
+                <label asp-for="BtnLink2">BtnLink2</label>
+                <input asp-for="BtnLink2" class="form-control" id="BtnLink2" placeholder="BtnLink2">
+                <span class="text-danger" asp-validation-for="BtnLink2"></span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-6">
+                <label asp-for="ImagePosition">Image Position</label>
+                <select asp-for="ImagePosition" class="form-control" asp-items="Html.GetEnumSelectList<ImagePosition>()">
+                  <option value="">-- Select Position --</option>
+                </select>
+                <span class="text-danger" asp-validation-for="ImagePosition"></span>
+              </div>
+
+              <div class="form-group col-6">
+                <label asp-for="Order">Order</label>
+                <input asp-for="Order" class="form-control" id="Order">
+                <span class="text-danger" asp-validation-for="Order"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label asp-for="Image">Image</label>
+              <input asp-for="Image" name="Image" class="file-upload-default img-input" id="Image">
+              <input type="hidden" name="ImageUrl" value="@ViewBag.ImageUrl" />
+              <div class="input-group col-xs-12">
+                <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                <span class="input-group-append">
+                  <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                </span>
+              </div>
+              <div class="preview-box">
+                <img width="200" class="preview-img" src="@ViewBag.ImageUrl" />
+              </div>
+              <span class="text-danger" asp-validation-for="Image"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary mr-2">Edit</button>
+            <a class="btn btn-dark" asp-action="Index">Cancel</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section scripts {
+  <script src="~/assets/js/file-upload.js"></script>
+  <script src="~/assets/js/custom/preview.js"></script>
+}

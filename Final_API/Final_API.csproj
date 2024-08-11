@@ -26,11 +26,4 @@
     <ProjectReference Include="..\Final_Business\Final_Business.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\images\houses\" />
-    <Folder Include="wwwroot\images\features\" />
-    <Folder Include="wwwroot\images\users\" />
-    <Folder Include="wwwroot\images\sliders\" />
-  </ItemGroup>
-
 </Project>

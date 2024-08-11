@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Final_Core.Enums;
+using Microsoft.AspNetCore.Http;
 
 namespace Final_Business.DTOs.General;
 
@@ -13,7 +14,7 @@ public record SliderGetOneDto(
     string BtnText2,
     string BtnLink1,
     string BtnLink2,
-    int ImagePosition,
+    ImagePosition ImagePosition,
     int Order
 );
 
@@ -34,7 +35,7 @@ public record SliderCreateDto(
   string? BtnText2,
   string? BtnLink1,
   string? BtnLink2,
-  int ImagePosition,
+  ImagePosition ImagePosition,
   int Order
 );
 
@@ -48,6 +49,6 @@ public record SliderUpdateDto(
   string? BtnText2,
   string? BtnLink1,
   string? BtnLink2,
-  int ImagePosition,
+  ImagePosition ImagePosition,
   int Order
 );

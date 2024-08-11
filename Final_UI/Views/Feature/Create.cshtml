@@ -1,0 +1,50 @@
+﻿@model FeatureCreateRequest
+
+@{
+  ViewData["Title"] = "Create";
+}
+
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="col-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Create</h4>
+          <form class="forms-sample" asp-action="Create" method="post" enctype="multipart/form-data">
+
+            <div class="form-group">
+              <label asp-for="Name">Name</label>
+              <input asp-for="Name" class="form-control" id="Name" placeholder="Name">
+              <span class="text-danger" asp-validation-for="Name"></span>
+            </div>
+
+            <div class="form-group">
+              <label asp-for="Description">Description</label>
+              <textarea asp-for="Description" class="form-control" id="Description" rows="4"></textarea>
+              <span class="text-danger" asp-validation-for="Description"></span>
+            </div>
+
+            <div class="form-group">
+              <label asp-for="Icon">Icon</label>
+              <input asp-for="Icon" name="Icon" class="file-upload-default">
+              <div class="input-group col-xs-12">
+                <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                <span class="input-group-append">
+                  <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                </span>
+              </div>
+              <span class="text-danger" asp-validation-for="Icon"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary mr-2">Create</button>
+            <a class="btn btn-dark" asp-action="Index">Cancel</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section scripts {
+  <script src="~/assets/js/file-upload.js"></script>
+}
