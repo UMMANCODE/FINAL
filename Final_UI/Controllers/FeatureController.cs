@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Final_UI.Controllers;
 
 [ServiceFilter(typeof(AuthFilter))]
+[ServiceFilter(typeof(AdminOrSuperAdminFilter))]
 public class FeatureController(ICrudService crudService, IConfiguration configuration, IMapper mapper) : Controller {
   private readonly string _apiUrl = configuration.GetSection("APIEndpoint").Value!;
 

@@ -829,6 +829,10 @@
       "PackagePath": "staticwebassets\\assets\\js\\custom\\alert.js"
     },
     {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_UI\\wwwroot\\assets\\js\\custom\\mytoast.js",
+      "PackagePath": "staticwebassets\\assets\\js\\custom\\mytoast.js"
+    },
+    {
       "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_UI\\wwwroot\\assets\\js\\custom\\preview.js",
       "PackagePath": "staticwebassets\\assets\\js\\custom\\preview.js"
     },

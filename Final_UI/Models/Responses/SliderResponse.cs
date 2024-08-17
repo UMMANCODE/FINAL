@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Final_UI.Models.Requests;
+﻿using Final_UI.Helpers.Enums;
 
 namespace Final_UI.Models.Responses;
 

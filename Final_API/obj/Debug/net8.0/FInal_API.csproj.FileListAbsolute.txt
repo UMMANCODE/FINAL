@@ -183,3 +183,9 @@ C:\Users\user\Desktop\Code Academy\FInal App\FInal_API\obj\Debug\net8.0\FInal_AP
 C:\Users\user\Desktop\Code Academy\FInal App\FInal_API\obj\Debug\net8.0\ref\FInal_API.dll
 C:\Users\user\Desktop\Code Academy\FInal App\Final_API\bin\Debug\net8.0\Final_API.staticwebassets.runtime.json
 C:\Users\user\Desktop\Code Academy\FInal App\Final_API\obj\Debug\net8.0\Final_API.sourcelink.json
+C:\Users\user\Desktop\Code Academy\FInal App\Final_API\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.Google.dll
+C:\Users\user\Desktop\Code Academy\FInal App\Final_API\bin\Debug\net8.0\Microsoft.Extensions.Caching.StackExchangeRedis.dll
+C:\Users\user\Desktop\Code Academy\FInal App\Final_API\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\user\Desktop\Code Academy\FInal App\Final_API\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\user\Desktop\Code Academy\FInal App\Final_API\bin\Debug\net8.0\Pipelines.Sockets.Unofficial.dll
+C:\Users\user\Desktop\Code Academy\FInal App\Final_API\bin\Debug\net8.0\StackExchange.Redis.dll

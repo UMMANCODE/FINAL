@@ -1,5 +1,6 @@
 using AutoMapper;
 using Final_API.Filters;
+using Final_API.Middlewares;
 using Final_Business.Exceptions;
 using Final_Business.Profiles;
 using Final_Business.Services.Implementations;
@@ -14,6 +15,8 @@ using FluentValidation.AspNetCore;
 using Hangfire;
 using Hangfire.MemoryStorage;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -44,6 +47,8 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(opt => {
   opt.Password.RequiredLength = 8;
   opt.Password.RequireUppercase = false;
   opt.Password.RequireLowercase = false;
+  opt.Password.RequireDigit = false;
+  opt.User.RequireUniqueEmail = true;
 }).AddDefaultTokenProviders().AddEntityFrameworkStores<AppDbContext>();
 
 builder.Services.AddHttpContextAccessor();
@@ -124,6 +129,7 @@ builder.Services.AddScoped<IFeatureService, FeatureService>();
 builder.Services.AddScoped<IHouseImageService, HouseImageService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IDiscountService, DiscountService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 builder.Services.AddScoped<IHouseRepository, HouseRepository>();
 builder.Services.AddScoped<ISliderRepository, SliderRepository>();
@@ -132,16 +138,29 @@ builder.Services.AddScoped<IHouseImageRepository, HouseImageRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<IBidRepository, BidRepository>();
 builder.Services.AddScoped<IDiscountRepository, DiscountRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 builder.Services.AddScoped<IEmailService, EmailService>();
+
+//builder.Services.AddScoped<RedisCacheFilter>();
+
+builder.Services.AddLogging();
 
 builder.Host.UseSerilog((hostingContext, loggerConfiguration) => {
   loggerConfiguration
   .ReadFrom.Configuration(hostingContext.Configuration);
 });
 
-//Micro-elements
+// Micro-elements
 builder.Services.AddFluentValidationRulesToSwagger();
+
+// Cashing
+//builder.Services.AddStackExchangeRedisCache(options => {
+//  options.Configuration = builder.Configuration.GetConnectionString("RedisConnection");
+//  options.InstanceName = "MyApp_";
+//});
+
+builder.Services.AddResponseCaching();
 
 
 // Configure JWT Authentication
@@ -157,6 +176,27 @@ builder.Services.AddAuthentication(opt => {
   };
 });
 
+
+// Configure Google Authentication
+builder.Services.AddAuthentication(options => {
+  options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+  options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+})
+.AddCookie(options => {
+  options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+})
+.AddGoogle(options => {
+  options.ClientId = builder.Configuration.GetSection("Google:ClientId").Value!;
+  options.ClientSecret = builder.Configuration.GetSection("Google:ClientSecret").Value!;
+  options.SaveTokens = true;
+  options.Scope.Add("https://www.googleapis.com/auth/userinfo.profile");
+  options.Scope.Add("https://www.googleapis.com/auth/userinfo.email");
+  options.Events.OnRedirectToAuthorizationEndpoint = context => {
+    context.HttpContext.Response.Redirect(context.RedirectUri);
+    return Task.CompletedTask;
+  };
+});
+
 // Configure Hangfire
 builder.Services.AddHangfire(config =>
   config.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
@@ -166,6 +206,15 @@ builder.Services.AddHangfire(config =>
 
 // Add Hangfire server
 builder.Services.AddHangfireServer();
+
+// Configure CORS
+builder.Services.AddCors(options => {
+  options.AddPolicy("AllowAll", conf => {
+    conf.AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader();
+  });
+});
 
 var app = builder.Build();
 
@@ -185,6 +234,10 @@ if (app.Environment.IsDevelopment()) {
 
 app.UseHttpsRedirection();
 
+app.UseCors();
+
+app.UseResponseCaching();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -202,7 +255,9 @@ app.UseStaticFiles();
 
 app.MapControllers();
 
-app.UseMiddleware<Final_API.Middlewares.ExceptionHandlerMiddleware>();
+// Custom Middlewares
+app.UseMiddleware<ExceptionHandlerMiddleware>();
+//app.UseMiddleware<RedisResponseCacheMiddleware>();
 
 app.Run();
 

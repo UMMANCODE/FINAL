@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\images\\features\\3727a17a-867a-405b-9c81-c32d22aea3c51_44KZRAupREHKCL1zIjjDig.png"
     },
     {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\features\\4292dc2f-8ba2-4166-ab36-fd138028852eUmman CV.png",
+      "PackagePath": "staticwebassets\\images\\features\\4292dc2f-8ba2-4166-ab36-fd138028852eUmman CV.png"
+    },
+    {
       "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\features\\a54c6039-9bad-4985-8257-c95c9c9dda631_44KZRAupREHKCL1zIjjDig.png",
       "PackagePath": "staticwebassets\\images\\features\\a54c6039-9bad-4985-8257-c95c9c9dda631_44KZRAupREHKCL1zIjjDig.png"
     },
@@ -17,8 +21,12 @@
       "PackagePath": "staticwebassets\\images\\features\\c28cf624-eba5-4e3b-a3ab-2c82253be5f0Ayaz CV.png"
     },
     {
-      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\features\\default.png",
-      "PackagePath": "staticwebassets\\images\\features\\default.png"
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\0d0acf9d-c046-4a30-acf8-a0ceabb6bb68Ayaz CV.png",
+      "PackagePath": "staticwebassets\\images\\houses\\0d0acf9d-c046-4a30-acf8-a0ceabb6bb68Ayaz CV.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\14bb3a31-b072-4a12-b165-0b9624406f7fUmman CV.png",
+      "PackagePath": "staticwebassets\\images\\houses\\14bb3a31-b072-4a12-b165-0b9624406f7fUmman CV.png"
     },
     {
       "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\163395f0-7ec9-44eb-b05d-203ace2306101699359402394.jpg",
@@ -29,8 +37,48 @@
       "PackagePath": "staticwebassets\\images\\houses\\214abd65-5975-43fc-8cc3-7fb0306c392e1701709855027-min.jpg"
     },
     {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\46a67817-c403-4336-8737-73f50bf4ba06Ayaz CV.png",
+      "PackagePath": "staticwebassets\\images\\houses\\46a67817-c403-4336-8737-73f50bf4ba06Ayaz CV.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\4a93f4c2-1eda-4328-9daa-0088667a0a95Ayaz CV.png",
+      "PackagePath": "staticwebassets\\images\\houses\\4a93f4c2-1eda-4328-9daa-0088667a0a95Ayaz CV.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\5d596da5-d11d-431e-9b57-3346f5c35dadUmman CV.png",
+      "PackagePath": "staticwebassets\\images\\houses\\5d596da5-d11d-431e-9b57-3346f5c35dadUmman CV.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\5e298d67-b88b-4079-a6c5-2b577f0811c6Umman CV.png",
+      "PackagePath": "staticwebassets\\images\\houses\\5e298d67-b88b-4079-a6c5-2b577f0811c6Umman CV.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\70ab6fd4-5f08-46f1-8271-ca69cab5c70cAyaz CV.png",
+      "PackagePath": "staticwebassets\\images\\houses\\70ab6fd4-5f08-46f1-8271-ca69cab5c70cAyaz CV.png"
+    },
+    {
       "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\7699754e-ca35-4d08-b32e-71488eb5a22b1_44KZRAupREHKCL1zIjjDig.png",
       "PackagePath": "staticwebassets\\images\\houses\\7699754e-ca35-4d08-b32e-71488eb5a22b1_44KZRAupREHKCL1zIjjDig.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\a328aa89-d2f7-4c02-9d0f-82061c25a144Umman CV.png",
+      "PackagePath": "staticwebassets\\images\\houses\\a328aa89-d2f7-4c02-9d0f-82061c25a144Umman CV.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\a47ae686-1094-4d24-a8d8-4ecc2b2453dfAyaz CV.png",
+      "PackagePath": "staticwebassets\\images\\houses\\a47ae686-1094-4d24-a8d8-4ecc2b2453dfAyaz CV.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\a56d2341-feaa-4002-8f48-b068d2dbd06dAyaz CV.png",
+      "PackagePath": "staticwebassets\\images\\houses\\a56d2341-feaa-4002-8f48-b068d2dbd06dAyaz CV.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\c2bd36a6-6496-44d5-bfe7-1b7b6a634af8Umman CV.png",
+      "PackagePath": "staticwebassets\\images\\houses\\c2bd36a6-6496-44d5-bfe7-1b7b6a634af8Umman CV.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\d0f18c1b-4061-4313-a15e-b5237e14d31aAyaz CV.png",
+      "PackagePath": "staticwebassets\\images\\houses\\d0f18c1b-4061-4313-a15e-b5237e14d31aAyaz CV.png"
     },
     {
       "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\default.png",
@@ -41,8 +89,20 @@
       "PackagePath": "staticwebassets\\images\\houses\\ec2a2e65-5531-4447-a7e4-a74880f4563cAyaz CV.png"
     },
     {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\f1acdab2-ac83-40ff-8328-34005c011f47Umman CV.png",
+      "PackagePath": "staticwebassets\\images\\houses\\f1acdab2-ac83-40ff-8328-34005c011f47Umman CV.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\f5dd0bad-b414-4b8a-b156-f7e598708ed1Umman CV.png",
+      "PackagePath": "staticwebassets\\images\\houses\\f5dd0bad-b414-4b8a-b156-f7e598708ed1Umman CV.png"
+    },
+    {
       "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\f7b0c28f-a301-4967-802e-b81c94f3da771_44KZRAupREHKCL1zIjjDig.png",
       "PackagePath": "staticwebassets\\images\\houses\\f7b0c28f-a301-4967-802e-b81c94f3da771_44KZRAupREHKCL1zIjjDig.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\fd7f06e1-e59d-475b-bdc4-f313b1ca7b61Ayaz CV.png",
+      "PackagePath": "staticwebassets\\images\\houses\\fd7f06e1-e59d-475b-bdc4-f313b1ca7b61Ayaz CV.png"
     },
     {
       "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\houses\\fdc0c711-fe38-456e-8124-91a8c4e34f281699359402394.jpg",
@@ -105,12 +165,24 @@
       "PackagePath": "staticwebassets\\images\\users\\00fadf1f-fc84-45e5-ae94-0a7a1a4f40531_44KZRAupREHKCL1zIjjDig.png"
     },
     {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\users\\0848c36e-5eec-4827-8175-6f2997165ca6AyazCanvaCV.png",
+      "PackagePath": "staticwebassets\\images\\users\\0848c36e-5eec-4827-8175-6f2997165ca6AyazCanvaCV.png"
+    },
+    {
       "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\users\\1b893609-3b69-4c91-a959-8a32079746631_44KZRAupREHKCL1zIjjDig.png",
       "PackagePath": "staticwebassets\\images\\users\\1b893609-3b69-4c91-a959-8a32079746631_44KZRAupREHKCL1zIjjDig.png"
     },
     {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\users\\1c4dd0c7-c10f-4595-b70a-5c938ea0586eAyazCanvaCV.png",
+      "PackagePath": "staticwebassets\\images\\users\\1c4dd0c7-c10f-4595-b70a-5c938ea0586eAyazCanvaCV.png"
+    },
+    {
       "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\users\\3f355ba1-f4a3-4e9c-a41a-635aa54ff4331_44KZRAupREHKCL1zIjjDig.png",
       "PackagePath": "staticwebassets\\images\\users\\3f355ba1-f4a3-4e9c-a41a-635aa54ff4331_44KZRAupREHKCL1zIjjDig.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\users\\490d80e2-3042-4918-bb5e-8426d78a583aUmmanCanvaCV.png",
+      "PackagePath": "staticwebassets\\images\\users\\490d80e2-3042-4918-bb5e-8426d78a583aUmmanCanvaCV.png"
     },
     {
       "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\users\\62c2e02a-fd63-4a34-a8dd-15c9d2881df81_44KZRAupREHKCL1zIjjDig.png",
@@ -125,8 +197,20 @@
       "PackagePath": "staticwebassets\\images\\users\\87130d34-fbf9-48b0-813e-e0348b78acb21_44KZRAupREHKCL1zIjjDig.png"
     },
     {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\users\\89eea692-8f7c-4ef8-8f9f-f58f9a291b44AyazCanvaCV.png",
+      "PackagePath": "staticwebassets\\images\\users\\89eea692-8f7c-4ef8-8f9f-f58f9a291b44AyazCanvaCV.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\users\\b70224cc-2a3f-4338-8057-59403e41c96bAyazCanvaCV.png",
+      "PackagePath": "staticwebassets\\images\\users\\b70224cc-2a3f-4338-8057-59403e41c96bAyazCanvaCV.png"
+    },
+    {
       "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\users\\c5edd4e0-b5ae-4a61-a353-7236fc2afab11_44KZRAupREHKCL1zIjjDig.png",
       "PackagePath": "staticwebassets\\images\\users\\c5edd4e0-b5ae-4a61-a353-7236fc2afab11_44KZRAupREHKCL1zIjjDig.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\users\\dc133802-0da9-43a4-94c4-544bcd7ff7b8AyazCanvaCV.png",
+      "PackagePath": "staticwebassets\\images\\users\\dc133802-0da9-43a4-94c4-544bcd7ff7b8AyazCanvaCV.png"
     },
     {
       "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_API\\wwwroot\\images\\users\\default.png",

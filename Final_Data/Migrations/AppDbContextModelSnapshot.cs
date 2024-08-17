@@ -56,6 +56,9 @@ namespace Final_Data.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<string>("Nationality")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -150,6 +153,9 @@ namespace Final_Data.Migrations
                     b.Property<int>("HouseId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId");
@@ -232,6 +238,9 @@ namespace Final_Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<byte>("Bathrooms")
                         .HasColumnType("tinyint");
 
@@ -271,9 +280,6 @@ namespace Final_Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("OwnerId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -298,7 +304,7 @@ namespace Final_Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OwnerId");
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("Houses");
                 });
@@ -349,6 +355,44 @@ namespace Final_Data.Migrations
                     b.HasIndex("HouseId");
 
                     b.ToTable("HouseImages");
+                });
+
+            modelBuilder.Entity("Final_Core.Entities.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("AppUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("HouseId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("HouseId");
+
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Final_Core.Entities.Slider", b =>
@@ -597,11 +641,9 @@ namespace Final_Data.Migrations
 
             modelBuilder.Entity("Final_Core.Entities.House", b =>
                 {
-                    b.HasOne("Final_Core.Entities.AppUser", "Owner")
+                    b.HasOne("Final_Core.Entities.AppUser", null)
                         .WithMany("Houses")
-                        .HasForeignKey("OwnerId");
-
-                    b.Navigation("Owner");
+                        .HasForeignKey("AppUserId");
                 });
 
             modelBuilder.Entity("Final_Core.Entities.HouseFeature", b =>
@@ -626,10 +668,29 @@ namespace Final_Data.Migrations
             modelBuilder.Entity("Final_Core.Entities.HouseImage", b =>
                 {
                     b.HasOne("Final_Core.Entities.House", "House")
-                        .WithMany("Images")
+                        .WithMany("HouseImages")
                         .HasForeignKey("HouseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("House");
+                });
+
+            modelBuilder.Entity("Final_Core.Entities.Order", b =>
+                {
+                    b.HasOne("Final_Core.Entities.AppUser", "AppUser")
+                        .WithMany("Orders")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Final_Core.Entities.House", "House")
+                        .WithMany("Orders")
+                        .HasForeignKey("HouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
 
                     b.Navigation("House");
                 });
@@ -692,6 +753,8 @@ namespace Final_Data.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("Houses");
+
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("Final_Core.Entities.House", b =>
@@ -702,7 +765,9 @@ namespace Final_Data.Migrations
 
                     b.Navigation("Discounts");
 
-                    b.Navigation("Images");
+                    b.Navigation("HouseImages");
+
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

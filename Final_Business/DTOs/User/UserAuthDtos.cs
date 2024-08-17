@@ -1,15 +1,21 @@
-﻿namespace Final_Business.DTOs.User;
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Final_Business.DTOs.User;
 
 public record UserLoginDto(
-  string UserName, string Password
+  string UserName, string? Password, bool RememberMe, bool ExternalLogin
 );
 
 public record UserRegisterDto(
-   string Email, string FullName, string UserName, string Password, string ConfirmPassword
+   string Email, string FullName, string UserName, string Password, string ConfirmPassword, IFormFile? Avatar, string Nationality
 );
 
 public record UserVerifyEmailDto(
   string Email, string Token
+);
+
+public record UserSendVerifyEmailDto(
+  string Email
 );
 
 public record UserForgetPasswordDto(

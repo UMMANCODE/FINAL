@@ -1,0 +1,143 @@
+﻿@model HouseUpdateRequest
+
+@{
+  ViewData["Title"] = "Edit";
+}
+
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="col-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Edit</h4>
+          <form class="forms-sample" asp-action="Edit" method="post" enctype="multipart/form-data">
+
+            <div class="form-group">
+              <label asp-for="Name">Name</label>
+              <input asp-for="Name" class="form-control" id="Name" placeholder="Name">
+              <span class="text-danger" asp-validation-for="Name"></span>
+            </div>
+
+            <div class="form-group">
+              <label asp-for="Location">Location</label>
+              <input asp-for="Location" class="form-control" id="Location" placeholder="Location">
+              <span class="text-danger" asp-validation-for="Location"></span>
+            </div>
+
+            <div class="form-group">
+              <label asp-for="Description">Description</label>
+              <textarea asp-for="Description" class="form-control" id="Description" rows="4"></textarea>
+              <span class="text-danger" asp-validation-for="Description"></span>
+            </div>
+
+            <div class="form-group">
+              <label asp-for="Price">Price</label>
+              <input asp-for="Price" class="form-control" id="Price" placeholder="Price">
+              <span class="text-danger" asp-validation-for="Price"></span>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-6">
+                <label asp-for="BuiltYear">BuiltYear</label>
+                <input asp-for="BuiltYear" class="form-control" id="BuiltYear" placeholder="BuiltYear">
+                <span class="text-danger" asp-validation-for="BuiltYear"></span>
+              </div>
+
+              <div class="form-group col-6">
+                <label asp-for="HomeArea">HomeArea</label>
+                <input asp-for="HomeArea" class="form-control" id="HomeArea" placeholder="HomeArea">
+                <span class="text-danger" asp-validation-for="HomeArea"></span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-4">
+                <label asp-for="Rooms">Rooms</label>
+                <input asp-for="Rooms" class="form-control" id="Rooms" placeholder="Rooms">
+                <span class="text-danger" asp-validation-for="Rooms"></span>
+              </div>
+
+              <div class="form-group col-4">
+                <label asp-for="Bedrooms">Bedrooms</label>
+                <input asp-for="Bedrooms" class="form-control" id="Bedrooms" placeholder="Bedrooms">
+                <span class="text-danger" asp-validation-for="Bedrooms"></span>
+              </div>
+
+              <div class="form-group col-4">
+                <label asp-for="Bathrooms">Bathrooms</label>
+                <input asp-for="Bathrooms" class="form-control" id="Bathrooms" placeholder="Bathrooms">
+                <span class="text-danger" asp-validation-for="Bathrooms"></span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-3">
+                <label asp-for="IsFeatured">IsFeatured</label>
+                <input asp-for="IsFeatured" class="form-control" id="IsFeatured">
+                <span class="text-danger" asp-validation-for="IsFeatured"></span>
+              </div>
+
+              <div class="form-group col-3">
+                <label asp-for="Status">Status</label>
+                <select asp-for="Status" class="form-control" asp-items="Html.GetEnumSelectList<PropertyStatus>()">
+                  <option value="">-- Select Status --</option>
+                </select>
+                <span class="text-danger" asp-validation-for="Status"></span>
+              </div>
+
+              <div class="form-group col-3">
+                <label asp-for="Type">Type</label>
+                <select asp-for="Type" class="form-control" asp-items="Html.GetEnumSelectList<PropertyType>()">
+                  <option value="">-- Select Type --</option>
+                </select>
+                <span class="text-danger" asp-validation-for="Type"></span>
+              </div>
+
+              <div class="form-group col-3">
+                <label asp-for="State">State</label>
+                <select asp-for="State" class="form-control" asp-items="Html.GetEnumSelectList<PropertyState>()">
+                  <option value="">-- Select State --</option>
+                </select>
+                <span class="text-danger" asp-validation-for="State"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label asp-for="Images">Images</label>
+              <input asp-for="Images" name="Images" class="file-upload-default img-input" id="Images" multiple>
+              <div class="input-group col-xs-12">
+                <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Images">
+                <span class="input-group-append">
+                  <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                </span>
+              </div>
+              <div class="preview-box">
+                @foreach (HouseImageResponse item in ViewBag.Images) {
+                  <div class="img-box mt-3 mr-3" style="display:inline-block;position:relative">
+                    <span class="remove-img-icon" style="position: absolute;
+                                                         right: -9px;
+                                                         top: -22px;
+                                                         font-size: 28px;
+                                                         color: red;
+                                                         cursor: pointer;">x</span>
+                    <input type="hidden" name="ImageIds" value="@item.Id" />
+                    <img width="200" src="@item.ImageLink" />
+                  </div>
+                }
+              </div>
+              <span class="text-danger" asp-validation-for="Images"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary mr-2">Edit</button>
+            <a class="btn btn-dark" asp-action="Index">Cancel</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section scripts {
+  <script src="~/assets/js/file-upload.js"></script>
+  <script src="~/assets/js/custom/preview.js"></script>
+}

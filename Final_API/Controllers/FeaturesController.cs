@@ -1,7 +1,5 @@
-﻿using Azure;
-using Final_Business.DTOs.General;
+﻿using Final_Business.DTOs.General;
 using Final_Business.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Final_API.Controllers;
@@ -12,6 +10,7 @@ public class FeaturesController(IFeatureService featureService) : ControllerBase
   // Admin routes
   //[Authorize(Roles = "Admin")]
   [HttpGet("admin")]
+  [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any, NoStore = false)]
   public async Task<IActionResult> AdminGetPaginated(int pageNumber = 1, int pageSize = 1) {
     var response = await featureService.GetPaginated(pageNumber, pageSize);
     return StatusCode(response.StatusCode, response);
@@ -19,6 +18,7 @@ public class FeaturesController(IFeatureService featureService) : ControllerBase
 
   //[Authorize(Roles = "Admin")]
   [HttpGet("admin/all")]
+  [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any, NoStore = false)]
   public async Task<IActionResult> AdminGetAll() {
     var response = await featureService.GetAll();
     return StatusCode(response.StatusCode, response);
@@ -26,6 +26,7 @@ public class FeaturesController(IFeatureService featureService) : ControllerBase
 
   //[Authorize(Roles = "Admin")]
   [HttpGet("admin/{id:int}")]
+  [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any, NoStore = false)]
   public async Task<IActionResult> AdminGetById(int id) {
     var response = await featureService.GetById(id);
     return StatusCode(response.StatusCode, response);
@@ -54,18 +55,21 @@ public class FeaturesController(IFeatureService featureService) : ControllerBase
 
   // Client routes
   [HttpGet("user")]
+  [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any, NoStore = false)]
   public async Task<IActionResult> UserGetPaginated(int pageNumber = 1, int pageSize = 1) {
     var response = await featureService.GetPaginated(pageNumber, pageSize);
     return StatusCode(response.StatusCode, response);
   }
 
   [HttpGet("user/all")]
+  [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any, NoStore = false)]
   public async Task<IActionResult> UserGetAll() {
     var response = await featureService.GetAll();
     return StatusCode(response.StatusCode, response);
   }
 
   [HttpGet("user/{id:int}")]
+  [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any, NoStore = false)]
   public async Task<IActionResult> UserGetById(int id) {
     var response = await featureService.GetById(id);
     return StatusCode(response.StatusCode, response);

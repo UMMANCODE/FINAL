@@ -1,6 +1,6 @@
 ﻿namespace Final_Core.Enums;
 public enum PropertyType {
-  House,
+  House = 1,
   Apartment,
   Condo,
   Townhouse

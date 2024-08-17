@@ -1,16 +1,14 @@
 ﻿using AutoMapper;
-using Final_Business.DTOs.User;
 using Final_Business.DTOs;
+using Final_Business.DTOs.User;
 using Final_Business.Exceptions;
 using Final_Business.Helpers;
+using Final_Business.Services.Interfaces;
 using Final_Core.Entities;
 using Final_Data.Repositories.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.Transactions;
-using Final_Business.Services.Interfaces;
-using Final_Core.Enums;
-using Org.BouncyCastle.Math.EC.Rfc7748;
 
 namespace Final_Business.Services.Implementations {
   public class UserHouseService(
@@ -38,11 +36,11 @@ namespace Final_Business.Services.Implementations {
             if (image == createDto.Images.First()) {
               houseImage.IsMain = true;
             }
-            house.Images.Add(houseImage);
+            house.HouseImages.Add(houseImage);
           }
         }
         else {
-          house.Images.Add(new HouseImage { ImageLink = FileManager.DefaultImage, IsMain = true });
+          house.HouseImages.Add(new HouseImage { ImageLink = FileManager.DefaultImage, IsMain = true });
         }
 
         await houseRepository.AddAsync(house);
@@ -75,28 +73,12 @@ namespace Final_Business.Services.Implementations {
       return new BaseResponse(204, "Deleted successfully", null, []);
     }
 
-    public async Task<BaseResponse> Buy(int id, string ownerId) {
-      var house = await houseRepository.GetAsync(x => x.Id == id && !x.IsDeleted)
-        ?? throw new RestException(StatusCodes.Status404NotFound, "House not found");
-
-      if (house.Status == PropertyStatus.Sold)
-        throw new RestException(StatusCodes.Status400BadRequest, "House is already sold");
-
-      house.Status = PropertyStatus.Sold;
-      house.OwnerId = ownerId;
-      house.UpdatedAt = DateTime.Now;
-
-      await houseRepository.SaveAsync();
-
-      return new BaseResponse(204, "Bought successfully", null, []);
-    }
-
     public async Task<BaseResponse> GetPaginated(int pageNumber = 1, int pageSize = 1) {
       if (pageNumber <= 0 || pageSize <= 0) {
         throw new RestException(StatusCodes.Status400BadRequest, "Invalid parameters for paging");
       }
 
-      var houses = await houseRepository.GetPaginatedAsync(x => !x.IsDeleted, pageNumber, pageSize, "Images");
+      var houses = await houseRepository.GetPaginatedAsync(x => !x.IsDeleted, pageNumber, pageSize, "HouseImages");
       var paginated = PaginatedList<House>.Create(houses, pageNumber, pageSize);
       var data = new PaginatedList<UserHouseGetAllDto>(mapper.Map<List<UserHouseGetAllDto>>(paginated.Items), paginated.TotalPages, pageNumber, pageSize);
 
@@ -104,7 +86,7 @@ namespace Final_Business.Services.Implementations {
     }
 
     public async Task<BaseResponse> GetById(int id) {
-      var house = await houseRepository.GetAsync(x => x.Id == id && !x.IsDeleted, "Images", "Comments", "Bids", "Discounts");
+      var house = await houseRepository.GetAsync(x => x.Id == id && !x.IsDeleted, "HouseImages", "Comments", "Bids", "Discounts");
 
       return house == null
         ? throw new RestException(StatusCodes.Status404NotFound, "House not found")
@@ -119,7 +101,7 @@ namespace Final_Business.Services.Implementations {
     public async Task<BaseResponse> Update(int id, UserHouseUpdateDto updateDto) {
       var uploadedNewFiles = new List<string>();
 
-      var house = await houseRepository.GetAsync(x => x.Id == id && !x.IsDeleted, "Images")
+      var house = await houseRepository.GetAsync(x => x.Id == id && !x.IsDeleted, "HouseImages")
           ?? throw new RestException(StatusCodes.Status404NotFound, "House not found");
 
       using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
@@ -128,8 +110,8 @@ namespace Final_Business.Services.Implementations {
         mapper.Map(updateDto, house);
 
         var newImages = new List<HouseImage>();
-        var allImages = new List<HouseImage>(house.Images.Where(image => updateDto.IdsToDelete != null && !updateDto.IdsToDelete.Contains(image.Id)));
-        var deletedImages = house.Images.Where(image => updateDto.IdsToDelete != null && updateDto.IdsToDelete.Contains(image.Id)).ToList();
+        var allImages = new List<HouseImage>(house.HouseImages.Where(image => updateDto.IdsToDelete != null && !updateDto.IdsToDelete.Contains(image.Id)));
+        var deletedImages = house.HouseImages.Where(image => updateDto.IdsToDelete != null && updateDto.IdsToDelete.Contains(image.Id)).ToList();
 
         if (updateDto.Images != null && updateDto.Images.Count != 0) {
           foreach (var image in updateDto.Images) {
@@ -145,7 +127,7 @@ namespace Final_Business.Services.Implementations {
 
           allImages.AddRange(newImages);
 
-          house.Images = allImages;
+          house.HouseImages = allImages;
         }
         else {
           if (allImages.Count == 0)
@@ -153,7 +135,7 @@ namespace Final_Business.Services.Implementations {
           else
             allImages.First().IsMain = true;
 
-          house.Images = allImages;
+          house.HouseImages = allImages;
         }
 
         house.UpdatedAt = DateTime.Now;

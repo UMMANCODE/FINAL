@@ -6,7 +6,6 @@ namespace Final_Business.DTOs.User;
 
 public record UserHouseGetOneDto(
   int Id,
-  string OwnerId,
   bool IsFeatured,
   string Name,
   string Description,
@@ -18,7 +17,7 @@ public record UserHouseGetOneDto(
   byte Bedrooms,
   byte Bathrooms,
   int BuiltYear,
-  List<HouseImageGetDto> Images,
+  List<HouseImageGetDto> HouseImages,
   List<CommentGetDto> Comments,
   List<UserBidGetDto> Bids,
   List<DiscountGetDto> Discounts,
@@ -29,18 +28,17 @@ public record UserHouseGetOneDto(
 
 public record UserHouseGetAllDto(
   int Id,
-  string OwnerId,
   string Name,
   string Location,
   float HomeArea,
   byte Bedrooms,
   byte Bathrooms,
-  decimal Price
+  decimal Price,
+  List<HouseImageGetDto> HouseImages
 );
 
 public record UserHouseCreateDto(
   string Name,
-  string OwnerId,
   string Description,
   string Location,
   decimal Price,
@@ -59,7 +57,6 @@ public record UserHouseCreateDto(
 
 public record UserHouseUpdateDto(
   string Name,
-  string OwnerId,
   string Description,
   string Location,
   decimal Price,

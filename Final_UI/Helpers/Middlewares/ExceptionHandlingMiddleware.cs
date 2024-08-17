@@ -1,7 +1,5 @@
 ﻿using Final_UI.Helpers.Exceptions;
 using System.Net;
-using System.Text.Json;
-using Final_UI.Models.Responses;
 
 namespace Final_UI.Helpers.Middlewares;
 
@@ -21,51 +19,35 @@ public class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<Exception
   }
 
   private static async Task HandleHttpResponseExceptionAsync(HttpContext context, HttpResponseException ex) {
-    context.Response.ContentType = "application/json";
+    context.Response.ContentType = "text/html";
     context.Response.StatusCode = (int)ex.Response.StatusCode;
 
-    if (context.Response.StatusCode == (int)HttpStatusCode.Unauthorized) {
+    var statusCode = context.Response.StatusCode;
+
+    if (statusCode == (int)HttpStatusCode.Unauthorized) {
       var returnUrl = context.Request.Path.ToString();
       context.Response.Redirect($"/Account/Login?returnUrl={returnUrl}");
       return;
     }
 
-    ErrorResponse errorResponse;
-    try {
-      var options = new JsonSerializerOptions {
-        PropertyNameCaseInsensitive = true
-      };
-      var responseContent = await ex.Response.Content.ReadAsStringAsync();
-      errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options)!;
-      errorResponse!.StatusCode = context.Response.StatusCode;
-    }
-    catch (Exception deserializationEx) {
-      errorResponse = new ErrorResponse {
-        StatusCode = context.Response.StatusCode,
-        Message = ex.Response.ReasonPhrase ?? "An error occurred processing your request.",
-        Errors = [
-          new ErrorResponseItem { Key = "DeserializationError", Message = deserializationEx.Message }
-        ]
-      };
-    }
-
-    var result = JsonSerializer.Serialize(errorResponse);
-    await context.Response.WriteAsync(result);
-  }
-
-  private async Task HandleExceptionAsync(HttpContext context, Exception ex) {
-    context.Response.ContentType = "application/json";
-    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-
-    var errorResponse = new ErrorResponse {
-      StatusCode = context.Response.StatusCode,
-      Message = "An internal server error has occurred.",
-      Errors = [
-        new ErrorResponseItem { Key = "Exception", Message = ex.Message }
-      ]
+    var redirectUrl = statusCode switch {
+      (int)HttpStatusCode.Forbidden => "/Error/Forbidden",
+      (int)HttpStatusCode.NotFound => "/Error/NotFound",
+      (int)HttpStatusCode.BadRequest => "/Error/BadRequest",
+      _ => "/Error/InternalServerError"
     };
 
-    var result = JsonSerializer.Serialize(errorResponse);
-    await context.Response.WriteAsync(result);
+    context.Response.Redirect(redirectUrl);
+    await Task.CompletedTask;
+  }
+
+  private static async Task HandleExceptionAsync(HttpContext context, Exception ex) {
+    context.Response.ContentType = "text/html";
+    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+
+    const string redirectUrl = "/Error/InternalServerError";
+    context.Response.Redirect(redirectUrl);
+
+    await Task.CompletedTask;
   }
 }

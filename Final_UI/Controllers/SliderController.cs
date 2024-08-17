@@ -4,11 +4,13 @@ using Final_UI.Helpers.Filters;
 using Final_UI.Models.Requests;
 using Final_UI.Models.Responses;
 using Final_UI.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Final_UI.Controllers;
 
 [ServiceFilter(typeof(AuthFilter))]
+[ServiceFilter(typeof(AdminOrSuperAdminFilter))]
 public class SliderController(ICrudService crudService, IConfiguration configuration, IMapper mapper)  : Controller {
   private readonly string _apiUrl = configuration.GetSection("APIEndpoint").Value!;
 

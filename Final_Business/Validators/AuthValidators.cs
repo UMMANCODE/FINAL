@@ -40,3 +40,9 @@ public class UserVerifyEmailValidator : AbstractValidator<UserVerifyEmailDto> {
     RuleFor(x => x.Token).NotEmpty();
   }
 }
+
+public class UserSendVerifyEmailValidator : AbstractValidator<UserSendVerifyEmailDto> {
+  public UserSendVerifyEmailValidator() {
+    RuleFor(x => x.Email).NotEmpty().EmailAddress();
+  }
+}

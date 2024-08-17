@@ -1,13 +1,8 @@
 ﻿using Final_UI.Helpers.Attributes;
 using System.ComponentModel.DataAnnotations;
+using Final_UI.Helpers.Enums;
 
 namespace Final_UI.Models.Requests;
-
-public enum ImagePosition {
-  Left = 1,
-  Right = 2,
-  Center = 3
-}
 
 public class SliderCreateRequest {
   [Required] [MaxLength(50)]

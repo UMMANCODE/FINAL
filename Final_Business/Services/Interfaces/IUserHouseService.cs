@@ -9,5 +9,4 @@ public interface IUserHouseService {
   public Task<BaseResponse> GetById(int id);
   public Task<BaseResponse> Update(int id, UserHouseUpdateDto updateDto);
   public Task<BaseResponse> Delete(int id);
-  public Task<BaseResponse> Buy(int id, string ownerId);
 }

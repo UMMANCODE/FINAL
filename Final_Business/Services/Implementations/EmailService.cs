@@ -37,7 +37,7 @@ public class EmailService(IConfiguration configuration, AppDbContext context, Us
 
     // Query houses with discounts expiring within the next 7 days
     var houses = context.Houses
-      .Include(h => h.Images).Include(house => house.Discounts)
+      .Include(h => h.HouseImages).Include(house => house.Discounts)
       .Where(h => h.Discounts.Any(d => d.ExpiryDate >= DateTime.Now && d.ExpiryDate <= expirationThreshold))
       .ToList();
 

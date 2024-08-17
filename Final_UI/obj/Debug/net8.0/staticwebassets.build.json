@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ES7/Eoms+vY9Irhap3AP3CCjstBV39T/6Aia9/fdoCk=",
+  "Hash": "+JYcWllZ9XNl3+anbiDQAMoQSchrKyi9siT27j4jNIo=",
   "Source": "Final_UI",
   "BasePath": "_content/Final_UI",
   "Mode": "Default",
@@ -3967,6 +3967,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\js\\custom\\alert.js"
+    },
+    {
+      "Identity": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_UI\\wwwroot\\assets\\js\\custom\\mytoast.js",
+      "SourceId": "Final_UI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_UI\\wwwroot\\",
+      "BasePath": "_content/Final_UI",
+      "RelativePath": "assets/js/custom/mytoast.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\js\\custom\\mytoast.js"
     },
     {
       "Identity": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_UI\\wwwroot\\assets\\js\\custom\\preview.js",

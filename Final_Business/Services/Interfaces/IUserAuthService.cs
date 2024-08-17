@@ -1,6 +1,5 @@
 ﻿using Final_Business.DTOs.User;
 using Final_Business.Helpers;
-using Final_Core.Entities;
 
 namespace Final_Business.Services.Interfaces;
 public interface IUserAuthService {
@@ -9,5 +8,6 @@ public interface IUserAuthService {
   Task<BaseResponse> ForgetPassword(UserForgetPasswordDto forgetPasswordDto);
   Task<BaseResponse> ResetPassword(UserResetPasswordDto resetPasswordDto);
   Task<BaseResponse> VerifyEmail(UserVerifyEmailDto verifyEmailDto);
+  Task<BaseResponse> SendVerifyEmail(UserSendVerifyEmailDto sendVerifyEmailDto);
   Task<BaseResponse> GetUsers();
 }

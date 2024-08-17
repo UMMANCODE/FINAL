@@ -3,6 +3,7 @@ using Final_Business.Exceptions;
 using Final_Business.Helpers;
 using Final_Business.Services.Interfaces;
 using Final_Core.Entities;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -12,19 +13,34 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
+using System.Transactions;
+using AutoMapper;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Final_Business.Services.Implementations;
-public class UserAuthService(UserManager<AppUser> userManager, IConfiguration configuration, IEmailService emailService) : IUserAuthService {
+public class UserAuthService(UserManager<AppUser> userManager, IConfiguration configuration, IEmailService emailService, IWebHostEnvironment env, IMapper mapper)
+  : IUserAuthService {
   public async Task<BaseResponse> Login(UserLoginDto loginDto) {
-    var user = await userManager.FindByNameAsync(loginDto.UserName!);
+    var user = loginDto.ExternalLogin ? await userManager.FindByEmailAsync(loginDto.UserName) : await userManager.FindByNameAsync(loginDto.UserName);
 
-    if (user == null || !await userManager.CheckPasswordAsync(user, loginDto.Password!))
-      throw new RestException(StatusCodes.Status401Unauthorized, "UserName or Password incorrect!");
+    if (!loginDto.ExternalLogin) {
+
+      if (user == null || !await userManager.CheckPasswordAsync(user, loginDto.Password!))
+        throw new RestException(StatusCodes.Status401Unauthorized, "UserName or Password incorrect!");
+
+      if (!await userManager.IsEmailConfirmedAsync(user))
+        throw new RestException(StatusCodes.Status401Unauthorized, $"Email not verified!{user.Email}");
+    }
+    else {
+      user!.EmailConfirmed = true;
+      await userManager.UpdateAsync(user);
+    }
 
     List<Claim> claims = [
-      new Claim(ClaimTypes.NameIdentifier, user.Id),
+      new Claim(ClaimTypes.NameIdentifier, user!.Id),
       new Claim(ClaimTypes.Name, user.UserName!),
-      new Claim("FullName", user.FullName!)
+      new Claim("FullName", user.FullName!),
+      new Claim("ExternalLogin", loginDto.ExternalLogin ? "true" : "false")
     ];
 
     var roles = await userManager.GetRolesAsync(user);
@@ -36,12 +52,14 @@ public class UserAuthService(UserManager<AppUser> userManager, IConfiguration co
     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
     var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
 
+    var expires = loginDto.RememberMe ? DateTime.Now.AddDays(7) : DateTime.Now.AddDays(1);
+
     JwtSecurityToken securityToken = new(
       issuer: configuration.GetSection("JWT:Issuer").Value,
       audience: configuration.GetSection("JWT:Audience").Value,
       claims: claims,
       signingCredentials: credentials,
-      expires: DateTime.Now.AddDays(3)
+      expires: expires
     );
 
     var token = new JwtSecurityTokenHandler().WriteToken(securityToken);
@@ -50,25 +68,42 @@ public class UserAuthService(UserManager<AppUser> userManager, IConfiguration co
   }
 
   public async Task<BaseResponse> Register(UserRegisterDto registerDto) {
-    var user = new AppUser {
-      UserName = registerDto.UserName,
-      FullName = registerDto.FullName,
-      Email = registerDto.Email
-    };
+    string? uploadedFilePath = null;
+    using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+    try
+    {
+      var user = mapper.Map<AppUser>(registerDto);
 
-    var result = await userManager.CreateAsync(user, registerDto.Password);
+      if (registerDto.Avatar != null)
+        uploadedFilePath = FileManager.Save(registerDto.Avatar, env.WebRootPath, "images/users");
 
-    if (!result.Succeeded) {
-      var errors = string.Join(", ", result.Errors.Select(x => x.Description));
-      throw new RestException(StatusCodes.Status400BadRequest, errors);
+      user.AvatarLink = uploadedFilePath;
+
+      var result = await userManager.CreateAsync(user, registerDto.Password);
+
+      if (!result.Succeeded) {
+        var errors = string.Join(", ", result.Errors.Select(x => x.Description));
+        throw new RestException(StatusCodes.Status400BadRequest, errors);
+      }
+
+      await userManager.AddToRoleAsync(user, "Admin");
+      var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+      // Send url to user email
+      var url = new Uri($"{configuration.GetSection("Client:URL").Value}Account/VerifyEmail?email={user.Email}&token={WebUtility.UrlEncode(token)}");
+      emailService.Send(user.Email!, "Email Verification", EmailTemplates.GetVerifyEmailTemplate(url.ToString()));
+
+      scope.Complete();
+
+      return new BaseResponse(201, "User registered successfully!", new { user.Id }, []);
     }
+    catch {
 
-    await userManager.AddToRoleAsync(user, "Member");
-    var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
-    // Send url to user email
-    var url = new Uri($"{configuration.GetSection("JWT:Audience").Value}api/Auth/verify-email?email={user.Email}&token={WebUtility.UrlEncode(token)}");
-    emailService.Send(user.Email, "Email Verification", EmailTemplates.GetVerifyEmailTemplate(url.ToString()));
-    return new BaseResponse(201, "User registered successfully!", user.Id, []);
+      if (!string.IsNullOrEmpty(uploadedFilePath)) {
+        FileManager.Delete(env.WebRootPath, "images/users", uploadedFilePath);
+      }
+
+      throw;
+    }
   }
 
   public async Task<BaseResponse> ForgetPassword(UserForgetPasswordDto forgetPasswordDto) {
@@ -78,7 +113,7 @@ public class UserAuthService(UserManager<AppUser> userManager, IConfiguration co
                ?? throw new RestException(StatusCodes.Status404NotFound, "User not found!");
     var token = await userManager.GeneratePasswordResetTokenAsync(user);
     // Send url to user email
-    var url = new Uri($"{configuration.GetSection("JWT:Audience").Value}api/Auth/reset-password?email={user.Email}&token={WebUtility.UrlEncode(token)}");
+    var url = new Uri($"{configuration.GetSection("Client:URL").Value}Account/ResetPassword?email={user.Email}&token={WebUtility.UrlEncode(token)}");
     emailService.Send(user.Email!, "Password Reset", EmailTemplates.GetForgetPasswordTemplate(url.ToString()));
 
     return new BaseResponse(200, "Password reset link sent to your email!", token, []);
@@ -91,6 +126,18 @@ public class UserAuthService(UserManager<AppUser> userManager, IConfiguration co
     if (result.Succeeded) return new BaseResponse(200, "Password reset successfully!", null, []);
     var errors = string.Join(", ", result.Errors.Select(x => x.Description));
     throw new RestException(StatusCodes.Status400BadRequest, errors);
+  }
+
+  public async Task<BaseResponse> SendVerifyEmail(UserSendVerifyEmailDto sendVerifyEmailDto) {
+    var user = await userManager.FindByEmailAsync(sendVerifyEmailDto.Email)
+               ?? throw new RestException(StatusCodes.Status404NotFound, "User not found!");
+
+    var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+    // Send url to user email
+    var url = new Uri($"{configuration.GetSection("Client:URL").Value}Account/VerifyEmail?email={user.Email}&token={WebUtility.UrlEncode(token)}");
+    emailService.Send(user.Email!, "Email Verification", EmailTemplates.GetVerifyEmailTemplate(url.ToString()));
+
+    return new BaseResponse(200, "Verification email sent successfully!", token, []);
   }
 
   public async Task<BaseResponse> VerifyEmail(UserVerifyEmailDto verifyEmailDto) {
@@ -110,6 +157,7 @@ public class UserAuthService(UserManager<AppUser> userManager, IConfiguration co
       x.FullName,
       x.Email,
       x.AvatarLink,
+      x.Nationality,
       Roles = userManager.GetRolesAsync(x).Result.ToList()
     }).ToList();
     return new BaseResponse(200, "Users fetched successfully!", usersDto, []);

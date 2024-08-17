@@ -22,7 +22,7 @@ public class CrudService(IHttpContextAccessor contextAccessor) : ICrudService {
   public async Task<TResponse?> CreateAsync<TRequest, TResponse>(TRequest data, string url) {
     AddAuthorizationHeader();
     var content = CreateMultipartContent(data);
-    var response = await _client.PostAsync(url, content);
+    using var response = await _client.PostAsync(url, content);
     if (!response.IsSuccessStatusCode) throw new HttpResponseException(response);
 
     var bodyStr = await response.Content.ReadAsStringAsync();
@@ -37,7 +37,7 @@ public class CrudService(IHttpContextAccessor contextAccessor) : ICrudService {
 
   public async Task<TResponse?> DeleteAsync<TResponse>(string url) {
     AddAuthorizationHeader();
-    var response = await _client.DeleteAsync(url);
+    using var response = await _client.DeleteAsync(url);
     if (!response.IsSuccessStatusCode) throw new HttpResponseException(response);
 
     var bodyStr = await response.Content.ReadAsStringAsync();
@@ -53,7 +53,7 @@ public class CrudService(IHttpContextAccessor contextAccessor) : ICrudService {
 
   public async Task<TResponse?> GetAsync<TResponse>(string url) {
     AddAuthorizationHeader();
-    var response = await _client.GetAsync(url);
+    using var response = await _client.GetAsync(url);
     if (!response.IsSuccessStatusCode) throw new HttpResponseException(response);
     var bodyStr = await response.Content.ReadAsStringAsync();
 
@@ -69,7 +69,7 @@ public class CrudService(IHttpContextAccessor contextAccessor) : ICrudService {
     var queryParams = string.Join("&", parameters.Select(p => $"{p.Key}={p.Value}"));
     var url = $"{baseUrl}?pageNumber={page}&{queryParams}";
 
-    var response = await _client.GetAsync(url);
+    using var response = await _client.GetAsync(url);
     if (!response.IsSuccessStatusCode) throw new HttpResponseException(response);
     var bodyStr = await response.Content.ReadAsStringAsync();
 
@@ -88,7 +88,7 @@ public class CrudService(IHttpContextAccessor contextAccessor) : ICrudService {
   public async Task<TResponse?> UpdateAsync<TRequest, TResponse>(TRequest data, string url) {
     AddAuthorizationHeader();
     var content = CreateMultipartContent(data);
-    var response = await _client.PutAsync(url, content);
+    using var response = await _client.PutAsync(url, content);
     if (!response.IsSuccessStatusCode) throw new HttpResponseException(response);
 
     var bodyStr = await response.Content.ReadAsStringAsync();

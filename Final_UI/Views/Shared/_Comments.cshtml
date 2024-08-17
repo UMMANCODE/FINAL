@@ -1,0 +1,54 @@
+﻿@model List<CommentResponse>
+
+@{
+  string GetStyle(CommentStatus status) {
+    return status switch {
+      CommentStatus.Approved => "badge badge-outline-success",
+      CommentStatus.Pending => "badge badge-outline-warning",
+      CommentStatus.Rejected => "badge badge-outline-danger",
+      _ => "badge badge-outline-primary"
+    };
+  }
+}
+
+<div class="row">
+  <div class="col-12 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Comments</h4>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th> User </th>
+                <th> UserName </th>
+                <th> HouseId </th>
+                <th> Content </th>
+                <th> CreatedAt </th>
+                <th> Status </th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach (var comment in Model) {
+                <tr>
+                  <td class="py-1">
+                    <img src="@comment.AppUserAvatarLink" alt="image" />
+                  </td>
+                  <td> @comment.AppUserUserName </td>
+                  <td>
+                    @comment.HouseId
+                  </td>
+                  <td> @comment.Content </td>
+                  <td> @comment.CreatedAt.Date.ToShortDateString() </td>
+                  <td>
+                    <div class="badge @GetStyle(comment.Status)">@comment.Status.ToString()</div>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

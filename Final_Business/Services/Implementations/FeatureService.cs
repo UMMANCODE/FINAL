@@ -10,119 +10,119 @@ using Microsoft.AspNetCore.Http;
 using System.Transactions;
 using Final_Business.DTOs.General;
 
-namespace Final_Business.Services.Implementations {
-  public class FeatureService(IFeatureRepository featureRepository, IMapper mapper, IWebHostEnvironment env)
-    : IFeatureService {
-    public async Task<BaseResponse> Create(FeatureCreateDto createDto) {
-      string? uploadedFilePath = null;
+namespace Final_Business.Services.Implementations;
 
-      using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-      try {
+public class FeatureService(IFeatureRepository featureRepository, IMapper mapper, IWebHostEnvironment env)
+  : IFeatureService {
+  public async Task<BaseResponse> Create(FeatureCreateDto createDto) {
+    string? uploadedFilePath = null;
 
-        var feature = mapper.Map<Feature>(createDto);
+    using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+    try {
 
-        uploadedFilePath = FileManager.Save(createDto.Icon, env.WebRootPath, "images/features");
-        feature.IconLink = uploadedFilePath;
+      var feature = mapper.Map<Feature>(createDto);
 
-        await featureRepository.AddAsync(feature);
+      uploadedFilePath = FileManager.Save(createDto.Icon, env.WebRootPath, "images/features");
+      feature.IconLink = uploadedFilePath;
 
-        await featureRepository.SaveAsync();
-
-        scope.Complete();
-
-        return new BaseResponse(201, "Created successfully", mapper.Map<FeatureGetOneDto>(feature), []);
-      }
-      catch {
-
-        if (!string.IsNullOrEmpty(uploadedFilePath)) {
-          FileManager.Delete(env.WebRootPath, "images/features", uploadedFilePath);
-        }
-
-        throw;
-      }
-    }
-
-    public async Task<BaseResponse> Delete(int id) {
-      var feature = await featureRepository.GetAsync(x => x.Id == id && !x.IsDeleted)
-        ?? throw new RestException(StatusCodes.Status404NotFound, "Feature not found");
-
-      feature.IsDeleted = true;
-      feature.UpdatedAt = DateTime.Now;
+      await featureRepository.AddAsync(feature);
 
       await featureRepository.SaveAsync();
 
-      return new BaseResponse(204, "Deleted successfully", null, []);
-    }
+      scope.Complete();
 
-    public async Task<BaseResponse> GetPaginated(int pageNumber = 1, int pageSize = 1) {
-      if (pageNumber <= 0 || pageSize <= 0) {
-        throw new RestException(StatusCodes.Status400BadRequest, "Invalid parameters for paging");
+      return new BaseResponse(201, "Created successfully", mapper.Map<FeatureGetOneDto>(feature), []);
+    }
+    catch {
+
+      if (!string.IsNullOrEmpty(uploadedFilePath)) {
+        FileManager.Delete(env.WebRootPath, "images/features", uploadedFilePath);
       }
 
-      var features = await featureRepository.GetPaginatedAsync(x => !x.IsDeleted, pageNumber, pageSize);
-      var paginated = PaginatedList<Feature>.Create(features, pageNumber, pageSize);
-      var data =  new PaginatedList<FeatureGetAllDto>(mapper.Map<List<FeatureGetAllDto>>(paginated.Items), paginated.TotalPages, pageNumber, pageSize);
+      throw;
+    }
+  }
 
-      return new BaseResponse(200, "Success", data, []);
+  public async Task<BaseResponse> Delete(int id) {
+    var feature = await featureRepository.GetAsync(x => x.Id == id && !x.IsDeleted)
+                  ?? throw new RestException(StatusCodes.Status404NotFound, "Feature not found");
+
+    feature.IsDeleted = true;
+    feature.UpdatedAt = DateTime.Now;
+
+    await featureRepository.SaveAsync();
+
+    return new BaseResponse(204, "Deleted successfully", null, []);
+  }
+
+  public async Task<BaseResponse> GetPaginated(int pageNumber = 1, int pageSize = 1) {
+    if (pageNumber <= 0 || pageSize <= 0) {
+      throw new RestException(StatusCodes.Status400BadRequest, "Invalid parameters for paging");
     }
 
-    public async Task<BaseResponse> GetById(int id) {
-      var feature = await featureRepository.GetAsync(x => x.Id == id && !x.IsDeleted);
+    var features = await featureRepository.GetPaginatedAsync(x => !x.IsDeleted, pageNumber, pageSize);
+    var paginated = PaginatedList<Feature>.Create(features, pageNumber, pageSize);
+    var data =  new PaginatedList<FeatureGetAllDto>(mapper.Map<List<FeatureGetAllDto>>(paginated.Items), paginated.TotalPages, pageNumber, pageSize);
 
-      return feature == null
-        ? throw new RestException(StatusCodes.Status404NotFound, "Feature not found")
-        : new BaseResponse(200, "Success", mapper.Map<FeatureGetOneDto>(feature), []);
-    }
+    return new BaseResponse(200, "Success", data, []);
+  }
 
-    public async Task<BaseResponse> GetAll() {
-      var features = await featureRepository.GetAllAsync(x => !x.IsDeleted);
+  public async Task<BaseResponse> GetById(int id) {
+    var feature = await featureRepository.GetAsync(x => x.Id == id && !x.IsDeleted);
 
-      return new BaseResponse(200, "Success", mapper.Map<List<FeatureGetAllDto>>(features), []);
-    }
+    return feature == null
+      ? throw new RestException(StatusCodes.Status404NotFound, "Feature not found")
+      : new BaseResponse(200, "Success", mapper.Map<FeatureGetOneDto>(feature), []);
+  }
 
-    public async Task<BaseResponse> Update(int id, FeatureUpdateDto updateDto) {
-      string? newUploadedFilePath = null;
+  public async Task<BaseResponse> GetAll() {
+    var features = await featureRepository.GetAllAsync(x => !x.IsDeleted);
 
-      var feature = await featureRepository.GetAsync(x => x.Id == id && !x.IsDeleted)
-        ?? throw new RestException(StatusCodes.Status404NotFound, "Feature not found");
+    return new BaseResponse(200, "Success", mapper.Map<List<FeatureGetAllDto>>(features), []);
+  }
 
-      using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-      try {
+  public async Task<BaseResponse> Update(int id, FeatureUpdateDto updateDto) {
+    string? newUploadedFilePath = null;
 
-        mapper.Map(updateDto, feature);
+    var feature = await featureRepository.GetAsync(x => x.Id == id && !x.IsDeleted)
+                  ?? throw new RestException(StatusCodes.Status404NotFound, "Feature not found");
 
-        if (updateDto.Icon != null) {
-          newUploadedFilePath = FileManager.Save(updateDto.Icon, env.WebRootPath, "images/features");
+    using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+    try {
 
-          var oldIconPath = feature.IconLink;
-          feature.IconLink = newUploadedFilePath;
-          feature.UpdatedAt = DateTime.Now;
+      mapper.Map(updateDto, feature);
 
-          await featureRepository.SaveAsync();
+      if (updateDto.Icon != null) {
+        newUploadedFilePath = FileManager.Save(updateDto.Icon, env.WebRootPath, "images/features");
 
-          if (!string.IsNullOrEmpty(oldIconPath)) {
-            FileManager.Delete(env.WebRootPath, "images/features", oldIconPath);
-          }
+        var oldIconPath = feature.IconLink;
+        feature.IconLink = newUploadedFilePath;
+        feature.UpdatedAt = DateTime.Now;
+
+        await featureRepository.SaveAsync();
+
+        if (!string.IsNullOrEmpty(oldIconPath)) {
+          FileManager.Delete(env.WebRootPath, "images/features", oldIconPath);
         }
-        else {
-          feature.UpdatedAt = DateTime.Now;
-          feature.IconLink = FileManager.DefaultImage;
-
-          await featureRepository.SaveAsync();
-        }
-
-        scope.Complete();
-
-        return new BaseResponse(204, "Updated successfully", null, []);
       }
-      catch {
+      else {
+        feature.UpdatedAt = DateTime.Now;
+        feature.IconLink = FileManager.DefaultImage;
 
-        if (!string.IsNullOrEmpty(newUploadedFilePath)) {
-          FileManager.Delete(env.WebRootPath, "images/features", newUploadedFilePath);
-        }
-
-        throw;
+        await featureRepository.SaveAsync();
       }
+
+      scope.Complete();
+
+      return new BaseResponse(204, "Updated successfully", null, []);
+    }
+    catch {
+
+      if (!string.IsNullOrEmpty(newUploadedFilePath)) {
+        FileManager.Delete(env.WebRootPath, "images/features", newUploadedFilePath);
+      }
+
+      throw;
     }
   }
 }

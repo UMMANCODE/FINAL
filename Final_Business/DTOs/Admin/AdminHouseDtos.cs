@@ -7,7 +7,6 @@ namespace Final_Business.DTOs.Admin;
 
 public record AdminHouseGetOneDto(
   int Id,
-  string OwnerId,
   bool IsFeatured,
   string Name,
   string Description,
@@ -19,7 +18,7 @@ public record AdminHouseGetOneDto(
   byte Bedrooms,
   byte Bathrooms,
   int BuiltYear,
-  List<HouseImageGetDto> Images,
+  List<HouseImageGetDto> HouseImages,
   List<CommentGetDto> Comments,
   List<UserBidGetDto> Bids,
   List<DiscountGetDto> Discounts,
@@ -30,14 +29,14 @@ public record AdminHouseGetOneDto(
 
 public record AdminHouseGetAllDto(
   int Id,
-  string OwnerId,
+  string Location,
   string Name,
-  decimal Price
+  decimal Price,
+  List<HouseImageGetDto> HouseImages
 );
 
 public record AdminHouseCreateDto(
   string Name,
-  string OwnerId,
   string Description,
   string Location,
   decimal Price,
@@ -56,7 +55,6 @@ public record AdminHouseCreateDto(
 
 public record AdminHouseUpdateDto(
   string Name,
-  string OwnerId,
   string Description,
   string Location,
   decimal Price,
@@ -70,6 +68,6 @@ public record AdminHouseUpdateDto(
   PropertyType Type,
   PropertyState State,
   List<IFormFile>? Images,
-  List<int> IdsToDelete,
+  List<int>? IdsToDelete,
   bool IsAdmin = true
 );

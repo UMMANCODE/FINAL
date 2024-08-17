@@ -1,6 +1,6 @@
 ﻿namespace Final_Core.Enums;
 public enum PropertyStatus {
-  ForSale,
+  ForSale = 1,
   ForAuction,
   Sold
 }

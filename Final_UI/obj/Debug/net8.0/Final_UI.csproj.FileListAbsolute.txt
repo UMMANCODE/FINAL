@@ -32,3 +32,8 @@ C:\Users\user\Desktop\Code Academy\FInal App\Final_UI\obj\Debug\net8.0\refint\Fi
 C:\Users\user\Desktop\Code Academy\FInal App\Final_UI\obj\Debug\net8.0\Final_UI.pdb
 C:\Users\user\Desktop\Code Academy\FInal App\Final_UI\obj\Debug\net8.0\Final_UI.genruntimeconfig.cache
 C:\Users\user\Desktop\Code Academy\FInal App\Final_UI\obj\Debug\net8.0\ref\Final_UI.dll
+C:\Users\user\Desktop\Code Academy\FInal App\Final_UI\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\user\Desktop\Code Academy\FInal App\Final_UI\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\user\Desktop\Code Academy\FInal App\Final_UI\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\user\Desktop\Code Academy\FInal App\Final_UI\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\user\Desktop\Code Academy\FInal App\Final_UI\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll

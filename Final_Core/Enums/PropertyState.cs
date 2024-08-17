@@ -1,6 +1,6 @@
 ﻿namespace Final_Core.Enums;
 public enum PropertyState {
-  Alaska,
+  Alaska = 1,
   Texas,
   California,
   Montana,

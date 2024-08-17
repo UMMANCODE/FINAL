@@ -1,5 +1,7 @@
-﻿using Final_Business.DTOs.General;
+﻿using Final_API.Filters;
+using Final_Business.DTOs.General;
 using Final_Business.Services.Interfaces;
+using Final_Core.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +13,7 @@ public class CommentsController(ICommentService commentService) : ControllerBase
   // Admin routes
   [Authorize(Roles = "Admin")]
   [HttpGet("admin")]
+  // [TypeFilter(typeof(RedisCacheFilter))]
   public async Task<IActionResult> AdminGetPaginated(int pageNumber = 1, int pageSize = 1) {
     var response = await commentService.GetPaginated(pageNumber, pageSize);
     return StatusCode(response.StatusCode, response);
@@ -18,6 +21,7 @@ public class CommentsController(ICommentService commentService) : ControllerBase
 
   [Authorize(Roles = "Admin")]
   [HttpGet("admin/all")]
+  // [TypeFilter(typeof(RedisCacheFilter))]
   public async Task<IActionResult> AdminGetAll() {
     var response = await commentService.GetAll();
     return StatusCode(response.StatusCode, response);
@@ -25,25 +29,36 @@ public class CommentsController(ICommentService commentService) : ControllerBase
 
   [Authorize(Roles = "Admin")]
   [HttpGet("admin/{id:int}")]
+  // [TypeFilter(typeof(RedisCacheFilter))]
   public async Task<IActionResult> AdminGetById(int id) {
     var response = await commentService.GetById(id);
     return StatusCode(response.StatusCode, response);
   }
 
+  [Authorize(Roles = "Admin")]
+  [HttpPut("admin/{id:int}/status")]
+  public async Task<IActionResult> AdminUpdateStatus(int id, CommentStatus status) {
+    var response = await commentService.UpdateStatus(id, status);
+    return StatusCode(response.StatusCode, response);
+  }
+
   // Client routes
   [HttpGet("user")]
+  // [TypeFilter(typeof(RedisCacheFilter))]
   public async Task<IActionResult> UserGetPaginated(int pageNumber = 1, int pageSize = 1) {
     var response = await commentService.GetPaginated(pageNumber, pageSize);
     return StatusCode(response.StatusCode, response);
   }
 
   [HttpGet("user/all")]
+  // [TypeFilter(typeof(RedisCacheFilter))]
   public async Task<IActionResult> UserGetAll() {
     var response = await commentService.GetAll();
     return StatusCode(response.StatusCode, response);
   }
 
   [HttpGet("user/{id:int}")]
+  // [TypeFilter(typeof(RedisCacheFilter))]
   public async Task<IActionResult> UserGetById(int id) {
     var response = await commentService.GetById(id);
     return StatusCode(response.StatusCode, response);

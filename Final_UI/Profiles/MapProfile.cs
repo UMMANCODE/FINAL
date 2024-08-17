@@ -12,5 +12,8 @@ public class MapProfile : Profile {
 
     CreateMap<SliderUpdateRequest, SliderResponse>().ReverseMap();
     CreateMap<SliderCreateRequest, SliderResponse>().ReverseMap();
+
+    CreateMap<HouseUpdateRequest, HouseResponse>().ReverseMap();
+    CreateMap<HouseCreateRequest, HouseResponse>().ReverseMap();
   }
 }

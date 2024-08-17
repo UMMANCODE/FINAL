@@ -16,19 +16,19 @@ public class MapProfile : Profile {
     var baseUrl = uriBuilder.Uri.AbsoluteUri;
 
     CreateMap<House, AdminHouseUpdateDto>().ReverseMap()
-      .ForMember(dest => dest.Images, opt => opt.Ignore());
+      .ForMember(dest => dest.HouseImages, opt => opt.Ignore());
 
     CreateMap<House, AdminHouseCreateDto>().ReverseMap()
-      .ForMember(dest => dest.Images, opt => opt.Ignore());
+      .ForMember(dest => dest.HouseImages, opt => opt.Ignore());
 
     CreateMap<House, AdminHouseGetAllDto>().ReverseMap();
     CreateMap<House, AdminHouseGetOneDto>().ReverseMap();
 
     CreateMap<House, UserHouseUpdateDto>().ReverseMap()
-      .ForMember(dest => dest.Images, opt => opt.Ignore());
+      .ForMember(dest => dest.HouseImages, opt => opt.Ignore());
 
     CreateMap<House, UserHouseCreateDto>().ReverseMap()
-      .ForMember(dest => dest.Images, opt => opt.Ignore());
+      .ForMember(dest => dest.HouseImages, opt => opt.Ignore());
 
     CreateMap<House, UserHouseGetAllDto>().ReverseMap();
     CreateMap<House, UserHouseGetOneDto>().ReverseMap();
@@ -43,8 +43,17 @@ public class MapProfile : Profile {
     CreateMap<Feature, FeatureGetAllDto>().ReverseMap();
     CreateMap<Feature, FeatureGetOneDto>().ReverseMap();
 
-    CreateMap<Comment, CommentGetDto>().ReverseMap();
+    CreateMap<Comment, CommentGetDto>()
+      .ForMember(dest => dest.AppUserAvatarLink, opt => opt.MapFrom(src => src.AppUser.AvatarLink))
+      .ForMember(dest => dest.AppUserUserName, opt => opt.MapFrom(src => src.AppUser.UserName))
+      .ReverseMap();
     CreateMap<Comment, CommentCreateDto>().ReverseMap();
+
+    CreateMap<Order, OrderGetDto>()
+      .ForMember(dest => dest.AppUserAvatarLink, opt => opt.MapFrom(src => src.AppUser.AvatarLink))
+      .ForMember(dest => dest.AppUserUserName, opt => opt.MapFrom(src => src.AppUser.UserName))
+      .ReverseMap();
+    CreateMap<Order, OrderCreateDto>().ReverseMap();
 
     CreateMap<Bid, UserBidGetDto>().ReverseMap();
     CreateMap<Bid, UserBidCreateDto>().ReverseMap();
@@ -53,6 +62,8 @@ public class MapProfile : Profile {
     CreateMap<Discount, DiscountCreateDto>().ReverseMap();
 
     CreateMap<HouseImage, HouseImageGetDto>().ReverseMap();
+
+    CreateMap<AppUser, UserRegisterDto>().ReverseMap();
 
     CreateMap<HouseImage, HouseImageGetDto>()
       .ForCtorParam("ImageLink", opt => opt.MapFrom(src => baseUrl + "images/houses/" + src.ImageLink));

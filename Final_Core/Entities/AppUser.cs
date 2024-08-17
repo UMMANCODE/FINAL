@@ -8,4 +8,6 @@ public class AppUser : IdentityUser {
   public List<House> Houses { get; set; } = [];
   public List<Bid> Bids { get; set; } = [];
   public string? AvatarLink { get; set; }
+  public List<Order> Orders { get; set; } = [];
+  public string? Nationality { get; set; }
 }

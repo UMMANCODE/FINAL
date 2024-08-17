@@ -12,15 +12,14 @@ public class House : AuditEntity {
   public byte Bedrooms { get; set; }
   public byte Bathrooms { get; set; }
   public int BuiltYear { get; set; }
-  public List<HouseImage> Images { get; set; } = [];
+  public List<HouseImage> HouseImages { get; set; } = [];
   public List<Comment> Comments { get; set; } = [];
   public List<Bid> Bids { get; set; } = [];
   public List<Discount> Discounts { get; set; } = [];
+  public List<Order> Orders { get; set; } = [];
   public PropertyStatus Status { get; set; }
   public PropertyType Type { get; set; }
   public PropertyState State { get; set; }
   public bool IsFeatured { get; set; }
   public bool IsAdmin { get; set; }
-  public string? OwnerId { get; set; }
-  public AppUser? Owner { get; set; }
 }
