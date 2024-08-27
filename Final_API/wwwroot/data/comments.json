@@ -1,0 +1,86 @@
+[
+  {
+    "HouseId": 2,
+    "AppUserId": "779ce4cd-aaf9-4baf-9d66-edb5fcbfef52",
+    "Content": "The location is perfect for a family.",
+    "CreatedAt": "2023-11-20T14:45:00Z"
+  },
+  {
+    "HouseId": 3,
+    "AppUserId": "0ce2e722-336c-4e2c-9b41-cf96bfc40aad",
+    "Content": "Nice house but a bit pricey.",
+    "CreatedAt": "2023-10-25T09:15:00Z"
+  },
+  {
+    "HouseId": 4,
+    "AppUserId": "201c5c52-a6fe-4cdd-937e-b93dcc734c3b",
+    "Content": "Lovely design and spacious rooms.",
+    "CreatedAt": "2023-09-30T16:00:00Z"
+  },
+  {
+    "HouseId": 5,
+    "AppUserId": "2230a853-fd28-4347-8b9c-2ad4626d7321",
+    "Content": "The backyard is perfect for kids.",
+    "CreatedAt": "2023-08-15T11:20:00Z"
+  },
+  {
+    "HouseId": 6,
+    "AppUserId": "1759f4f2-cfd5-4059-9a84-b3f73c6d2fd0",
+    "Content": "Modern and well-maintained house.",
+    "CreatedAt": "2023-07-10T13:35:00Z"
+  },
+  {
+    "HouseId": 7,
+    "AppUserId": "9b94baa0-441b-4d9f-b34d-df92f44ecf6d",
+    "Content": "Would consider this if the price is reduced.",
+    "CreatedAt": "2023-06-25T12:50:00Z"
+  },
+  {
+    "HouseId": 8,
+    "AppUserId": "6e7b5a47-cf4d-436a-a6a5-f0f67de66ca0",
+    "Content": "Great neighborhood and amenities.",
+    "CreatedAt": "2023-05-30T15:05:00Z"
+  },
+  {
+    "HouseId": 9,
+    "AppUserId": "0de36659-adaa-4257-9b07-f1e6d0875186",
+    "Content": "Need more information about the house.",
+    "CreatedAt": "2023-04-20T10:00:00Z"
+  },
+  {
+    "HouseId": 10,
+    "AppUserId": "f64d8b52-6bc8-4bcf-92be-d0fa2ac38c56",
+    "Content": "Charming house with unique features.",
+    "CreatedAt": "2023-03-15T17:25:00Z"
+  },
+  {
+    "HouseId": 11,
+    "AppUserId": "45cf46bb-050a-4326-9ea8-250b9fa33a62",
+    "Content": "The layout is very functional.",
+    "CreatedAt": "2023-02-10T09:40:00Z"
+  },
+  {
+    "HouseId": 12,
+    "AppUserId": "97417fd4-be1c-4161-8192-e68c77063cda",
+    "Content": "Great value for the price.",
+    "CreatedAt": "2023-01-05T14:55:00Z"
+  },
+  {
+    "HouseId": 13,
+    "AppUserId": "2db58494-8992-4314-a848-1f435794b544",
+    "Content": "Nice house but could use some renovations.",
+    "CreatedAt": "2022-12-25T12:10:00Z"
+  },
+  {
+    "HouseId": 14,
+    "AppUserId": "d082925a-16d8-406f-a73d-9d43b9caf234",
+    "Content": "Perfect for a growing family.",
+    "CreatedAt": "2022-11-20T16:30:00Z"
+  },
+  {
+    "HouseId": 15,
+    "AppUserId": "ffdd3aa9-6e4c-4bb6-a084-447b5bf024f7",
+    "Content": "Amazing view and location.",
+    "CreatedAt": "2022-10-10T11:45:00Z"
+  }
+]

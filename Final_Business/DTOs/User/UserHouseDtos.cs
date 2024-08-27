@@ -1,8 +1,4 @@
-﻿using Final_Business.DTOs.General;
-using Final_Core.Enums;
-using Microsoft.AspNetCore.Http;
-
-namespace Final_Business.DTOs.User;
+﻿namespace Final_Business.DTOs.User;
 
 public record UserHouseGetOneDto(
   int Id,

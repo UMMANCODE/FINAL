@@ -1,0 +1,35 @@
+version: '3.4'
+
+services:
+  final.api:
+    image: ${DOCKER_REGISTRY-}finalapi
+    networks:
+      - my-network
+    build:
+      context: .
+      dockerfile: Final_API/Dockerfile
+
+  final.ui:
+    image: ${DOCKER_REGISTRY-}finalui
+    networks:
+      - my-network
+    build:
+      context: .
+      dockerfile: Final_UI/Dockerfile
+
+  db:
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
+    networks:
+      - my-network
+
+  redis:
+    image: "redis:latest"
+    networks:
+      - my-network
+
+volumes:
+  mssql_data:
+
+networks:
+  my-network:
+    driver: bridge

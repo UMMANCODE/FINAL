@@ -1,15 +1,10 @@
-﻿using Final_Business.DTOs.Admin;
-using Final_Business.DTOs.User;
-using Final_Business.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-
-namespace Final_API.Controllers;
+﻿namespace Final_API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
 public class HousesController(IAdminHouseService adminHouseService, IUserHouseService userHouseService) : ControllerBase {
   // Admin routes
-  //[Authorize(Roles = "Admin")]
+  [Authorize(Roles = "Admin, SuperAdmin")]
   [HttpGet("admin")]
   [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any, NoStore = false)]
   public async Task<IActionResult> AdminGetPaginated(int pageNumber = 1, int pageSize = 1) {
@@ -17,7 +12,7 @@ public class HousesController(IAdminHouseService adminHouseService, IUserHouseSe
     return StatusCode(response.StatusCode, response);
   }
 
-  //[Authorize(Roles = "Admin")]
+  [Authorize(Roles = "Admin, SuperAdmin")]
   [HttpGet("admin/all")]
   [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any, NoStore = false)]
   public async Task<IActionResult> AdminGetAll() {
@@ -25,7 +20,7 @@ public class HousesController(IAdminHouseService adminHouseService, IUserHouseSe
     return StatusCode(response.StatusCode, response);
   }
 
-  //[Authorize(Roles = "Admin")]
+  [Authorize(Roles = "Admin, SuperAdmin")]
   [HttpGet("admin/{id:int}")]
   [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any, NoStore = false)]
   public async Task<IActionResult> AdminGetById(int id) {
@@ -33,21 +28,21 @@ public class HousesController(IAdminHouseService adminHouseService, IUserHouseSe
     return StatusCode(response.StatusCode, response);
   }
 
-  //[Authorize(Roles = "Admin")]
+  [Authorize(Roles = "Admin, SuperAdmin")]
   [HttpPost("admin")]
   public async Task<IActionResult> AdminCreateHouse([FromForm] AdminHouseCreateDto houseDto) {
     var response = await adminHouseService.Create(houseDto);
     return StatusCode(response.StatusCode, response);
   }
 
-  //[Authorize(Roles = "Admin")]
+  [Authorize(Roles = "Admin, SuperAdmin")]
   [HttpPut("admin/{id:int}")]
   public async Task<IActionResult> AdminUpdateHouse(int id, [FromForm] AdminHouseUpdateDto houseDto) {
     var response = await adminHouseService.Update(id, houseDto);
     return StatusCode(response.StatusCode, response);
   }
 
-  //[Authorize(Roles = "Admin")]
+  [Authorize(Roles = "Admin, SuperAdmin")]
   [HttpDelete("admin/{id:int}")]
   public async Task<IActionResult> AdminDeleteHouse(int id) {
     var response = await adminHouseService.Delete(id);
@@ -55,6 +50,7 @@ public class HousesController(IAdminHouseService adminHouseService, IUserHouseSe
   }
 
   // Client routes
+  [Authorize(Roles = "Member")]
   [HttpGet("user")]
   [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any, NoStore = false)]
   public async Task<IActionResult> UserGetPaginated(int pageNumber = 1, int pageSize = 1) {
@@ -62,6 +58,7 @@ public class HousesController(IAdminHouseService adminHouseService, IUserHouseSe
     return StatusCode(response.StatusCode, response);
   }
 
+  [Authorize(Roles = "Member")]
   [HttpGet("user/all")]
   [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any, NoStore = false)]
   public async Task<IActionResult> UserGetAll() {
@@ -69,6 +66,7 @@ public class HousesController(IAdminHouseService adminHouseService, IUserHouseSe
     return StatusCode(response.StatusCode, response);
   }
 
+  [Authorize(Roles = "Member")]
   [HttpGet("user/{id:int}")]
   [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any, NoStore = false)]
   public async Task<IActionResult> UserGetById(int id) {
@@ -76,18 +74,21 @@ public class HousesController(IAdminHouseService adminHouseService, IUserHouseSe
     return StatusCode(response.StatusCode, response);
   }
 
+  [Authorize(Roles = "Member")]
   [HttpPost("user")]
   public async Task<IActionResult> UserCreateHouse([FromForm] UserHouseCreateDto houseDto) {
     var response = await userHouseService.Create(houseDto);
     return StatusCode(response.StatusCode, response);
   }
 
+  [Authorize(Roles = "Member")]
   [HttpPut("user/{id:int}")]
   public async Task<IActionResult> UserUpdateHouse(int id, [FromForm] UserHouseUpdateDto houseDto) {
     var response = await userHouseService.Update(id, houseDto);
     return StatusCode(response.StatusCode, response);
   }
 
+  [Authorize(Roles = "Member")]
   [HttpDelete("user/{id:int}")]
   public async Task<IActionResult> UserDeleteHouse(int id) {
     var response = await userHouseService.Delete(id);

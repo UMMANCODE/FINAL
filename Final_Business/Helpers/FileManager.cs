@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace Final_Business.Helpers;
+﻿namespace Final_Business.Helpers;
 
 public class FileManager {
 

@@ -1,7 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Final_UI.Helpers.Filters;
 

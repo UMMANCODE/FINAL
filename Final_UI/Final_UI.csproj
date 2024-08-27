@@ -6,12 +6,19 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>061d3de3-b9a7-40e4-838e-91dcd18bcbcb</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="EPPlus" Version="7.2.2" />
+    <PackageReference Include="Microsoft.AspNet.SignalR" Version="2.4.3" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\assets\images\custom\" />
   </ItemGroup>
 
 </Project>

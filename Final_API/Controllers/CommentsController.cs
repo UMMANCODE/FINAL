@@ -1,9 +1,4 @@
-﻿using Final_API.Filters;
-using Final_Business.DTOs.General;
-using Final_Business.Services.Interfaces;
-using Final_Core.Enums;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Final_Core.Enums;
 
 namespace Final_API.Controllers;
 
@@ -11,7 +6,7 @@ namespace Final_API.Controllers;
 [Route("api/[controller]")]
 public class CommentsController(ICommentService commentService) : ControllerBase {
   // Admin routes
-  [Authorize(Roles = "Admin")]
+  [Authorize(Roles = "Admin, SuperAdmin")]
   [HttpGet("admin")]
   // [TypeFilter(typeof(RedisCacheFilter))]
   public async Task<IActionResult> AdminGetPaginated(int pageNumber = 1, int pageSize = 1) {
@@ -19,7 +14,7 @@ public class CommentsController(ICommentService commentService) : ControllerBase
     return StatusCode(response.StatusCode, response);
   }
 
-  [Authorize(Roles = "Admin")]
+  [Authorize(Roles = "Admin, SuperAdmin")]
   [HttpGet("admin/all")]
   // [TypeFilter(typeof(RedisCacheFilter))]
   public async Task<IActionResult> AdminGetAll() {
@@ -27,7 +22,7 @@ public class CommentsController(ICommentService commentService) : ControllerBase
     return StatusCode(response.StatusCode, response);
   }
 
-  [Authorize(Roles = "Admin")]
+  [Authorize(Roles = "Admin, SuperAdmin")]
   [HttpGet("admin/{id:int}")]
   // [TypeFilter(typeof(RedisCacheFilter))]
   public async Task<IActionResult> AdminGetById(int id) {
@@ -35,7 +30,7 @@ public class CommentsController(ICommentService commentService) : ControllerBase
     return StatusCode(response.StatusCode, response);
   }
 
-  [Authorize(Roles = "Admin")]
+  [Authorize(Roles = "Admin, SuperAdmin")]
   [HttpPut("admin/{id:int}/status")]
   public async Task<IActionResult> AdminUpdateStatus(int id, CommentStatus status) {
     var response = await commentService.UpdateStatus(id, status);
@@ -43,6 +38,7 @@ public class CommentsController(ICommentService commentService) : ControllerBase
   }
 
   // Client routes
+  [Authorize(Roles = "Member")]
   [HttpGet("user")]
   // [TypeFilter(typeof(RedisCacheFilter))]
   public async Task<IActionResult> UserGetPaginated(int pageNumber = 1, int pageSize = 1) {
@@ -50,6 +46,7 @@ public class CommentsController(ICommentService commentService) : ControllerBase
     return StatusCode(response.StatusCode, response);
   }
 
+  [Authorize(Roles = "Member")]
   [HttpGet("user/all")]
   // [TypeFilter(typeof(RedisCacheFilter))]
   public async Task<IActionResult> UserGetAll() {
@@ -57,6 +54,7 @@ public class CommentsController(ICommentService commentService) : ControllerBase
     return StatusCode(response.StatusCode, response);
   }
 
+  [Authorize(Roles = "Member")]
   [HttpGet("user/{id:int}")]
   // [TypeFilter(typeof(RedisCacheFilter))]
   public async Task<IActionResult> UserGetById(int id) {
@@ -64,6 +62,7 @@ public class CommentsController(ICommentService commentService) : ControllerBase
     return StatusCode(response.StatusCode, response);
   }
 
+  [Authorize(Roles = "Member")]
   [HttpPost("user")]
   public async Task<IActionResult> UserCreateComment([FromForm] CommentCreateDto commentDto) {
     var response = await commentService.Create(commentDto);

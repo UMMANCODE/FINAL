@@ -1,0 +1,226 @@
+[
+  {
+    "AppUserId": "779ce4cd-aaf9-4baf-9d66-edb5fcbfef52",
+    "HouseId": 2,
+    "Price": 320000.00,
+    "Address": "456 Elm St, City, Country",
+    "CreatedAt": "2024-01-10T09:25:00Z"
+  },
+  {
+    "AppUserId": "0ce2e722-336c-4e2c-9b41-cf96bfc40aad",
+    "HouseId": 5,
+    "Price": 450000.00,
+    "Address": "654 Birch St, City, Country",
+    "CreatedAt": "2024-05-20T11:45:00Z"
+  },
+  {
+    "AppUserId": "201c5c52-a6fe-4cdd-937e-b93dcc734c3b",
+    "HouseId": 5,
+    "Price": 450000.00,
+    "Address": "654 Birch St, City, Country",
+    "CreatedAt": "2024-04-30T16:50:00Z"
+  },
+  {
+    "AppUserId": "9b94baa0-441b-4d9f-b34d-df92f44ecf6d",
+    "HouseId": 9,
+    "Price": 245000.00,
+    "Address": "123 Ash St, City, Country",
+    "CreatedAt": "2024-02-01T13:30:00Z"
+  },
+  {
+    "AppUserId": "6e7b5a47-cf4d-436a-a6a5-f0f67de66ca0",
+    "HouseId": 9,
+    "Price": 245000.00,
+    "Address": "123 Ash St, City, Country",
+    "CreatedAt": "2024-03-05T10:00:00Z"
+  },
+  {
+    "AppUserId": "0de36659-adaa-4257-9b07-f1e6d0875186",
+    "HouseId": 12,
+    "Price": 260000.00,
+    "Address": "321 Willow St, City, Country",
+    "CreatedAt": "2024-05-15T08:15:00Z"
+  },
+  {
+    "AppUserId": "f64d8b52-6bc8-4bcf-92be-d0fa2ac38c56",
+    "HouseId": 12,
+    "Price": 260000.00,
+    "Address": "321 Willow St, City, Country",
+    "CreatedAt": "2024-01-25T15:40:00Z"
+  },
+  {
+    "AppUserId": "45cf46bb-050a-4326-9ea8-250b9fa33a62",
+    "HouseId": 15,
+    "Price": 290000.00,
+    "Address": "123 Oak St, City, Country",
+    "CreatedAt": "2024-02-10T12:55:00Z"
+  },
+  {
+    "AppUserId": "97417fd4-be1c-4161-8192-e68c77063cda",
+    "HouseId": 15,
+    "Price": 290000.00,
+    "Address": "123 Oak St, City, Country",
+    "CreatedAt": "2024-06-15T14:20:00Z"
+  },
+  {
+    "AppUserId": "779ce4cd-aaf9-4baf-9d66-edb5fcbfef52",
+    "HouseId": 2,
+    "Price": 320000.00,
+    "Address": "456 Elm St, City, Country",
+    "CreatedAt": "2024-06-10T09:25:00Z"
+  },
+  {
+    "AppUserId": "0ce2e722-336c-4e2c-9b41-cf96bfc40aad",
+    "HouseId": 5,
+    "Price": 450000.00,
+    "Address": "654 Birch St, City, Country",
+    "CreatedAt": "2024-05-20T11:45:00Z"
+  },
+  {
+    "AppUserId": "201c5c52-a6fe-4cdd-937e-b93dcc734c3b",
+    "HouseId": 5,
+    "Price": 450000.00,
+    "Address": "654 Birch St, City, Country",
+    "CreatedAt": "2024-05-30T16:50:00Z"
+  },
+  {
+    "AppUserId": "2230a853-fd28-4347-8b9c-2ad4626d7321",
+    "HouseId": 9,
+    "Price": 245000.00,
+    "Address": "123 Ash St, City, Country",
+    "CreatedAt": "2024-04-01T13:30:00Z"
+  },
+  {
+    "AppUserId": "1759f4f2-cfd5-4059-9a84-b3f73c6d2fd0",
+    "HouseId": 9,
+    "Price": 245000.00,
+    "Address": "123 Ash St, City, Country",
+    "CreatedAt": "2024-03-05T10:00:00Z"
+  },
+  {
+    "AppUserId": "9b94baa0-441b-4d9f-b34d-df92f44ecf6d",
+    "HouseId": 12,
+    "Price": 260000.00,
+    "Address": "321 Willow St, City, Country",
+    "CreatedAt": "2024-02-15T08:15:00Z"
+  },
+  {
+    "AppUserId": "6e7b5a47-cf4d-436a-a6a5-f0f67de66ca0",
+    "HouseId": 12,
+    "Price": 260000.00,
+    "Address": "321 Willow St, City, Country",
+    "CreatedAt": "2024-03-25T15:40:00Z"
+  },
+  {
+    "AppUserId": "0de36659-adaa-4257-9b07-f1e6d0875186",
+    "HouseId": 15,
+    "Price": 290000.00,
+    "Address": "123 Oak St, City, Country",
+    "CreatedAt": "2024-01-10T12:55:00Z"
+  },
+  {
+    "AppUserId": "f64d8b52-6bc8-4bcf-92be-d0fa2ac38c56",
+    "HouseId": 15,
+    "Price": 290000.00,
+    "Address": "123 Oak St, City, Country",
+    "CreatedAt": "2024-03-15T14:20:00Z"
+  },
+  {
+    "AppUserId": "45cf46bb-050a-4326-9ea8-250b9fa33a62",
+    "HouseId": 1,
+    "Price": 200000.00,
+    "Address": "789 Maple St, City, Country",
+    "CreatedAt": "2024-02-05T10:25:00Z"
+  },
+  {
+    "AppUserId": "97417fd4-be1c-4161-8192-e68c77063cda",
+    "HouseId": 3,
+    "Price": 350000.00,
+    "Address": "234 Pine St, City, Country",
+    "CreatedAt": "2024-03-15T14:50:00Z"
+  },
+  {
+    "AppUserId": "2db58494-8992-4314-a848-1f435794b544",
+    "HouseId": 4,
+    "Price": 275000.00,
+    "Address": "987 Cedar St, City, Country",
+    "CreatedAt": "2024-01-01T12:30:00Z"
+  },
+  {
+    "AppUserId": "d082925a-16d8-406f-a73d-9d43b9caf234",
+    "HouseId": 6,
+    "Price": 310000.00,
+    "Address": "345 Fir St, City, Country",
+    "CreatedAt": "2024-04-25T08:45:00Z"
+  },
+  {
+    "AppUserId": "ffdd3aa9-6e4c-4bb6-a084-447b5bf024f7",
+    "HouseId": 8,
+    "Price": 280000.00,
+    "Address": "789 Spruce St, City, Country",
+    "CreatedAt": "2024-05-20T11:15:00Z"
+  },
+  {
+    "AppUserId": "3a03aa02-471a-41aa-b6c1-4e718dc811ea",
+    "HouseId": 10,
+    "Price": 375000.00,
+    "Address": "678 Linden St, City, Country",
+    "CreatedAt": "2024-06-12T14:00:00Z"
+  },
+  {
+    "AppUserId": "97417fd4-be1c-4161-8192-e68c77063cda",
+    "HouseId": 11,
+    "Price": 295000.00,
+    "Address": "876 Redwood St, City, Country",
+    "CreatedAt": "2024-05-02T09:20:00Z"
+  },
+  {
+    "AppUserId": "6e7b5a47-cf4d-436a-a6a5-f0f67de66ca0",
+    "HouseId": 13,
+    "Price": 225000.00,
+    "Address": "432 Cherry St, City, Country",
+    "CreatedAt": "2024-02-18T13:05:00Z"
+  },
+  {
+    "AppUserId": "201c5c52-a6fe-4cdd-937e-b93dcc734c3b",
+    "HouseId": 14,
+    "Price": 240000.00,
+    "Address": "543 Palm St, City, Country",
+    "CreatedAt": "2024-03-27T15:30:00Z"
+  },
+  {
+    "AppUserId": "1759f4f2-cfd5-4059-9a84-b3f73c6d2fd0",
+    "HouseId": 3,
+    "Price": 355000.00,
+    "Address": "234 Pine St, City, Country",
+    "CreatedAt": "2024-01-28T16:10:00Z"
+  },
+  {
+    "AppUserId": "6e7b5a47-cf4d-436a-a6a5-f0f67de66ca0",
+    "HouseId": 7,
+    "Price": 290000.00,
+    "Address": "123 Cedar St, City, Country",
+    "CreatedAt": "2024-05-11T10:55:00Z"
+  },
+  {
+    "AppUserId": "f64d8b52-6bc8-4bcf-92be-d0fa2ac38c56",
+    "HouseId": 8,
+    "Price": 285000.00,
+    "Address": "678 Fir St, City, Country",
+    "CreatedAt": "2024-04-22T11:35:00Z"
+  },
+  {
+    "AppUserId": "97417fd4-be1c-4161-8192-e68c77063cda",
+    "HouseId": 10,
+    "Price": 380000.00,
+    "Address": "789 Linden St, City, Country",
+    "CreatedAt": "2024-01-14T12:40:00Z"
+  },
+  {
+    "AppUserId": "3a03aa02-471a-41aa-b6c1-4e718dc811ea",
+    "HouseId": 11,
+    "Price": 300000.00,
+    "Address": "876 Redwood St, City, Country",
+    "CreatedAt": "2024-05-07T08:55:00Z"
+  }
+]

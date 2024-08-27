@@ -1,0 +1,139 @@
+﻿@model CreateAdminRequest
+@{
+  Layout = null;
+  ViewBag.Title = "CreateAdmin";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Corona Admin</title>
+
+  <!-- Custom Scoped Styles -->
+  <style>
+    /* Custom form styling outside of Bootstrap scope */
+    .custom-input {
+      width: 100% !important;
+      padding: 10px !important;
+      margin: 10px 0 !important;
+      border: 1px solid #ccc !important;
+      border-radius: 4px !important;
+    }
+
+    /* Scoped Bootstrap styles */
+    .bootstrap-scope .selectpicker {
+      width: 100% !important;
+      display: block;
+    }
+  </style>
+
+  <!-- Bootstrap CSS (only for scoped elements) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Other Required CSS Files -->
+  <link rel="stylesheet" href="~/assets/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="~/assets/vendors/css/vendor.bundle.base.css">
+
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-select-country/dist/css/bootstrap-select-country.min.css" rel="stylesheet">
+
+  <!-- Layout styles -->
+  <link rel="stylesheet" href="~/assets/css/style.css">
+  <link rel="shortcut icon" href="~/assets/images/favicon.png" />
+</head>
+<body>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="row w-100 m-0">
+        <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
+          <div class="card col-lg-4 mx-auto">
+            <div class="card-body px-5 py-5">
+              <h3 class="card-title text-left mb-3">CreateAdmin</h3>
+              @if (TempData["Error"] != null) {
+                <span class="text-danger">@TempData["Error"]</span>
+              }
+              <form asp-action="CreateAdmin" asp-controller="Account" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                  <label asp-for="Email">Email</label>
+                  <input asp-for="Email" id="Email" class="form-control custom-input">
+                  <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                  <label asp-for="UserName">Username</label>
+                  <input asp-for="UserName" id="UserName" class="form-control custom-input">
+                  <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                  <label asp-for="FullName">Fullname</label>
+                  <input asp-for="FullName" id="FullName" class="form-control custom-input">
+                  <span asp-validation-for="FullName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                  <label asp-for="Password">Password</label>
+                  <input asp-for="Password" id="Password" class="form-control custom-input">
+                  <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                  <label asp-for="ConfirmPassword">Confirm password</label>
+                  <input asp-for="ConfirmPassword" id="ConfirmPassword" class="form-control custom-input">
+                  <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                  <label asp-for="Avatar">Avatar</label>
+                  <input asp-for="Avatar" name="Avatar" class="file-upload-default">
+                  <div class="input-group col-xs-12">
+                    <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Avatar">
+                    <span class="input-group-append">
+                      <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                    </span>
+                  </div>
+                  <span class="text-danger" asp-validation-for="Avatar"></span>
+                </div>
+
+                <!-- Scoped Bootstrap for Country Picker with Nationality binding -->
+                <div class="bootstrap-scope form-group w-100">
+                  <label asp-for="Nationality">Nationality</label>
+                  <select asp-for="Nationality" id="Nationality" name="Nationality" class="selectpicker form-control custom-input" data-flag="true"></select>
+                  <span asp-validation-for="Nationality" class="text-danger"></span>
+                </div>
+
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary btn-block enter-btn">Create Admin</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+      </div>
+      <!-- row ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- Required JS Files -->
+  <script src="~/assets/vendors/js/vendor.bundle.base.js"></script>
+  <script src="~/assets/js/off-canvas.js"></script>
+  <script src="~/assets/js/hoverable-collapse.js"></script>
+  <script src="~/assets/js/misc.js"></script>
+  <script src="~/assets/js/settings.js"></script>
+  <script src="~/assets/js/todolist.js"></script>
+  <script src="~/assets/js/file-upload.js"></script>
+
+  <!-- Bootstrap Select JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-select-country/dist/js/bootstrap-select-country.min.js"></script>
+
+  <!-- Initialization Script -->
+  <script>
+    $(document).ready(function () {
+      $('#Nationality').countrypicker();
+    });
+  </script>
+</body>
+</html>

@@ -1,11 +1,4 @@
-﻿using AutoMapper;
-using Final_Business.DTOs.Admin;
-using Final_Business.DTOs.General;
-using Final_Business.DTOs.User;
-using Final_Core.Entities;
-using Microsoft.AspNetCore.Http;
-
-namespace Final_Business.Profiles;
+﻿namespace Final_Business.Profiles;
 
 public class MapProfile : Profile {
   public MapProfile(IHttpContextAccessor accessor) {
@@ -35,13 +28,9 @@ public class MapProfile : Profile {
 
     CreateMap<Slider, SliderCreateDto>().ReverseMap();
     CreateMap<Slider, SliderUpdateDto>().ReverseMap();
-    CreateMap<Slider, SliderGetAllDto>().ReverseMap();
-    CreateMap<Slider, SliderGetOneDto>().ReverseMap();
 
     CreateMap<Feature, FeatureCreateDto>().ReverseMap();
     CreateMap<Feature, FeatureUpdateDto>().ReverseMap();
-    CreateMap<Feature, FeatureGetAllDto>().ReverseMap();
-    CreateMap<Feature, FeatureGetOneDto>().ReverseMap();
 
     CreateMap<Comment, CommentGetDto>()
       .ForMember(dest => dest.AppUserAvatarLink, opt => opt.MapFrom(src => src.AppUser.AvatarLink))
@@ -61,23 +50,27 @@ public class MapProfile : Profile {
     CreateMap<Discount, DiscountGetDto>().ReverseMap();
     CreateMap<Discount, DiscountCreateDto>().ReverseMap();
 
-    CreateMap<HouseImage, HouseImageGetDto>().ReverseMap();
-
     CreateMap<AppUser, UserRegisterDto>().ReverseMap();
+    CreateMap<AppUser, UserCreateAdminDto>().ReverseMap();
 
     CreateMap<HouseImage, HouseImageGetDto>()
-      .ForCtorParam("ImageLink", opt => opt.MapFrom(src => baseUrl + "images/houses/" + src.ImageLink));
+      .ForCtorParam("ImageLink", opt => opt.MapFrom(src => baseUrl + "images/houses/" + src.ImageLink))
+      .ReverseMap();
 
     CreateMap<Slider, SliderGetOneDto>()
-      .ForCtorParam("ImageLink", opt => opt.MapFrom(src => baseUrl + "images/sliders/" + src.ImageLink));
+      .ForCtorParam("ImageLink", opt => opt.MapFrom(src => baseUrl + "images/sliders/" + src.ImageLink))
+      .ReverseMap();
 
     CreateMap<Slider, SliderGetAllDto>()
-      .ForCtorParam("ImageLink", opt => opt.MapFrom(src => baseUrl + "images/sliders/" + src.ImageLink));
+      .ForCtorParam("ImageLink", opt => opt.MapFrom(src => baseUrl + "images/sliders/" + src.ImageLink))
+      .ReverseMap();
 
     CreateMap<Feature, FeatureGetAllDto>()
-      .ForCtorParam("IconLink", opt => opt.MapFrom(src => baseUrl + "images/features/" + src.IconLink));
+      .ForCtorParam("IconLink", opt => opt.MapFrom(src => baseUrl + "images/features/" + src.IconLink))
+      .ReverseMap();
 
     CreateMap<Feature, FeatureGetOneDto>()
-      .ForCtorParam("IconLink", opt => opt.MapFrom(src => baseUrl + "images/features/" + src.IconLink));
+      .ForCtorParam("IconLink", opt => opt.MapFrom(src => baseUrl + "images/features/" + src.IconLink))
+      .ReverseMap();
   }
 }

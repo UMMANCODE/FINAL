@@ -1,0 +1,98 @@
+[
+  {
+    "HouseId": 1,
+    "FeatureId": 1
+  },
+  {
+    "HouseId": 1,
+    "FeatureId": 2
+  },
+  {
+    "HouseId": 2,
+    "FeatureId": 3
+  },
+  {
+    "HouseId": 2,
+    "FeatureId": 4
+  },
+  {
+    "HouseId": 5,
+    "FeatureId": 5
+  },
+  {
+    "HouseId": 5,
+    "FeatureId": 6
+  },
+  {
+    "HouseId": 7,
+    "FeatureId": 7
+  },
+  {
+    "HouseId": 7,
+    "FeatureId": 8
+  },
+  {
+    "HouseId": 9,
+    "FeatureId": 9
+  },
+  {
+    "HouseId": 9,
+    "FeatureId": 10
+  },
+  {
+    "HouseId": 3,
+    "FeatureId": 1
+  },
+  {
+    "HouseId": 3,
+    "FeatureId": 4
+  },
+  {
+    "HouseId": 4,
+    "FeatureId": 2
+  },
+  {
+    "HouseId": 4,
+    "FeatureId": 6
+  },
+  {
+    "HouseId": 6,
+    "FeatureId": 3
+  },
+  {
+    "HouseId": 6,
+    "FeatureId": 7
+  },
+  {
+    "HouseId": 8,
+    "FeatureId": 5
+  },
+  {
+    "HouseId": 8,
+    "FeatureId": 8
+  },
+  {
+    "HouseId": 10,
+    "FeatureId": 6
+  },
+  {
+    "HouseId": 10,
+    "FeatureId": 9
+  },
+  {
+    "HouseId": 11,
+    "FeatureId": 7
+  },
+  {
+    "HouseId": 11,
+    "FeatureId": 10
+  },
+  {
+    "HouseId": 13,
+    "FeatureId": 8
+  },
+  {
+    "HouseId": 14,
+    "FeatureId": 9
+  }
+]

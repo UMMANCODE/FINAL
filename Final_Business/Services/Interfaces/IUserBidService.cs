@@ -1,7 +1,4 @@
-﻿using Final_Business.DTOs.User;
-using Final_Business.Helpers;
-
-namespace Final_Business.Services.Interfaces;
+﻿namespace Final_Business.Services.Interfaces;
 public interface IUserBidService {
   public Task<BaseResponse> GetPaginated(int pageNumber = 1, int pageSize = 1);
   public Task<BaseResponse> GetAll();

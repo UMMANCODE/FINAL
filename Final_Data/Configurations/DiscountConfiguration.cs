@@ -1,8 +1,4 @@
-﻿using Final_Core.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace Final_Data.Configurations;
+﻿namespace Final_Data.Configurations;
 public class DiscountConfiguration : IEntityTypeConfiguration<Discount> {
   public void Configure(EntityTypeBuilder<Discount> builder) {
     builder.Property(x => x.Amount).HasColumnType("decimal(18,2)").IsRequired();

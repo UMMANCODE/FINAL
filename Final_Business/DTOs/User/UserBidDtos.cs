@@ -2,14 +2,13 @@
 
 public record UserBidGetDto(
   int Id,
-  string UserId,
+  string AppUserId,
   int HouseId,
   decimal Amount,
   DateTime CreatedAt
 );
 
 public record UserBidCreateDto(
-  string UserId,
   int HouseId,
   decimal Amount
 );

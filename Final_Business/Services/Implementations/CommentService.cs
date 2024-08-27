@@ -1,19 +1,16 @@
-﻿using AutoMapper;
-using Final_Business.DTOs;
-using Final_Business.DTOs.General;
-using Final_Business.Exceptions;
-using Final_Business.Helpers;
-using Final_Business.Services.Interfaces;
-using Final_Core.Entities;
-using Final_Core.Enums;
-using Final_Data.Repositories.Interfaces;
-using Microsoft.AspNetCore.Http;
+﻿using System.Security.Claims;
 
 namespace Final_Business.Services.Implementations;
-public class CommentService(ICommentRepository commentRepository, IMapper mapper)
+public class CommentService(ICommentRepository commentRepository, IMapper mapper, IHttpContextAccessor httpContextAccessor)
   : ICommentService  {
   public async Task<BaseResponse> Create(CommentCreateDto createDto) {
     var comment = mapper.Map<Comment>(createDto);
+
+    var token = httpContextAccessor.HttpContext!.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last()
+      ?? throw new RestException(StatusCodes.Status401Unauthorized, "Unauthorized");
+
+    comment.AppUserId = JwtHelper.GetClaimFromJwt(token, ClaimTypes.NameIdentifier)!;
+
     await commentRepository.AddAsync(comment);
     await commentRepository.SaveAsync();
 

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace Final_UI.Controllers;
+﻿namespace Final_UI.Controllers;
 public class ErrorController : Controller {
   public new IActionResult Unauthorized() {
     return View();

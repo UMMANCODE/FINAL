@@ -1,7 +1,4 @@
 ﻿using System.Linq.Expressions;
-using Final_Core.Entities;
-using Final_Data.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace Final_Data.Repositories.Implementations;
 

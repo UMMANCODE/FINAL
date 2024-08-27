@@ -1,14 +1,19 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text.Json;
-using Final_UI.Models.Responses;
-using Final_UI.Services.Interfaces;
 using Microsoft.Net.Http.Headers;
 
 namespace Final_UI.Services.Implementations;
 
-public class UserService(IHttpContextAccessor contextAccessor) : IUserService {
+public class UserService(IHttpContextAccessor contextAccessor, IConfiguration configuration) : IUserService {
   private readonly HttpClient _client = new();
+  private readonly string _apiUrl = configuration.GetSection("APIEndpoint").Value!;
+
+  public string? GetUserId() {
+    var token = contextAccessor.HttpContext!.Request.Cookies["token"]
+                ?? string.Empty;
+    return GetClaimFromToken(token, ClaimTypes.NameIdentifier);
+  }
 
   public string? GetUserName() {
     var token = contextAccessor.HttpContext!.Request.Cookies["token"]
@@ -34,14 +39,14 @@ public class UserService(IHttpContextAccessor contextAccessor) : IUserService {
     return GetClaimFromToken(token, "FullName");
   }
 
-  public async Task<AppUserResponse?>? GetUsers() {
+  public async Task<List<AppUserResponse>?> GetUsers() {
     // Add Authorization header
     var token = contextAccessor.HttpContext!.Request.Cookies["token"];
     if (string.IsNullOrEmpty(token)) return null;
     _client.DefaultRequestHeaders.Remove(HeaderNames.Authorization);
     _client.DefaultRequestHeaders.Add(HeaderNames.Authorization, token);
 
-    var response = await _client.GetAsync("https://localhost:5001/api/users");
+    var response = await _client.GetAsync($"{_apiUrl}/Auth/community");
     if (!response.IsSuccessStatusCode) return null;
 
     var bodyStr = await response.Content.ReadAsStringAsync();
@@ -49,7 +54,7 @@ public class UserService(IHttpContextAccessor contextAccessor) : IUserService {
 
     var baseResponse = JsonSerializer.Deserialize<BaseResponse>(bodyStr, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-    return baseResponse?.Data == null ? null : JsonSerializer.Deserialize<AppUserResponse>(baseResponse.Data.ToString()
+    return baseResponse?.Data == null ? null : JsonSerializer.Deserialize<List<AppUserResponse>>(baseResponse.Data.ToString()
          ?? string.Empty, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
   }
 

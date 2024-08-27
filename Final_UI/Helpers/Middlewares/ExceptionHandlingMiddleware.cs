@@ -1,5 +1,4 @@
-﻿using Final_UI.Helpers.Exceptions;
-using System.Net;
+﻿using System.Net;
 
 namespace Final_UI.Helpers.Middlewares;
 

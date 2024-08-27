@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="~/assets/css/style.css">
   <!-- End layout styles -->
   <link rel="shortcut icon" href="~/assets/images/favicon.png" />
+  <link rel="stylesheet" href="~/assets/css/custom/google.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
@@ -69,12 +70,10 @@
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary btn-block enter-btn">Login</button>
                 </div>
-                <div class="d-flex">
-                  <a href="#" class="btn btn-facebook mr-2 col">
-                    <i class="mdi mdi-facebook"></i> Facebook
-                  </a>
-                  <a href="@googleLoginUrl" class="btn btn-google col">
-                    <i class="mdi mdi-google-plus"></i> Google
+                <div class="d-flex justify-content-center">
+                  <a href="@googleLoginUrl" class="btn btn-google-modern col-6 d-flex align-items-center justify-content-center">
+                    <img src="~/assets/images/custom/google.png" alt="Google" style="width: 20px; height: 20px; margin-right: 8px;">
+                    <span>Sign in with Google</span>
                   </a>
                 </div>
                 <p class="sign-up">Don't have an Account?<a asp-action="Register"> Sign Up</a></p>

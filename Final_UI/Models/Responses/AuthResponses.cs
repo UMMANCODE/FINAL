@@ -8,6 +8,10 @@ public class RegisterResponse {
   public string? UserId { get; set; }
 }
 
+public class CreateAdminResponse {
+  public string? UserId { get; set; }
+}
+
 public class ForgetPasswordResponse {
   public string? Token { get; set; }
 }

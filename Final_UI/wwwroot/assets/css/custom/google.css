@@ -1,0 +1,17 @@
+﻿.btn-google-modern {
+  background-color: #ffffff;
+  color: #4285f4;
+  border: 1px solid #ddd;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-google-modern:hover {
+  background-color: #f8f8f8;
+}
+
+.btn-google-modern img {
+  margin-right: 10px;
+}

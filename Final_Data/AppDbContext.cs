@@ -1,6 +1,4 @@
-﻿using Final_Core.Entities;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Final_Data;
 

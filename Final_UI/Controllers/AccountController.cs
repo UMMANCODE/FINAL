@@ -1,14 +1,9 @@
-﻿using Final_UI.Models.Requests;
-using Final_UI.Models.Responses;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.Net.Http.Headers;
 using System.Text.Json;
-using Final_UI.Services.Interfaces;
-using Final_UI.Helpers.Extensions;
-using Final_UI.Helpers.Exceptions;
 
 namespace Final_UI.Controllers;
 
-public class AccountController(IConfiguration configuration, ICrudService crudService) : Controller {
+public class AccountController(IConfiguration configuration, ICrudService crudService, IHttpContextAccessor contextAccessor) : Controller {
 
   private readonly string _apiUrl = configuration.GetSection("APIEndpoint").Value!;
   private readonly HttpClient _client = new();
@@ -29,6 +24,7 @@ public class AccountController(IConfiguration configuration, ICrudService crudSe
 
     if (response.IsSuccessStatusCode) {
       var token = apiResponse?.Data?.ToString();
+      var message = apiResponse?.Message!;
 
       if (string.IsNullOrEmpty(token)) {
         TempData["Error"] = "Invalid token received.";
@@ -42,6 +38,10 @@ public class AccountController(IConfiguration configuration, ICrudService crudSe
       };
 
       Response.Cookies.Append("token", "Bearer " + token, cookieOptions);
+
+      if (message.Contains("Change")) {
+        return RedirectToAction("ChangePassword", "Account");
+      }
 
       if (!string.IsNullOrEmpty(returnUrl)) {
         return Redirect(returnUrl);
@@ -73,54 +73,93 @@ public class AccountController(IConfiguration configuration, ICrudService crudSe
 
   [HttpPost]
   public async Task<IActionResult> Register([FromForm] RegisterRequest registerRequest) {
-    // Check if the model state is valid
     if (!ModelState.IsValid) {
       return View(registerRequest);
     }
 
-    // Check if the uploaded avatar is a valid image
     if (!UploadExtension.IsValidImage(registerRequest.Avatar)) {
       ModelState.AddModelError("Avatar", "Not a valid image type!");
       return View(registerRequest);
     }
 
-    // Create multipart content for the request
     var content = crudService.CreateMultipartContent(registerRequest);
 
-    // Send the POST request to the API
     using var response = await _client.PostAsync($"{_apiUrl}/Auth/register", content);
 
-    // Check if the API response is successful
     if (!response.IsSuccessStatusCode) {
       TempData["Error"] = $"Something went wrong: {response.ReasonPhrase}";
       return View(registerRequest);
     }
 
-    // Read the response content
     var bodyStr = await response.Content.ReadAsStringAsync();
 
-    // Check if the response body is empty
     if (string.IsNullOrEmpty(bodyStr)) {
       TempData["Error"] = "Received an empty response from the server.";
       return View(registerRequest);
     }
 
-    // Deserialize the response content
     var baseResponse = JsonSerializer.Deserialize<BaseResponse>(bodyStr, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-    // Check if the deserialization was successful and data is present
     if (baseResponse?.Data == null) {
       TempData["Error"] = $"Error: {baseResponse?.Message ?? "No data received."}";
       return View(registerRequest);
     }
 
-    // Deserialize the data into RegisterResponse
     JsonSerializer.Deserialize<RegisterResponse>(baseResponse.Data.ToString()
         ?? string.Empty, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-    // Set success message and redirect to the VerifyEmail page
     TempData["Success"] = baseResponse.Message;
     return RedirectToAction("VerifyEmail");
+  }
+
+  public IActionResult CreateAdmin() {
+    return View();
+  }
+
+  [HttpPost]
+  public async Task<IActionResult?> CreateAdmin([FromForm] CreateAdminRequest createAdminRequest) {
+    // Add Authorization header
+    var token = contextAccessor.HttpContext!.Request.Cookies["token"];
+    if (string.IsNullOrEmpty(token)) return null;
+    _client.DefaultRequestHeaders.Remove(HeaderNames.Authorization);
+    _client.DefaultRequestHeaders.Add(HeaderNames.Authorization, token);
+
+    if (!ModelState.IsValid) {
+      return View(createAdminRequest);
+    }
+
+    if (createAdminRequest.Avatar is not null && !UploadExtension.IsValidImage(createAdminRequest.Avatar)) {
+      ModelState.AddModelError("Avatar", "Not a valid image type!");
+      return View(createAdminRequest);
+    }
+
+    var content = crudService.CreateMultipartContent(createAdminRequest);
+
+    using var response = await _client.PostAsync($"{_apiUrl}/Auth/create-super", content);
+
+    if (!response.IsSuccessStatusCode) {
+      TempData["Error"] = $"Something went wrong: {response.ReasonPhrase}";
+      return View(createAdminRequest);
+    }
+
+    var bodyStr = await response.Content.ReadAsStringAsync();
+
+    if (string.IsNullOrEmpty(bodyStr)) {
+      TempData["Error"] = "Received an empty response from the server.";
+      return View(createAdminRequest);
+    }
+
+    var baseResponse = JsonSerializer.Deserialize<BaseResponse>(bodyStr, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+    if (baseResponse?.Data == null) {
+      TempData["Error"] = $"Error: {baseResponse?.Message ?? "No data received."}";
+      return View(createAdminRequest);
+    }
+
+    JsonSerializer.Deserialize<CreateAdminResponse>(baseResponse.Data.ToString() 
+        ?? string.Empty, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+    return RedirectToAction("Index", "Home");
   }
 
 
@@ -231,5 +270,38 @@ public class AccountController(IConfiguration configuration, ICrudService crudSe
     Response.Cookies.Append("token", "Bearer " + token, cookieOptions);
 
     return RedirectToAction("Index", "Home");
+  }
+
+  public IActionResult ChangePassword() {
+    return View();
+  }
+
+  [HttpPost]
+  public async Task<IActionResult> ChangePassword(ForceChangePasswordRequest changePasswordRequest) {
+    if (!ModelState.IsValid) {
+      return View(changePasswordRequest);
+    }
+
+    // Add Authorization header
+    var token = contextAccessor.HttpContext!.Request.Cookies["token"];
+    if (string.IsNullOrEmpty(token)) return RedirectToAction("Unauthorized", "Error");
+    _client.DefaultRequestHeaders.Remove(HeaderNames.Authorization);
+    _client.DefaultRequestHeaders.Add(HeaderNames.Authorization, token);
+
+    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+    var content = new StringContent(JsonSerializer.Serialize(changePasswordRequest, options), System.Text.Encoding.UTF8, "application/json");
+
+    using var response = await _client.PutAsync($"{_apiUrl}/Auth/change-password", content);
+    var jsonResponse = await response.Content.ReadAsStringAsync();
+    var apiResponse = JsonSerializer.Deserialize<BaseResponse>(jsonResponse, options);
+
+    if (response.IsSuccessStatusCode) {
+      TempData["Type"] = "success";
+      TempData["Message"] = apiResponse?.Message;
+      return RedirectToAction("Index", "Home");
+    }
+
+    TempData["Error"] = $"Something went wrong: {apiResponse?.Message}";
+    return View();
   }
 }

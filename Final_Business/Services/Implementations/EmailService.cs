@@ -1,7 +1,4 @@
-﻿using Final_Business.Helpers;
-using Final_Business.Services.Interfaces;
-using Final_Core.Entities;
-using Final_Data;
+﻿using Final_Data;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

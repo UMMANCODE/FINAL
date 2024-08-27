@@ -45,8 +45,8 @@
                     <div class="badge @GetStyle(comment.Status)">@comment.Status.ToString()</div>
                   </td>
                   <td>
-                    <a asp-action="UpdateCommentStatus" asp-route-id="@comment.Id" asp-route-status="Approved" class='btn btn-success mr-3 @(comment.Status.ToString() != "Pending" ? "disabled" : "")'>Approve</a>
-                    <a asp-action="UpdateCommentStatus" asp-route-id="@comment.Id" asp-route-status="Rejected" class='btn btn-danger @(comment.Status.ToString() != "Pending" ? "disabled" : "")'>Reject</a>
+                    <a asp-action="UpdateCommentStatus" asp-route-id="@comment.Id" asp-route-status="Approved" asp-route-userId="@comment.AppUserId" class='btn btn-success mr-3 @(comment.Status.ToString() != "Pending" ? "disabled" : "")'>Approve</a>
+                    <a asp-action="UpdateCommentStatus" asp-route-id="@comment.Id" asp-route-status="Rejected" asp-route-userId="@comment.AppUserId" class='btn btn-danger @(comment.Status.ToString() != "Pending" ? "disabled" : "")'>Reject</a>
                   </td>
                 </tr>
               }

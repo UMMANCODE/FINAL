@@ -1,0 +1,19 @@
+﻿@model ProfileResponse
+@{
+  ViewBag.Title = "Profile";
+}
+
+<div class="main-panel">
+  <div class="content-wrapper">
+    @(await Html.PartialAsync("_ChangeDetails", Model.ChangeDetailsRequest))
+    @(await Html.PartialAsync("_ChangePassword", Model.ChangePasswordRequest))
+    <input id="temp-message" type="hidden" value='@TempData["Message"]'>
+    <input id="temp-type" type="hidden" value='@TempData["Type"]'>
+  </div>
+</div>
+
+@section scripts {
+  <script src="~/assets/js/file-upload.js"></script>
+  <script src="~/assets/js/custom/preview.js"></script>
+  <script src="~/assets/js/custom/mytoast.js"></script>
+}

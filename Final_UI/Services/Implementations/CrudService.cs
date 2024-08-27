@@ -1,8 +1,5 @@
-﻿using Final_UI.Services.Interfaces;
-using Microsoft.Net.Http.Headers;
+﻿using Microsoft.Net.Http.Headers;
 using System.Text.Json;
-using Final_UI.Helpers.Exceptions;
-using Final_UI.Models.Responses;
 using ContentDispositionHeaderValue = System.Net.Http.Headers.ContentDispositionHeaderValue;
 using MediaTypeHeaderValue = System.Net.Http.Headers.MediaTypeHeaderValue;
 #pragma warning disable CA1869

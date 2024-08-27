@@ -1,6 +1,4 @@
-﻿using Final_Core.Enums;
-
-namespace Final_Business.DTOs.General;
+﻿namespace Final_Business.DTOs.General;
 
 public record OrderGetDto(
   int Id,
@@ -17,6 +15,5 @@ public record OrderGetDto(
 public record OrderCreateDto(
   decimal Price,
   string Address,
-  int HouseId,
-  string AppUserId
+  int HouseId
 );

@@ -1,9 +1,4 @@
-﻿using Final_Business.DTOs.General;
-using Final_Business.DTOs.User;
-using Final_Core.Enums;
-using Microsoft.AspNetCore.Http;
-
-namespace Final_Business.DTOs.Admin;
+﻿namespace Final_Business.DTOs.Admin;
 
 public record AdminHouseGetOneDto(
   int Id,

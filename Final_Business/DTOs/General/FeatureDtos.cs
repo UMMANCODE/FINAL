@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace Final_Business.DTOs.General;
+﻿namespace Final_Business.DTOs.General;
 
 public record FeatureGetOneDto(
   int Id,

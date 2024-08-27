@@ -1,11 +1,4 @@
-﻿using Final_Business.DTOs.User;
-using Final_Business.Exceptions;
-using Final_Business.Helpers;
-using Final_Business.Services.Interfaces;
-using Final_Core.Entities;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -13,12 +6,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
-using System.Transactions;
-using AutoMapper;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Final_Business.Services.Implementations;
-public class UserAuthService(UserManager<AppUser> userManager, IConfiguration configuration, IEmailService emailService, IWebHostEnvironment env, IMapper mapper)
+public class UserAuthService(UserManager<AppUser> userManager, IHttpContextAccessor accessor, IConfiguration configuration, IEmailService emailService, IWebHostEnvironment env, IMapper mapper)
   : IUserAuthService {
   public async Task<BaseResponse> Login(UserLoginDto loginDto) {
     var user = loginDto.ExternalLogin ? await userManager.FindByEmailAsync(loginDto.UserName) : await userManager.FindByNameAsync(loginDto.UserName);
@@ -64,20 +54,19 @@ public class UserAuthService(UserManager<AppUser> userManager, IConfiguration co
 
     var token = new JwtSecurityTokenHandler().WriteToken(securityToken);
 
-    return new BaseResponse(200, "Login successful!", token, []);
+    return user.ShouldChangePassword ? new BaseResponse(200, "Login successful! Change Password.", token, []) : new BaseResponse(200, "Login successful!", token, []);
   }
 
   public async Task<BaseResponse> Register(UserRegisterDto registerDto) {
     string? uploadedFilePath = null;
     using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-    try
-    {
+    try {
       var user = mapper.Map<AppUser>(registerDto);
 
       if (registerDto.Avatar != null)
         uploadedFilePath = FileManager.Save(registerDto.Avatar, env.WebRootPath, "images/users");
 
-      user.AvatarLink = uploadedFilePath;
+      user.AvatarLink = uploadedFilePath ?? "default.png";
 
       var result = await userManager.CreateAsync(user, registerDto.Password);
 
@@ -140,6 +129,67 @@ public class UserAuthService(UserManager<AppUser> userManager, IConfiguration co
     return new BaseResponse(200, "Verification email sent successfully!", token, []);
   }
 
+  public async Task<BaseResponse> CreateAdmin(UserCreateAdminDto createAdminDto) {
+    string? uploadedFilePath = null;
+    using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+    try {
+      var user = mapper.Map<AppUser>(createAdminDto);
+
+      if (createAdminDto.Avatar != null)
+        uploadedFilePath = FileManager.Save(createAdminDto.Avatar, env.WebRootPath, "images/users");
+
+      user.AvatarLink = uploadedFilePath ?? "default.png";
+      user.EmailConfirmed = true;
+      user.ShouldChangePassword = true;
+
+      var result = await userManager.CreateAsync(user, createAdminDto.Password);
+
+      if (!result.Succeeded) {
+        var errors = string.Join(", ", result.Errors.Select(x => x.Description));
+        throw new RestException(StatusCodes.Status400BadRequest, errors);
+      }
+
+      await userManager.AddToRoleAsync(user, "Admin");
+
+      scope.Complete();
+
+      return new BaseResponse(201, "Admin created successfully!", new { user.Id }, []);
+    }
+    catch {
+
+      if (!string.IsNullOrEmpty(uploadedFilePath)) {
+        FileManager.Delete(env.WebRootPath, "images/users", uploadedFilePath);
+      }
+
+      throw;
+    }
+  }
+
+  public async Task<BaseResponse> ChangePassword(UserForceChangePasswordDto changePasswordDto) {
+    var token = accessor.HttpContext!.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last()
+                ?? throw new RestException(StatusCodes.Status401Unauthorized, "Unauthorized");
+
+    var user = await userManager.FindByIdAsync(JwtHelper.GetClaimFromJwt(token, ClaimTypes.NameIdentifier)!)
+               ?? throw new RestException(StatusCodes.Status404NotFound, "User not found!");
+
+    if (!await userManager.CheckPasswordAsync(user, changePasswordDto.OldPassword)) {
+      throw new RestException(StatusCodes.Status400BadRequest, "Old password is incorrect!");
+    }
+
+    if (changePasswordDto.NewPassword != changePasswordDto.ConfirmPassword) {
+      throw new RestException(StatusCodes.Status400BadRequest, "New password and confirm password do not match!");
+    }
+    var result = await userManager.ChangePasswordAsync(user, changePasswordDto.OldPassword, changePasswordDto.NewPassword);
+
+    if (result.Succeeded) {
+      user.ShouldChangePassword = false;
+      return new BaseResponse(200, "Password changed successfully", null, []);
+    }
+
+    var errors = string.Join(", ", result.Errors.Select(x => x.Description));
+    throw new RestException(StatusCodes.Status400BadRequest, errors);
+  }
+
   public async Task<BaseResponse> VerifyEmail(UserVerifyEmailDto verifyEmailDto) {
     var user = await userManager.FindByEmailAsync(verifyEmailDto.Email!)
                ?? throw new RestException(StatusCodes.Status404NotFound, "User not found!");
@@ -150,16 +200,23 @@ public class UserAuthService(UserManager<AppUser> userManager, IConfiguration co
   }
 
   public async Task<BaseResponse> GetUsers() {
+    var uriBuilder = new UriBuilder(accessor.HttpContext!.Request.Scheme, accessor.HttpContext.Request.Host.Host, accessor.HttpContext.Request.Host.Port ?? -1);
+    if (uriBuilder.Uri.IsDefaultPort) uriBuilder.Port = -1;
+    var baseUrl = uriBuilder.Uri.AbsoluteUri;
+
     var users = await userManager.Users.ToListAsync();
-    var usersDto = users.Select(x => new {
-      x.Id,
-      x.UserName,
-      x.FullName,
-      x.Email,
-      x.AvatarLink,
-      x.Nationality,
-      Roles = userManager.GetRolesAsync(x).Result.ToList()
-    }).ToList();
+
+    var usersDto = users.Select(
+      x => new AppUserGetDto(
+        x.Id,
+        x.UserName!,
+        x.FullName!,
+        x.Email!,
+        x.AvatarLink != null && x.AvatarLink.Contains("google") ? x.AvatarLink : (baseUrl + "images/users/" + (x.AvatarLink ?? "default.png")),
+        x.Nationality!,
+        userManager.GetRolesAsync(x).Result.ToList()
+        )
+    ).ToList();
     return new BaseResponse(200, "Users fetched successfully!", usersDto, []);
   }
 }

@@ -1,11 +1,10 @@
-﻿using Final_UI.Models.Responses;
-
-namespace Final_UI.Services.Interfaces;
+﻿namespace Final_UI.Services.Interfaces;
 
 public interface IUserService {
+  public string? GetUserId();
   public string? GetUserName();
   public string? GetRole();
   public string? GetEmail();
   public string? GetFullName();
-  public Task<AppUserResponse?>? GetUsers();
+  public Task<List<AppUserResponse>?> GetUsers();
 }

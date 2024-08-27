@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Mvc;
-
-namespace Final_UI.Helpers.Filters;
+﻿namespace Final_UI.Helpers.Filters;
 
 public class AuthFilter : IActionFilter {
   public void OnActionExecuted(ActionExecutedContext context) {

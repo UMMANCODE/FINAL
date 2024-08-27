@@ -1,7 +1,4 @@
-﻿using Final_Business.DTOs.User;
-using FluentValidation;
-
-namespace Final_Business.Validators;
+﻿namespace Final_Business.Validators;
 
 public class UserLoginValidator : AbstractValidator<UserLoginDto> {
   public UserLoginValidator() {

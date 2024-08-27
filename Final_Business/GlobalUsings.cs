@@ -1,0 +1,15 @@
+﻿global using Final_Business.DTOs.General;
+global using FluentValidation;
+global using Microsoft.AspNetCore.Http;
+global using Final_Business.DTOs.Admin;
+global using Final_Business.DTOs.User;
+global using Final_Business.Helpers;
+global using Final_Core.Enums;
+global using AutoMapper;
+global using Final_Business.DTOs;
+global using Final_Business.Exceptions;
+global using Final_Business.Services.Interfaces;
+global using Final_Core.Entities;
+global using Final_Data.Repositories.Interfaces;
+global using Microsoft.AspNetCore.Hosting;
+global using System.Transactions;

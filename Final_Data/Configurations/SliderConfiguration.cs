@@ -1,8 +1,4 @@
-﻿using Final_Core.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace Final_Data.Configurations;
+﻿namespace Final_Data.Configurations;
 public class SliderConfiguration : IEntityTypeConfiguration<Slider> {
   public void Configure(EntityTypeBuilder<Slider> builder) {
     builder.Property(s => s.Title).HasMaxLength(50).IsRequired();

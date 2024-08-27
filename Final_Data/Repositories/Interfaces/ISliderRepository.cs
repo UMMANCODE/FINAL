@@ -1,5 +1,4 @@
-﻿using Final_Core.Entities;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace Final_Data.Repositories.Interfaces;
 public interface ISliderRepository : IRepository<Slider> {

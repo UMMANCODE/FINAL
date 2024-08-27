@@ -1,8 +1,4 @@
-﻿using Final_Core.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace Final_Data.Configurations;
+﻿namespace Final_Data.Configurations;
 public class CommentConfiguration : IEntityTypeConfiguration<Comment> {
   public void Configure(EntityTypeBuilder<Comment> builder) {
     builder.HasKey(x => x.Id);

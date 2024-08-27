@@ -1,0 +1,40 @@
+name: dockercompose8606253994561566179
+services:
+  final_ui:
+    build:
+      context: C:\Users\user\Desktop\Code Academy\FInal App
+      dockerfile: Final_UI/Dockerfile
+    environment:
+      APIEndpoint: http://final_api:8080/api
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: "8080"
+      ASPNETCORE_HTTPS_PORTS: "8081"
+      ASPNETCORE_URLS: '"https://+;http://+"'
+    image: finalui
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 8080
+        published: "7002"
+        protocol: tcp
+      - mode: ingress
+        target: 8081
+        published: "7062"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: C:\Users\user\AppData\Roaming/Microsoft/UserSecrets
+        target: /home/app/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\user\AppData\Roaming/ASP.NET/Https
+        target: /home/app/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+networks:
+  default:
+    name: dockercompose8606253994561566179_default

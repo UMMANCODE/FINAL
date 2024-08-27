@@ -1,0 +1,32 @@
+[
+  {
+    "Code": "DISCOUNT1000",
+    "Amount": 10000.00,
+    "ExpiryDate": "2024-12-31T23:59:59",
+    "HouseId": 1
+  },
+  {
+    "Code": "SAVE2000",
+    "Amount": 20000.00,
+    "ExpiryDate": "2024-11-30T23:59:59",
+    "HouseId": 2
+  },
+  {
+    "Code": "PROMO1500",
+    "Amount": 15000.00,
+    "ExpiryDate": "2024-10-31T23:59:59",
+    "HouseId": 5
+  },
+  {
+    "Code": "DEAL2500",
+    "Amount": 25000.00,
+    "ExpiryDate": "2024-12-01T23:59:59",
+    "HouseId": 8
+  },
+  {
+    "Code": "OFFER5000",
+    "Amount": 50000.00,
+    "ExpiryDate": "2024-09-30T23:59:59",
+    "HouseId": 10
+  }
+]

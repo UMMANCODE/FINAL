@@ -1,0 +1,159 @@
+name: dockercompose8606253994561566179
+services:
+  final_api:
+    build:
+      context: C:\Users\user\Desktop\Code Academy\FInal App
+      dockerfile: Final_API/Dockerfile
+      args:
+        BUILD_CONFIGURATION: Release
+      labels:
+        com.microsoft.created-by: visual-studio
+        com.microsoft.visual-studio.project-name: Final_API
+    container_name: Final_API_2
+    entrypoint:
+      - tail
+      - -f
+      - /dev/null
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: "8080"
+      ASPNETCORE_HTTPS_PORTS: "8081"
+    image: finalapi
+    labels:
+      com.microsoft.visual-studio.project-name: Final_API
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /.nuget/packages --additionalProbingPath /.nuget/fallbackpackages  "/app/Final_API.dll"'
+      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof dotnet); then kill $$PID; fi"
+      com.microsoft.visualstudio.debuggee.program: dotnet
+      com.microsoft.visualstudio.debuggee.workingdirectory: /app
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 8080
+        protocol: tcp
+      - mode: ingress
+        target: 8081
+        protocol: tcp
+    tty: true
+    volumes:
+      - type: bind
+        source: C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\HotReload
+        target: /HotReloadAgent
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Sdks\Microsoft.Docker.Sdk\tools\HotReloadProxy\linux-x64\net6.0
+        target: /HotReloadProxy
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Sdks\Microsoft.Docker.Sdk\tools\TokenService.Proxy\linux-x64\net6.0
+        target: /TokenService.Proxy
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\user\AppData\Roaming/ASP.NET/Https
+        target: /home/app/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\user\AppData\Roaming/Microsoft/UserSecrets
+        target: /home/app/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\user\vsdbg\vs2017u5
+        target: /remote_debugger
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\user\AppData\Roaming/ASP.NET/Https
+        target: /root/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\user\AppData\Roaming/Microsoft/UserSecrets
+        target: /root/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+  final_ui:
+    build:
+      context: C:\Users\user\Desktop\Code Academy\FInal App
+      dockerfile: Dockerfile
+      args:
+        BUILD_CONFIGURATION: Release
+      labels:
+        com.microsoft.created-by: visual-studio
+        com.microsoft.visual-studio.project-name: Final_UI
+    container_name: Final_UI
+    entrypoint:
+      - tail
+      - -f
+      - /dev/null
+    labels:
+      com.microsoft.visual-studio.project-name: Final_UI
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /.nuget/packages --additionalProbingPath /.nuget/fallbackpackages  "/app/Final_UI.dll"'
+      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof dotnet); then kill $$PID; fi"
+      com.microsoft.visualstudio.debuggee.program: dotnet
+      com.microsoft.visualstudio.debuggee.workingdirectory: /app
+    networks:
+      default: null
+    tty: true
+    volumes:
+      - type: bind
+        source: C:\Users\user\vsdbg\vs2017u5
+        target: /remote_debugger
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\user\AppData\Roaming/ASP.NET/Https
+        target: /root/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\user\AppData\Roaming/ASP.NET/Https
+        target: /home/app/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\user\AppData\Roaming/Microsoft/UserSecrets
+        target: /root/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\user\AppData\Roaming/Microsoft/UserSecrets
+        target: /home/app/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Sdks\Microsoft.Docker.Sdk\tools\TokenService.Proxy\linux-x64\net6.0
+        target: /TokenService.Proxy
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Sdks\Microsoft.Docker.Sdk\tools\HotReloadProxy\linux-x64\net6.0
+        target: /HotReloadProxy
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\HotReload
+        target: /HotReloadAgent
+        read_only: true
+        bind:
+          create_host_path: true
+networks:
+  default:
+    name: dockercompose8606253994561566179_default

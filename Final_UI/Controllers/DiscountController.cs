@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using Final_UI.Helpers.Filters;
-using Final_UI.Models.Requests;
-using Final_UI.Models.Responses;
-using Final_UI.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Final_UI.Controllers;
 

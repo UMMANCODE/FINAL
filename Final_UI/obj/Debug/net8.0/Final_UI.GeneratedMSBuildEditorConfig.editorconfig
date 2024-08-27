@@ -18,6 +18,14 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\user\Desktop\Code Academy\FInal App\Final_UI
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/user/Desktop/Code Academy/FInal App/Final_UI/Views/Account/ChangePassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxDaGFuZ2VQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/Desktop/Code Academy/FInal App/Final_UI/Views/Account/CreateAdmin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxDcmVhdGVBZG1pbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/user/Desktop/Code Academy/FInal App/Final_UI/Views/Account/ForgetPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxGb3JnZXRQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -82,12 +90,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmVhdHVyZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/user/Desktop/Code Academy/FInal App/Final_UI/Views/Home/Admins.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZG1pbnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/user/Desktop/Code Academy/FInal App/Final_UI/Views/Home/Comments.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDb21tZW50cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/user/Desktop/Code Academy/FInal App/Final_UI/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/Desktop/Code Academy/FInal App/Final_UI/Views/Home/Members.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxNZW1iZXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/user/Desktop/Code Academy/FInal App/Final_UI/Views/Home/Orders.cshtml]
@@ -104,6 +120,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/user/Desktop/Code Academy/FInal App/Final_UI/Views/House/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG91c2VcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/Desktop/Code Academy/FInal App/Final_UI/Views/Profile/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/Desktop/Code Academy/FInal App/Final_UI/Views/Shared/_ChangeDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9DaGFuZ2VEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/Desktop/Code Academy/FInal App/Final_UI/Views/Shared/_ChangePassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9DaGFuZ2VQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/user/Desktop/Code Academy/FInal App/Final_UI/Views/Shared/_Comments.cshtml]

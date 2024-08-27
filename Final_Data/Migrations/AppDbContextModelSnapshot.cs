@@ -79,6 +79,9 @@ namespace Final_Data.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("ShouldChangePassword")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -111,20 +114,20 @@ namespace Final_Data.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("HouseId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("HouseId");
+                    b.HasIndex("AppUserId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("HouseId");
 
                     b.ToTable("Bids");
                 });
@@ -138,6 +141,7 @@ namespace Final_Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AppUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Content")
@@ -380,11 +384,17 @@ namespace Final_Data.Migrations
                     b.Property<int>("HouseId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -596,26 +606,28 @@ namespace Final_Data.Migrations
 
             modelBuilder.Entity("Final_Core.Entities.Bid", b =>
                 {
+                    b.HasOne("Final_Core.Entities.AppUser", "AppUser")
+                        .WithMany("Bids")
+                        .HasForeignKey("AppUserId");
+
                     b.HasOne("Final_Core.Entities.House", "House")
                         .WithMany("Bids")
                         .HasForeignKey("HouseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Final_Core.Entities.AppUser", "User")
-                        .WithMany("Bids")
-                        .HasForeignKey("UserId");
+                    b.Navigation("AppUser");
 
                     b.Navigation("House");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Final_Core.Entities.Comment", b =>
                 {
                     b.HasOne("Final_Core.Entities.AppUser", "AppUser")
                         .WithMany("Comments")
-                        .HasForeignKey("AppUserId");
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Final_Core.Entities.House", "House")
                         .WithMany("Comments")

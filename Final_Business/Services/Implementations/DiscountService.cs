@@ -1,15 +1,4 @@
-﻿using AutoMapper;
-using Final_Business.DTOs;
-using Final_Business.DTOs.General;
-using Final_Business.Exceptions;
-using Final_Business.Helpers;
-using Final_Business.Services.Interfaces;
-using Final_Core.Entities;
-using Final_Core.Enums;
-using Final_Data.Repositories.Interfaces;
-using Microsoft.AspNetCore.Http;
-
-namespace Final_Business.Services.Implementations;
+﻿namespace Final_Business.Services.Implementations;
 public class DiscountService(IDiscountRepository discountRepository, IMapper mapper, IHouseRepository houseRepository)
   : IDiscountService {
   public async Task<BaseResponse> Create(DiscountCreateDto createDto) {

@@ -1,6 +1,4 @@
-﻿using Final_Core.Enums;
-
-namespace Final_Business.DTOs.General;
+﻿namespace Final_Business.DTOs.General;
 
 public record CommentGetDto(
   int Id,
@@ -15,6 +13,5 @@ public record CommentGetDto(
 
 public record CommentCreateDto(
   string Content,
-  string AppUserId,
   int HouseId
 );

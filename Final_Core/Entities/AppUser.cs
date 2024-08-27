@@ -10,4 +10,5 @@ public class AppUser : IdentityUser {
   public string? AvatarLink { get; set; }
   public List<Order> Orders { get; set; } = [];
   public string? Nationality { get; set; }
+  public bool ShouldChangePassword { get; set; }
 }

@@ -1,6 +1,4 @@
-﻿using Final_Data.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace Final_Data.Repositories.Implementations;
 

@@ -1,6 +1,4 @@
-﻿using Final_UI.Helpers.Enums;
-
-namespace Final_UI.Models.Responses;
+﻿namespace Final_UI.Models.Responses;
 
 public class HouseResponse {
   public int Id { get; set; }

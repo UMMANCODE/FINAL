@@ -1,13 +1,4 @@
-﻿using AutoMapper;
-using Final_UI.Helpers.Extensions;
-using Final_UI.Helpers.Filters;
-using Final_UI.Models.Requests;
-using Final_UI.Models.Responses;
-using Final_UI.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-
-namespace Final_UI.Controllers;
+﻿namespace Final_UI.Controllers;
 
 [ServiceFilter(typeof(AuthFilter))]
 [ServiceFilter(typeof(AdminOrSuperAdminFilter))]

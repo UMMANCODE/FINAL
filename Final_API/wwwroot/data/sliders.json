@@ -1,0 +1,80 @@
+[
+  {
+    "Title": "Welcome to Our Service",
+    "SubTitle1": "Your journey begins here",
+    "SubTitle2": "Explore the features",
+    "Description": "Discover all the amazing features we offer to make your experience better.",
+    "ImageLink": "slider1.jpeg",
+    "BtnText1": "Get Started",
+    "BtnText2": "Learn More",
+    "BtnLink1": "https://example.com/get-started",
+    "BtnLink2": "https://example.com/learn-more",
+    "ImagePosition": 1,
+    "Order": 1
+  },
+  {
+    "Title": "Advanced Tools",
+    "SubTitle1": "Unlock the potential",
+    "SubTitle2": "Tools for every need",
+    "Description": "Utilize our advanced tools to enhance your productivity and achieve more.",
+    "ImageLink": "slider2.jpeg",
+    "BtnText1": "Explore Tools",
+    "BtnText2": "See Benefits",
+    "BtnLink1": "https://example.com/tools",
+    "BtnLink2": "https://example.com/benefits",
+    "ImagePosition": 2,
+    "Order": 2
+  },
+  {
+    "Title": "Join the Community",
+    "SubTitle1": "Be part of something bigger",
+    "SubTitle2": "Connect with others",
+    "Description": "Join our vibrant community and connect with like-minded individuals.",
+    "ImageLink": "slider3.jpeg",
+    "BtnText1": "Join Now",
+    "BtnText2": "Community Guidelines",
+    "BtnLink1": "https://example.com/join",
+    "BtnLink2": "https://example.com/guidelines",
+    "ImagePosition": 3,
+    "Order": 3
+  },
+  {
+    "Title": "Secure and Reliable",
+    "SubTitle1": "Your data is safe",
+    "SubTitle2": "Trust our security",
+    "Description": "We prioritize your security with robust measures to protect your data.",
+    "ImageLink": "slider4.jpeg",
+    "BtnText1": "Learn More",
+    "BtnText2": "Security Features",
+    "BtnLink1": "https://example.com/security",
+    "BtnLink2": "https://example.com/features",
+    "ImagePosition": 1,
+    "Order": 4
+  },
+  {
+    "Title": "Customizable Options",
+    "SubTitle1": "Tailor to your needs",
+    "SubTitle2": "Flexibility at its best",
+    "Description": "Customize our service to fit your unique requirements and preferences.",
+    "ImageLink": "slider5.jpeg",
+    "BtnText1": "Customize Now",
+    "BtnText2": "See Options",
+    "BtnLink1": "https://example.com/customize",
+    "BtnLink2": "https://example.com/options",
+    "ImagePosition": 2,
+    "Order": 5
+  },
+  {
+    "Title": "Get Started Today",
+    "SubTitle1": "Your future awaits",
+    "SubTitle2": "Take the first step",
+    "Description": "Start using our service today and see immediate benefits.",
+    "ImageLink": "slider6.jpeg",
+    "BtnText1": "Sign Up",
+    "BtnText2": "Contact Us",
+    "BtnLink1": "https://example.com/sign-up",
+    "BtnLink2": "https://example.com/contact",
+    "ImagePosition": 3,
+    "Order": 6
+  }
+]

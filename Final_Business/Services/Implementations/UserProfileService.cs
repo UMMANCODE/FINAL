@@ -1,21 +1,18 @@
-﻿using Final_Business.DTOs.User;
-using Final_Business.Exceptions;
-using Final_Business.Helpers;
-using Final_Business.Services.Interfaces;
-using Final_Core.Entities;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 
 namespace Final_Business.Services.Implementations;
 public class UserProfileService(UserManager<AppUser> userManager, IHttpContextAccessor accessor, IWebHostEnvironment env)
   : IUserProfileService {
   public async Task<BaseResponse> GetProfile() {
-    var user = await userManager.GetUserAsync(accessor.HttpContext!.User)
+    var token = accessor.HttpContext!.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last()
+                ?? throw new RestException(StatusCodes.Status401Unauthorized, "Unauthorized");
+
+    var user = await userManager.FindByIdAsync(JwtHelper.GetClaimFromJwt(token, ClaimTypes.NameIdentifier)!) 
                ?? throw new RestException(StatusCodes.Status404NotFound, "User not found!");
 
     var uploadedFilePath = new Uri(
-      $"{accessor.HttpContext!.Request.Scheme}://{accessor.HttpContext!.Request.Host}/images/users/{user.AvatarLink}"
+      $"{accessor.HttpContext!.Request.Scheme}://{accessor.HttpContext!.Request.Host}/images/users/{user.AvatarLink ?? "default.png"}"
     );
 
     user.AvatarLink = uploadedFilePath.ToString();
@@ -23,17 +20,18 @@ public class UserProfileService(UserManager<AppUser> userManager, IHttpContextAc
   }
 
   public async Task<BaseResponse> UpdateProfile(UserChangeDetailsDto userChangeDetailsDto) {
-    var user = await userManager.GetUserAsync(accessor.HttpContext!.User)
+    var token = accessor.HttpContext!.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last()
+                ?? throw new RestException(StatusCodes.Status401Unauthorized, "Unauthorized");
+
+    var user = await userManager.FindByIdAsync(JwtHelper.GetClaimFromJwt(token, ClaimTypes.NameIdentifier)!)
                ?? throw new RestException(StatusCodes.Status404NotFound, "User not found!");
 
-    if (userChangeDetailsDto.Email != user.Email && userChangeDetailsDto.Email is not null) {
-      var emailExists = await userManager.FindByEmailAsync(userChangeDetailsDto.Email);
-      if (emailExists != null) {
-        throw new RestException(StatusCodes.Status400BadRequest, "Email already exists!");
-      }
+    if (userChangeDetailsDto.UserName != null &&
+        userChangeDetailsDto.UserName != user.UserName &&
+        await userManager.FindByNameAsync(userChangeDetailsDto.UserName) != null) {
+      throw new RestException(StatusCodes.Status400BadRequest, "Username already exists!");
     }
 
-    user.Email = userChangeDetailsDto.Email ?? user.Email;
     user.FullName = userChangeDetailsDto.FullName ?? user.FullName;
     user.UserName = userChangeDetailsDto.UserName ?? user.UserName;
 
@@ -48,11 +46,14 @@ public class UserProfileService(UserManager<AppUser> userManager, IHttpContextAc
 
     await userManager.UpdateAsync(user);
 
-    return new BaseResponse(204, "Profile updated successfully", null, []);
+    return new BaseResponse(200, "Profile updated successfully", null, []);
   }
 
   public async Task<BaseResponse> ChangePassword(UserChangePasswordDto userChangePasswordDto) {
-    var user = await userManager.GetUserAsync(accessor.HttpContext!.User)
+    var token = accessor.HttpContext!.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last()
+                ?? throw new RestException(StatusCodes.Status401Unauthorized, "Unauthorized");
+
+    var user = await userManager.FindByIdAsync(JwtHelper.GetClaimFromJwt(token, ClaimTypes.NameIdentifier)!)
                ?? throw new RestException(StatusCodes.Status404NotFound, "User not found!");
 
     if (!await userManager.CheckPasswordAsync(user, userChangePasswordDto.OldPassword)) {

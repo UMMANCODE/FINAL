@@ -1,9 +1,9 @@
-﻿@using Final_UI.Services.Interfaces
-@inject IHttpContextAccessor HttpContextAccessor
+﻿@inject IHttpContextAccessor HttpContextAccessor
 @inject IUserService UserService
 @inject IDataService DataService
 @{
   var context = HttpContextAccessor?.HttpContext;
+  var user = await DataService.GetProfile();
 
   var comments = await DataService.GetComments();
   var orders = await DataService.GetOrders();
@@ -38,307 +38,293 @@
   <link rel="stylesheet" href="~/assets/css/style.css">
   <!-- End layout styles -->
   <link rel="shortcut icon" href="~/assets/images/favicon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-  <div class="container-scroller">
-    <!-- partial:partials/_sidebar.html -->
-    <nav class="sidebar sidebar-offcanvas" id="sidebar">
-      <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-        <a class="sidebar-brand brand-logo" asp-controller="Home" asp-action="Index"><img src="~/assets/images/logo.svg" alt="logo" /></a>
-        <a class="sidebar-brand brand-logo-mini" asp-controller="Home" asp-action="Index"><img src="~/assets/images/logo-mini.svg" alt="logo" /></a>
+<div class="container-scroller">
+<!-- partial:partials/_sidebar.html -->
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+  <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
+    <a class="sidebar-brand brand-logo" asp-controller="Home" asp-action="Index"><img src="~/assets/images/logo.svg" alt="logo"/></a>
+    <a class="sidebar-brand brand-logo-mini" asp-controller="Home" asp-action="Index"><img src="~/assets/images/logo-mini.svg" alt="logo"/></a>
+  </div>
+  <ul class="nav">
+    @if (user is not null) {
+      <li class="nav-item profile">
+        <div class="profile-desc">
+          <div class="profile-pic">
+            <div class="count-indicator">
+              <img class="img-xs rounded-circle" src="@user.AvatarLink" alt="">
+            </div>
+            <div class="profile-name">
+              <h5 class="mb-0 font-weight-normal">@(UserService.GetUserName()?.Length <= 8 ? UserService.GetUserName() : $"{UserService.GetUserName()?[..8]}...")</h5>
+              <span>@UserService.GetRole()</span>
+            </div>
+          </div>
+          <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
+          <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
+            <a asp-controller="Profile" asp-action="Index" class="dropdown-item preview-item">
+              <div class="preview-thumbnail">
+                <div class="preview-icon bg-dark rounded-circle">
+                  <i class="mdi mdi-settings text-primary"></i>
+                </div>
+              </div>
+              <div class="preview-item-content">
+                <p class="preview-subject ellipsis mb-1 text-small">Account settings</p>
+              </div>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a asp-controller="Account" asp-action="ChangePassword" class="dropdown-item preview-item">
+              <div class="preview-thumbnail">
+                <div class="preview-icon bg-dark rounded-circle">
+                  <i class="mdi mdi-onepassword  text-info"></i>
+                </div>
+              </div>
+              <div class="preview-item-content">
+                <p class="preview-subject ellipsis mb-1 text-small">Change Password</p>
+              </div>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a asp-controller="Account" asp-action="Logout" class="dropdown-item preview-item">
+              <div class="preview-thumbnail">
+                <div class="preview-icon bg-dark rounded-circle">
+                  <i class="mdi mdi-logout text-danger"></i>
+                </div>
+              </div>
+              <div class="preview-item-content">
+                <p class="preview-subject mb-1">Log out</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </li>
+    }
+    <li class="nav-item nav-category">
+      <span class="nav-link">Navigation</span>
+    </li>
+    <li class="nav-item menu-items">
+      <a class="nav-link" asp-controller="Home">
+        <span class="menu-icon">
+          <i class="mdi mdi-speedometer"></i>
+        </span>
+        <span class="menu-title">Dashboard</span>
+      </a>
+    </li>
+    <li class="nav-item menu-items">
+      <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+        <span class="menu-icon">
+          <i class="mdi mdi-table-large"></i>
+        </span>
+        <span class="menu-title">Tables</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="ui-basic">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" asp-controller="House" asp-action="Index">Houses</a></li>
+          <li class="nav-item"> <a class="nav-link" asp-controller="Slider" asp-action="Index">Sliders</a></li>
+          <li class="nav-item"> <a class="nav-link" asp-controller="Feature" asp-action="Index">Features</a></li>
+          <li class="nav-item"> <a class="nav-link" asp-controller="Discount" asp-action="Index">Discounts</a></li>
+        </ul>
       </div>
-      <ul class="nav">
-        @if (context!.Request.Cookies["token"] != null) {
-          <li class="nav-item profile">
-            <div class="profile-desc">
-              <div class="profile-pic">
-                <div class="count-indicator">
-                  <img class="img-xs rounded-circle" src="~/assets/images/faces/face15.jpg" alt="">
-                  <span class="count bg-success"></span>
-                </div>
-                <div class="profile-name">
-                  <h5 class="mb-0 font-weight-normal">@(UserService.GetUserName()?.Length <= 8 ? UserService.GetUserName() : $"{UserService.GetUserName()?[..8]}...")</h5>
-                  <span>@UserService.GetRole()</span>
+    </li>
+    <li class="nav-item menu-items">
+      <a class="nav-link" asp-controller="Home" asp-action="Charts">
+        <span class="menu-icon">
+          <i class="mdi mdi-chart-bar"></i>
+        </span>
+        <span class="menu-title">Charts</span>
+      </a>
+    </li>
+    <li class="nav-item menu-items">
+      <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+        <span class="menu-icon">
+          <i class="mdi mdi-security"></i>
+        </span>
+        <span class="menu-title">User Pages</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="auth">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" asp-controller="Home" asp-action="Members"> Members </a></li>
+          @if (UserService.GetRole() == "SuperAdmin")
+          {
+            <li class="nav-item"> <a class="nav-link" asp-controller="Home" asp-action="Admins"> Admins </a></li>
+          }
+        </ul>
+      </div>
+    </li>
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="https://example.com">
+        <span class="menu-icon">
+          <i class="mdi mdi-file-document-box"></i>
+        </span>
+        <span class="menu-title">Documentation</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+<!-- partial -->
+<div class="container-fluid page-body-wrapper">
+  <!-- partial:partials/_navbar.html -->
+  <nav class="navbar p-0 fixed-top d-flex flex-row">
+    <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
+      <a class="navbar-brand brand-logo-mini" asp-controller="Home" asp-action="Index"><img src="~/assets/images/logo-mini.svg" alt="logo"/></a>
+    </div>
+    <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
+      <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+        <span class="mdi mdi-menu"></span>
+      </button>
+      <ul class="navbar-nav navbar-nav-right">
+        <li class="nav-item dropdown d-none d-lg-block">
+          <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" data-toggle="dropdown" aria-expanded="false" href="#">Generate Report</a>
+          <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="createbuttonDropdown">
+            <h6 class="p-3 mb-0">Reports</h6>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item preview-item" asp-controller="Home" asp-action="GenerateReportCommentsOrders">
+              <div class="preview-thumbnail">
+                <div class="preview-icon bg-dark rounded-circle">
+                  <i class="mdi mdi-file-outline text-primary"></i>
                 </div>
               </div>
-              <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
-              <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
-                <a href="#" class="dropdown-item preview-item">
+              <div class="preview-item-content">
+                <p class="preview-subject ellipsis mb-1">Comments and Orders</p>
+              </div>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item preview-item" asp-controller="Home" asp-action="GenerateReportUsers">
+              <div class="preview-thumbnail">
+                <div class="preview-icon bg-dark rounded-circle">
+                  <i class="mdi mdi-file-outline text-primary"></i>
+                </div>
+              </div>
+              <div class="preview-item-content">
+                <p class="preview-subject ellipsis mb-1">@(UserService.GetRole() == "Admin" ? "Members" : "Members and Admins")</p>
+              </div>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item preview-item" asp-controller="Home" asp-action="GenerateReportCrud">
+              <div class="preview-thumbnail">
+                <div class="preview-icon bg-dark rounded-circle">
+                  <i class="mdi mdi-file-outline text-primary"></i>
+                </div>
+              </div>
+              <div class="preview-item-content">
+                <p class="preview-subject ellipsis mb-1">Crud Data</p>
+              </div>
+            </a>
+          </div>
+        </li>
+        <li class="nav-item dropdown border-left">
+          <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+            <i class="mdi mdi-comment"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
+            <h6 class="p-3 mb-0">Comments</h6>
+            <div class="dropdown-divider"></div>
+            @for (var i = 0; i < commentsLimit; i++) {
+              var minutes = DateTime.Now.Subtract(comments![i].CreatedAt).Minutes;
+              @if (comments is { Count: > 0 }) {
+                <a class="dropdown-item preview-item">
                   <div class="preview-thumbnail">
-                    <div class="preview-icon bg-dark rounded-circle">
-                      <i class="mdi mdi-settings text-primary"></i>
-                    </div>
+                    <img src="@comments[i].AppUserAvatarLink" alt="image" class="rounded-circle profile-pic">
                   </div>
                   <div class="preview-item-content">
-                    <p class="preview-subject ellipsis mb-1 text-small">Account settings</p>
+                    <p class="preview-subject ellipsis mb-1">@comments[i].AppUserUserName send you a message</p>
+                    <p class="text-muted mb-0"> @minutes Minutes ago </p>
                   </div>
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-dark rounded-circle">
-                      <i class="mdi mdi-onepassword  text-info"></i>
-                    </div>
-                  </div>
+              }
+            }
+            <p class="p-3 mb-0 text-center"><a asp-controller="Home" asp-action="Comments" style="color: white">See all comments</a></p>
+          </div>
+        </li>
+        <li class="nav-item dropdown border-left">
+          <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+            <i class="mdi mdi-cart"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+            <h6 class="p-3 mb-0">Orders</h6>
+            <div class="dropdown-divider"></div>
+            @for (var i = 0; i < ordersLimit; i++) {
+              @if (orders is { Count: > 0 }) {
+                <a class="dropdown-item preview-item">
                   <div class="preview-item-content">
-                    <p class="preview-subject ellipsis mb-1 text-small">Change Password</p>
+                    <p class="preview-subject mb-1">@orders[i].Price</p>
+                    <p class="text-muted ellipsis mb-0">@orders[i].CreatedAt</p>
                   </div>
                 </a>
                 <div class="dropdown-divider"></div>
-                <a asp-controller="Account" asp-action="Logout" class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-dark rounded-circle">
-                      <i class="mdi mdi-logout text-danger"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <p class="preview-subject mb-1">Log out</p>
-                  </div>
-                </a>
+              }
+            }
+            <p class="p-3 mb-0 text-center"><a asp-controller="Home" asp-action="Orders" style="color: white">See all orders</a></p>
+          </div>
+        </li>
+        @if (user is not null) {
+          <li class="nav-item dropdown">
+            <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
+              <div class="navbar-profile">
+                <img class="img-xs rounded-circle" src="@user.AvatarLink" alt="">
+                <p class="mb-0 d-none d-sm-block navbar-profile-name">@UserService.GetFullName()</p>
+                <i class="mdi mdi-menu-down d-none d-sm-block"></i>
               </div>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
+              <a asp-controller="Profile" asp-action="Index" class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-dark rounded-circle">
+                    <i class="mdi mdi-settings text-primary"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <p class="preview-subject ellipsis mb-1 text-small">Account settings</p>
+                </div>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a asp-controller="Account" asp-action="ChangePassword" class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-dark rounded-circle">
+                    <i class="mdi mdi-onepassword  text-info"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <p class="preview-subject ellipsis mb-1 text-small">Change Password</p>
+                </div>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a asp-controller="Account" asp-action="Logout" class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-dark rounded-circle">
+                    <i class="mdi mdi-logout text-danger"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <p class="preview-subject mb-1">Log out</p>
+                </div>
+              </a>
             </div>
           </li>
         }
-        <li class="nav-item nav-category">
-          <span class="nav-link">Navigation</span>
-        </li>
-        <li class="nav-item menu-items">
-          <a class="nav-link" asp-controller="Home">
-            <span class="menu-icon">
-              <i class="mdi mdi-speedometer"></i>
-            </span>
-            <span class="menu-title">Dashboard</span>
-          </a>
-        </li>
-        <li class="nav-item menu-items">
-          <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-            <span class="menu-icon">
-              <i class="mdi mdi-table-large"></i>
-            </span>
-            <span class="menu-title">Tables</span>
-            <i class="menu-arrow"></i>
-          </a>
-          <div class="collapse" id="ui-basic">
-            <ul class="nav flex-column sub-menu">
-              <li class="nav-item"> <a class="nav-link" asp-controller="House" asp-action="Index">Houses</a></li>
-              <li class="nav-item"> <a class="nav-link" asp-controller="Slider" asp-action="Index">Sliders</a></li>
-              <li class="nav-item"> <a class="nav-link" asp-controller="Feature" asp-action="Index">Features</a></li>
-              <li class="nav-item"> <a class="nav-link" asp-controller="Discount" asp-action="Index">Discounts</a></li>
-            </ul>
-          </div>
-        </li>
-        <li class="nav-item menu-items">
-          <a class="nav-link" href="pages/charts/chartjs.html">
-            <span class="menu-icon">
-              <i class="mdi mdi-chart-bar"></i>
-            </span>
-            <span class="menu-title">Charts</span>
-          </a>
-        </li>
-        <li class="nav-item menu-items">
-          <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-            <span class="menu-icon">
-              <i class="mdi mdi-security"></i>
-            </span>
-            <span class="menu-title">User Pages</span>
-            <i class="menu-arrow"></i>
-          </a>
-          <div class="collapse" id="auth">
-            <ul class="nav flex-column sub-menu">
-              <li class="nav-item"> <a class="nav-link" href="pages/samples/blank-page.html"> Blank Page </a></li>
-              <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
-              <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
-              <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
-              <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
-            </ul>
-          </div>
-        </li>
-        <li class="nav-item menu-items">
-          <a class="nav-link" href="http://www.bootstrapdash.com/demo/corona-free/jquery/documentation/documentation.html">
-            <span class="menu-icon">
-              <i class="mdi mdi-file-document-box"></i>
-            </span>
-            <span class="menu-title">Documentation</span>
-          </a>
-        </li>
+        else {
+          <li class="nav-item">
+            <a class="nav-link" asp-controller="Account" asp-action="Login">
+              <i class="mdi mdi-login"></i>
+              <span class="menu-title ml-2">Login</span>
+            </a>
+          </li>
+        }
       </ul>
-    </nav>
-    <!-- partial -->
-    <div class="container-fluid page-body-wrapper">
-      <!-- partial:partials/_navbar.html -->
-      <nav class="navbar p-0 fixed-top d-flex flex-row">
-        <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
-          <a class="navbar-brand brand-logo-mini" asp-controller="Home" asp-action="Index"><img src="~/assets/images/logo-mini.svg" alt="logo" /></a>
-        </div>
-        <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
-          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-            <span class="mdi mdi-menu"></span>
-          </button>
-          <ul class="navbar-nav w-100">
-            <li class="nav-item w-100">
-              <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search">
-                <input type="text" class="form-control" placeholder="Search products">
-              </form>
-            </li>
-          </ul>
-          <ul class="navbar-nav navbar-nav-right">
-            <li class="nav-item dropdown d-none d-lg-block">
-              <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" data-toggle="dropdown" aria-expanded="false" href="#">+ Create New Project</a>
-              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="createbuttonDropdown">
-                <h6 class="p-3 mb-0">Projects</h6>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-dark rounded-circle">
-                      <i class="mdi mdi-file-outline text-primary"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <p class="preview-subject ellipsis mb-1">Software Development</p>
-                  </div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-dark rounded-circle">
-                      <i class="mdi mdi-web text-info"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <p class="preview-subject ellipsis mb-1">UI Development</p>
-                  </div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-dark rounded-circle">
-                      <i class="mdi mdi-layers text-danger"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <p class="preview-subject ellipsis mb-1">Software Testing</p>
-                  </div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <p class="p-3 mb-0 text-center">See all projects</p>
-              </div>
-            </li>
-            <li class="nav-item nav-settings d-none d-lg-block">
-              <a class="nav-link" href="#">
-                <i class="mdi mdi-view-grid"></i>
-              </a>
-            </li>
-            <li class="nav-item dropdown border-left">
-              <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-                <i class="mdi mdi-comment"></i>
-              </a>
-              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
-                <h6 class="p-3 mb-0">Comments</h6>
-                <div class="dropdown-divider"></div>
-                @for (var i = 0; i < commentsLimit; i++) {
-                  var minutes = DateTime.Now.Subtract(comments![i].CreatedAt).Minutes;
-                  @if (comments is { Count: > 0 }) {
-                    <a class="dropdown-item preview-item">
-                      <div class="preview-thumbnail">
-                        <img src="@comments[i].AppUserAvatarLink" alt="image" class="rounded-circle profile-pic">
-                      </div>
-                      <div class="preview-item-content">
-                        <p class="preview-subject ellipsis mb-1">@comments[i].AppUserUserName send you a message</p>
-                        <p class="text-muted mb-0"> @minutes Minutes ago </p>
-                      </div>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                  }
-                }
-                <p class="p-3 mb-0 text-center"><a asp-controller="Home" asp-action="Comments" style="color: white">See all comments</a></p>
-              </div>
-            </li>
-            <li class="nav-item dropdown border-left">
-              <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-                <i class="mdi mdi-cart"></i>
-              </a>
-              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-                <h6 class="p-3 mb-0">Orders</h6>
-                <div class="dropdown-divider"></div>
-              @for (var i = 0; i < ordersCount; i++) {
-                  @if (orders is { Count: > 0 }) {
-                    <a class="dropdown-item preview-item">
-                      <div class="preview-item-content">
-                        <p class="preview-subject mb-1">@orders[i].Price</p>
-                        <p class="text-muted ellipsis mb-0">@orders[i].CreatedAt</p>
-                      </div>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                  }
-                }
-                <p class="p-3 mb-0 text-center"><a asp-controller="Home" asp-action="Orders" style="color: white">See all orders</a></p>
-              </div>
-            </li>
-            @if (context!.Request.Cookies["token"] != null) {
-              <li class="nav-item dropdown">
-                <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
-                  <div class="navbar-profile">
-                    <img class="img-xs rounded-circle" src="~/assets/images/faces/face15.jpg" alt="">
-                    <p class="mb-0 d-none d-sm-block navbar-profile-name">@UserService.GetFullName()</p>
-                    <i class="mdi mdi-menu-down d-none d-sm-block"></i>
-                  </div>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
-                  <a href="#" class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <div class="preview-icon bg-dark rounded-circle">
-                        <i class="mdi mdi-settings text-primary"></i>
-                      </div>
-                    </div>
-                    <div class="preview-item-content">
-                      <p class="preview-subject ellipsis mb-1 text-small">Account settings</p>
-                    </div>
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <a href="#" class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <div class="preview-icon bg-dark rounded-circle">
-                        <i class="mdi mdi-onepassword  text-info"></i>
-                      </div>
-                    </div>
-                    <div class="preview-item-content">
-                      <p class="preview-subject ellipsis mb-1 text-small">Change Password</p>
-                    </div>
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <a asp-controller="Account" asp-action="Logout" class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <div class="preview-icon bg-dark rounded-circle">
-                        <i class="mdi mdi-logout text-danger"></i>
-                      </div>
-                    </div>
-                    <div class="preview-item-content">
-                      <p class="preview-subject mb-1">Log out</p>
-                    </div>
-                  </a>
-                </div>
-              </li>
-            }
-            else {
-              <li class="nav-item">
-                <a class="nav-link" asp-controller="Account" asp-action="Login">
-                  <i class="mdi mdi-login"></i>
-                  <span class="menu-title ml-2">Login</span>
-                </a>
-              </li>
-            }
-          </ul>
-          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-            <span class="mdi mdi-format-line-spacing"></span>
-          </button>
-        </div>
-      </nav>
-      <!-- partial -->
-      @RenderBody()
-      <!-- main-panel ends -->
+      <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+        <span class="mdi mdi-format-line-spacing"></span>
+      </button>
     </div>
-    <!-- page-body-wrapper ends -->
-  </div>
+  </nav>
+  <!-- partial -->
+  @RenderBody()
+  <!-- main-panel ends -->
+</div>
+<!-- page-body-wrapper ends -->
+</div>
   <!-- container-scroller -->
   <!-- plugins:js -->
   <script src="~/assets/vendors/js/vendor.bundle.base.js"></script>
@@ -360,6 +346,29 @@
   <!-- Custom js for this page -->
   <script src="~/assets/js/dashboard.js"></script>
   <!-- End custom js for this page -->
+  
+  <!-- toaster.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- SignalR -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.7/signalr.min.js" integrity="sha512-7SRCYIJtR6F8ocwW7UxW6wGKqbSyqREDbfCORCbGLatU0iugBLwyOXpzhkPyHIFdBO0K2VCu57fvP2Twgx1o2A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+      // Create a new SignalR connection
+      var connection = new signalR.HubConnectionBuilder().withUrl("/notificationHub").build();
+
+      // Define the function to be called when a notification is received
+      connection.on("notify", function (message) {
+        toastr.info(message);
+      });
+
+      // Start the connection
+      connection.start().then(function () {
+        console.log("SignalR connected");
+      }).catch(function (err) {
+        console.error(err.toString());
+      });
+    });
+  </script>
   @RenderSection("Scripts", required: false)
 </body>
 </html>

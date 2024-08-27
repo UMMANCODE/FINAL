@@ -1,0 +1,52 @@
+[
+  {
+    "IconLink": "feature1.png",
+    "Name": "Dashboard",
+    "Description": "Access your dashboard to view all analytics and reports."
+  },
+  {
+    "IconLink": "feature2.png",
+    "Name": "Notifications",
+    "Description": "Receive instant alerts and updates on your activities."
+  },
+  {
+    "IconLink": "feature3.png",
+    "Name": "Settings",
+    "Description": "Customize your application preferences and settings."
+  },
+  {
+    "IconLink": "feature4.png",
+    "Name": "User Management",
+    "Description": "Manage users, roles, and permissions easily."
+  },
+  {
+    "IconLink": "feature5.png",
+    "Name": "Reports",
+    "Description": "Generate and view detailed reports on performance."
+  },
+  {
+    "IconLink": "feature6.png",
+    "Name": "Help Center",
+    "Description": "Find answers and support in the help center."
+  },
+  {
+    "IconLink": "feature7.png",
+    "Name": "Integrations",
+    "Description": "Connect and manage third-party integrations."
+  },
+  {
+    "IconLink": "feature8.png",
+    "Name": "Billing",
+    "Description": "Manage billing and payment details securely."
+  },
+  {
+    "IconLink": "feature9.png",
+    "Name": "Feedback",
+    "Description": "Provide feedback to help us improve our services."
+  },
+  {
+    "IconLink": "feature10.png",
+    "Name": "Security",
+    "Description": "Ensure your data is safe with advanced security features."
+  }
+]

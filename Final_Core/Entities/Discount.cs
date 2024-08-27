@@ -1,6 +1,5 @@
 ﻿namespace Final_Core.Entities;
-public class Discount {
-  public int Id { get; set; }
+public class Discount : BaseEntity {
   public string Code { get; set; }
   public decimal Amount { get; set; }
   public DateTime ExpiryDate { get; set; }

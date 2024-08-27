@@ -1,0 +1,11 @@
+﻿global using Final_UI.Helpers.Enums;
+global using Final_UI.Helpers.Extensions;
+global using Final_UI.Helpers.Filters;
+global using Final_UI.Models.Responses;
+global using Final_UI.Models.Requests;
+global using Final_UI.Services.Interfaces;
+global using Final_UI.Helpers.Exceptions;
+global using System.ComponentModel.DataAnnotations;
+global using Microsoft.AspNetCore.Mvc.Filters;
+global using Microsoft.AspNetCore.Mvc;
+global using AutoMapper;

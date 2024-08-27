@@ -1,16 +1,4 @@
-﻿using AutoMapper;
-using Final_Business.DTOs;
-using Final_Business.Exceptions;
-using Final_Business.Helpers;
-using Final_Business.Services.Interfaces;
-using Final_Core.Entities;
-using Final_Data.Repositories.Interfaces;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using System.Transactions;
-using Final_Business.DTOs.General;
-
-namespace Final_Business.Services.Implementations;
+﻿namespace Final_Business.Services.Implementations;
 
 public class SliderService(ISliderRepository sliderRepository, IMapper mapper, IWebHostEnvironment env)
   : ISliderService {

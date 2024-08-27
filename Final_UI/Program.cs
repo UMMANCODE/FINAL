@@ -1,20 +1,24 @@
-using AutoMapper;
-using Final_UI.Helpers.Filters;
-using Final_UI.Helpers.Middlewares;
+using Final_UI.Helpers.SignalR;
 using Final_UI.Profiles;
 using Final_UI.Services.Implementations;
-using Final_UI.Services.Interfaces;
+using Microsoft.AspNetCore.SignalR;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddHttpsRedirection(options => {
-  options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
-  options.HttpsPort = 44360;
-});
+//builder.Services.AddHttpsRedirection(options => {
+//  options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
+//  options.HttpsPort = 44360;
+//});
+
+// Example of bypassing SSL certificate validation (use with caution)
+ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddSignalR();
 
 // Custom services
 builder.Services.AddScoped<AuthFilter>();
@@ -23,6 +27,8 @@ builder.Services.AddScoped<SuperAdminFilter>();
 builder.Services.AddScoped<ICrudService, CrudService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IDataService, DataService>();
+builder.Services.AddScoped<IExcelReportService, ExcelReportService>();
+builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 
 builder.Services.AddSingleton(provider => new MapperConfiguration(cfg => {
   cfg.AddProfile(new MapProfile());
@@ -45,9 +51,9 @@ else {
 
 // app.UseStatusCodePagesWithReExecute("/Home/Error", "?statusCode={0}");
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -58,5 +64,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
   name: "default",
   pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapHub<NotificationHub>("/notificationHub");
 
 app.Run();

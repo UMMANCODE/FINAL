@@ -1,0 +1,116 @@
+name: dockercompose8606253994561566179
+services:
+  db:
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: Your_password123
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 1433
+        published: "1433"
+        protocol: tcp
+    volumes:
+      - type: volume
+        source: mssql_data
+        target: /var/opt/mssql
+        volume: {}
+  final_api:
+    build:
+      context: C:\Users\user\Desktop\Code Academy\FInal App
+      dockerfile: Final_API/Dockerfile
+    depends_on:
+      db:
+        condition: service_started
+        required: true
+      redis:
+        condition: service_started
+        required: true
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: "8080"
+      ASPNETCORE_HTTPS_PORTS: "8081"
+      ConnectionStrings__DefaultConnection: Server=db;Database=mydatabase;User Id=sa;Password=Your_password123;
+      Redis__Configuration: redis
+    image: finalapi
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 8080
+        published: "8080"
+        protocol: tcp
+      - mode: ingress
+        target: 8081
+        published: "8081"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: C:\Users\user\AppData\Roaming/Microsoft/UserSecrets
+        target: /home/app/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\user\AppData\Roaming/ASP.NET/Https
+        target: /home/app/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+  final_ui:
+    build:
+      context: C:\Users\user\Desktop\Code Academy\FInal App
+      dockerfile: Final_UI/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: "8080"
+      ASPNETCORE_HTTPS_PORTS: "8081"
+    image: finalui
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 8080
+        published: "8080"
+        protocol: tcp
+      - mode: ingress
+        target: 8081
+        published: "8081"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: C:\Users\user\AppData\Roaming/Microsoft/UserSecrets
+        target: /home/app/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\user\AppData\Roaming/ASP.NET/Https
+        target: /home/app/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+  redis:
+    image: redis:latest
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 6379
+        published: "6379"
+        protocol: tcp
+    volumes:
+      - type: volume
+        source: redis_data
+        target: /data
+        volume: {}
+networks:
+  default:
+    name: dockercompose8606253994561566179_default
+volumes:
+  mssql_data:
+    name: dockercompose8606253994561566179_mssql_data
+  redis_data:
+    name: dockercompose8606253994561566179_redis_data

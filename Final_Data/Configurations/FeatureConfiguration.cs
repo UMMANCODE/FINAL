@@ -1,8 +1,4 @@
-﻿using Final_Core.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace Final_Data.Configurations;
+﻿namespace Final_Data.Configurations;
 public class FeatureConfiguration : IEntityTypeConfiguration<Feature> {
   public void Configure(EntityTypeBuilder<Feature> builder) {
     builder.HasKey(x => x.Id);

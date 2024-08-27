@@ -1,12 +1,7 @@
-﻿using Final_Business.DTOs.User;
-using FluentValidation;
-using Microsoft.AspNetCore.Http;
-
-namespace Final_Business.Validators;
+﻿namespace Final_Business.Validators;
 
 public class UserChangeDetailsValidator : AbstractValidator<UserChangeDetailsDto> {
   public UserChangeDetailsValidator() {
-    RuleFor(x => x.Email).EmailAddress().MaximumLength(50);
     RuleFor(x => x.FullName).MaximumLength(100);
     RuleFor(x => x.UserName).MaximumLength(50);
     RuleFor(x => x.Avatar)

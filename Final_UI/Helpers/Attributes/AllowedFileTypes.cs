@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Final_UI.Helpers.Attributes;
+﻿namespace Final_UI.Helpers.Attributes;
 
 public class AllowedFileTypes(params string[] types) : ValidationAttribute {
   protected override ValidationResult? IsValid(object? value, ValidationContext validationContext) {

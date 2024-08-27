@@ -1,19 +1,16 @@
-﻿using AutoMapper;
-using Final_Business.DTOs;
-using Final_Business.DTOs.User;
-using Final_Business.Exceptions;
-using Final_Business.Helpers;
-using Final_Business.Services.Interfaces;
-using Final_Core.Entities;
-using Final_Core.Enums;
-using Final_Data.Repositories.Interfaces;
-using Microsoft.AspNetCore.Http;
+﻿using System.Security.Claims;
 
 namespace Final_Business.Services.Implementations;
-public class UserBidService(IBidRepository bidRepository, IHouseRepository houseRepository, IMapper mapper)
+public class UserBidService(IBidRepository bidRepository, IHouseRepository houseRepository, IMapper mapper, IHttpContextAccessor httpContextAccessor)
   : IUserBidService {
   public async Task<BaseResponse> Create(UserBidCreateDto createDto) {
     var bid = mapper.Map<Bid>(createDto);
+
+    var token = httpContextAccessor.HttpContext!.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last()
+                ?? throw new RestException(StatusCodes.Status401Unauthorized, "Unauthorized");
+
+    bid.AppUserId = JwtHelper.GetClaimFromJwt(token, ClaimTypes.NameIdentifier)!;
+
     var house = await houseRepository.GetAsync(x => x.Id == createDto.HouseId && !x.IsDeleted && x.Status == PropertyStatus.ForAuction) 
                 ?? throw new RestException(StatusCodes.Status404NotFound, "House not found or not for auction");
 

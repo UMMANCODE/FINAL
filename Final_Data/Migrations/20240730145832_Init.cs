@@ -1,12 +1,10 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Final_Data.Migrations
-{
-    /// <inheritdoc />
-    public partial class Init : Migration
+namespace Final_Data.Migrations {
+  /// <inheritdoc />
+  public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

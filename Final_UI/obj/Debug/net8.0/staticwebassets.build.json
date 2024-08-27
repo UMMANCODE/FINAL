@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "+JYcWllZ9XNl3+anbiDQAMoQSchrKyi9siT27j4jNIo=",
+  "Hash": "YQNVxv5oQ79hdNLQOIFZ274uF5KcPxrL2URtwHb7TZk=",
   "Source": "Final_UI",
   "BasePath": "_content/Final_UI",
   "Mode": "Default",
@@ -53,6 +53,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_UI\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Final_UI.bundle.scp.css"
+    },
+    {
+      "Identity": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_UI\\wwwroot\\assets\\css\\custom\\google.css",
+      "SourceId": "Final_UI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_UI\\wwwroot\\",
+      "BasePath": "_content/Final_UI",
+      "RelativePath": "assets/css/custom/google.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\css\\custom\\google.css"
     },
     {
       "Identity": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_UI\\wwwroot\\assets\\css\\maps\\style.css.map",
@@ -965,6 +984,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\images\\carousel\\banner_9.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_UI\\wwwroot\\assets\\images\\custom\\google.png",
+      "SourceId": "Final_UI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_UI\\wwwroot\\",
+      "BasePath": "_content/Final_UI",
+      "RelativePath": "assets/images/custom/google.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\images\\custom\\google.png"
     },
     {
       "Identity": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_UI\\wwwroot\\assets\\images\\dashboard\\circle.png",
@@ -3967,6 +4005,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\js\\custom\\alert.js"
+    },
+    {
+      "Identity": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_UI\\wwwroot\\assets\\js\\custom\\chart.js",
+      "SourceId": "Final_UI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_UI\\wwwroot\\",
+      "BasePath": "_content/Final_UI",
+      "RelativePath": "assets/js/custom/chart.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\js\\custom\\chart.js"
     },
     {
       "Identity": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_UI\\wwwroot\\assets\\js\\custom\\mytoast.js",

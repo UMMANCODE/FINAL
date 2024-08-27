@@ -1,8 +1,4 @@
-﻿using Final_Core.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace Final_Data.Configurations;
+﻿namespace Final_Data.Configurations;
 public class OrderConfiguration : IEntityTypeConfiguration<Order> {
   public void Configure(EntityTypeBuilder<Order> builder) {
     builder.Property(x => x.CreatedAt).IsRequired();

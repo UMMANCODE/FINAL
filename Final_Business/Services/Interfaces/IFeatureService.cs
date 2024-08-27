@@ -1,7 +1,4 @@
-﻿using Final_Business.DTOs.General;
-using Final_Business.Helpers;
-
-namespace Final_Business.Services.Interfaces;
+﻿namespace Final_Business.Services.Interfaces;
 
 public interface IFeatureService {
   public Task<BaseResponse> Create(FeatureCreateDto createDto);

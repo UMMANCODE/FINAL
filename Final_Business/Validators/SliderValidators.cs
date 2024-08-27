@@ -1,8 +1,4 @@
-﻿using Final_Business.DTOs.General;
-using FluentValidation;
-using Microsoft.AspNetCore.Http;
-
-namespace Final_Business.Validators;
+﻿namespace Final_Business.Validators;
 public class SliderCreateValidator : AbstractValidator<SliderCreateDto> {
   public SliderCreateValidator() {
     RuleFor(x => x.Title).NotEmpty().MaximumLength(50);

@@ -1,6 +1,4 @@
-﻿using Final_UI.Models.Responses;
-
-namespace Final_UI.Services.Interfaces;
+﻿namespace Final_UI.Services.Interfaces;
 
 public interface ICrudService {
   Task<TResponse?> CreateAsync<TRequest, TResponse>(TRequest data, string url);

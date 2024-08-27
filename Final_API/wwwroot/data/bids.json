@@ -1,0 +1,68 @@
+[
+  {
+    "Amount": 270000.00,
+    "AppUserId": "779ce4cd-aaf9-4baf-9d66-edb5fcbfef52",
+    "HouseId": 2,
+    "CreatedAt": "2023-11-15T09:45:00Z"
+  },
+  {
+    "Amount": 300000.00,
+    "AppUserId": "0ce2e722-336c-4e2c-9b41-cf96bfc40aad",
+    "HouseId": 5,
+    "CreatedAt": "2023-10-20T10:00:00Z"
+  },
+  {
+    "Amount": 320000.00,
+    "AppUserId": "201c5c52-a6fe-4cdd-937e-b93dcc734c3b",
+    "HouseId": 5,
+    "CreatedAt": "2023-09-10T11:15:00Z"
+  },
+  {
+    "Amount": 270000.00,
+    "AppUserId": "2230a853-fd28-4347-8b9c-2ad4626d7321",
+    "HouseId": 7,
+    "CreatedAt": "2023-08-05T12:30:00Z"
+  },
+  {
+    "Amount": 290000.00,
+    "AppUserId": "1759f4f2-cfd5-4059-9a84-b3f73c6d2fd0",
+    "HouseId": 7,
+    "CreatedAt": "2023-07-15T13:45:00Z"
+  },
+  {
+    "Amount": 220000.00,
+    "AppUserId": "9b94baa0-441b-4d9f-b34d-df92f44ecf6d",
+    "HouseId": 9,
+    "CreatedAt": "2023-06-20T14:00:00Z"
+  },
+  {
+    "Amount": 240000.00,
+    "AppUserId": "6e7b5a47-cf4d-436a-a6a5-f0f67de66ca0",
+    "HouseId": 9,
+    "CreatedAt": "2023-05-10T15:15:00Z"
+  },
+  {
+    "Amount": 330000.00,
+    "AppUserId": "0de36659-adaa-4257-9b07-f1e6d0875186",
+    "HouseId": 12,
+    "CreatedAt": "2023-04-25T16:30:00Z"
+  },
+  {
+    "Amount": 350000.00,
+    "AppUserId": "f64d8b52-6bc8-4bcf-92be-d0fa2ac38c56",
+    "HouseId": 12,
+    "CreatedAt": "2023-03-15T17:45:00Z"
+  },
+  {
+    "Amount": 310000.00,
+    "AppUserId": "45cf46bb-050a-4326-9ea8-250b9fa33a62",
+    "HouseId": 15,
+    "CreatedAt": "2023-02-10T18:00:00Z"
+  },
+  {
+    "Amount": 330000.00,
+    "AppUserId": "97417fd4-be1c-4161-8192-e68c77063cda",
+    "HouseId": 15,
+    "CreatedAt": "2023-01-05T19:15:00Z"
+  }
+]

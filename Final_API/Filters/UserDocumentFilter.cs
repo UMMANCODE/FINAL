@@ -1,10 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Linq;
-
-
-namespace Final_API.Filters;
+﻿namespace Final_API.Filters;
 
 public class UserDocumentFilter : IDocumentFilter {
   public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context) {

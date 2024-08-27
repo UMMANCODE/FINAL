@@ -1,7 +1,4 @@
-﻿using Final_Business.DTOs.General;
-using FluentValidation;
-
-namespace Final_Business.Validators;
+﻿namespace Final_Business.Validators;
 public class DiscountCreateValidator : AbstractValidator<DiscountCreateDto> {
   public DiscountCreateValidator() {
     RuleFor(x => x.Amount).GreaterThanOrEqualTo(0);

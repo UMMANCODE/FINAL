@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Final_UI.Helpers.Attributes;
+﻿namespace Final_UI.Helpers.Attributes;
 
 public class ImageCountAttribute(int min, int max) : ValidationAttribute {
   protected override ValidationResult? IsValid(object? value, ValidationContext validationContext) {

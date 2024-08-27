@@ -1,6 +1,4 @@
 ﻿using Final_UI.Helpers.Attributes;
-using System.ComponentModel.DataAnnotations;
-using Final_UI.Helpers.Enums;
 
 namespace Final_UI.Models.Requests;
 

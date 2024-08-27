@@ -1,0 +1,131 @@
+name: dockercompose8606253994561566179
+services:
+  db:
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: Your_password123
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 1433
+        published: "1433"
+        protocol: tcp
+    volumes:
+      - type: volume
+        source: mssql_data
+        target: /var/opt/mssql
+        volume: {}
+  final_api:
+    build:
+      context: C:\Users\user\Desktop\Code Academy\FInal App
+      dockerfile: Final_API/Dockerfile
+    depends_on:
+      db:
+        condition: service_started
+        required: true
+      redis:
+        condition: service_started
+        required: true
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: "8080"
+      ASPNETCORE_HTTPS_PORTS: "8081"
+      ASPNETCORE_Kestrel__Certificates__Default__Password: DELLg155515
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /home/app/.aspnet/https/Final_API.pfx
+      Client__URL: https://final_ui:8083/
+      ConnectionStrings__CodeConnection: Server=db;Database=Final;User Id=sa;Password=Your_password123;Trusted_Connection=true;TrustServerCertificate=true;
+      ConnectionStrings__DGKConnection: Server=db;Database=Final;User Id=sa;Password=Your_password123;Trusted_Connection=true;TrustServerCertificate=true;
+      ConnectionStrings__DefaultConnection: Server=db;Database=Final;User Id=sa;Password=Your_password123;Trusted_Connection=true;TrustServerCertificate=true;
+      ConnectionStrings__RedisConnection: redis:6379
+      JWT__Audience: https://final_api:8081/
+      JWT__Issuer: https://final_api:8081/
+      JWT__Secret: 7E2A1F8D5C6B7A4E9F6B4C7A1F8D2E3F4D5A6C9B7E3F1A8D2B4E6F9E8D3C1A8F6B4A8D4A7F1B1F8A6C8D3F2A94A4B49D
+    image: finalapi
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 8080
+        published: "8080"
+        protocol: tcp
+      - mode: ingress
+        target: 8081
+        published: "8081"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: C:\Users\user\AppData\Roaming/Microsoft/UserSecrets
+        target: /home/app/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\user\AppData\Roaming/ASP.NET/Https
+        target: /home/app/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+  final_ui:
+    build:
+      context: C:\Users\user\Desktop\Code Academy\FInal App
+      dockerfile: Final_UI/Dockerfile
+    depends_on:
+      final_api:
+        condition: service_started
+        required: true
+    environment:
+      APIEndpoint: https://final_api:8081/api
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: "8080"
+      ASPNETCORE_HTTPS_PORTS: "8081"
+      ASPNETCORE_Kestrel__Certificates__Default__Password: DELLg155515
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /home/app/.aspnet/https/Final_API.pfx
+    image: finalui
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 8080
+        published: "8082"
+        protocol: tcp
+      - mode: ingress
+        target: 8081
+        published: "8083"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: C:\Users\user\AppData\Roaming/Microsoft/UserSecrets
+        target: /home/app/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\user\AppData\Roaming/ASP.NET/Https
+        target: /home/app/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+  redis:
+    image: redis:latest
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 6379
+        published: "6379"
+        protocol: tcp
+    volumes:
+      - type: volume
+        source: redis_data
+        target: /data
+        volume: {}
+networks:
+  default:
+    name: dockercompose8606253994561566179_default
+volumes:
+  mssql_data:
+    name: dockercompose8606253994561566179_mssql_data
+  redis_data:
+    name: dockercompose8606253994561566179_redis_data

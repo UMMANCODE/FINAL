@@ -1,8 +1,4 @@
-﻿using Final_Core.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace Final_Data.Configurations;
+﻿namespace Final_Data.Configurations;
 public class HouseConfiguration : IEntityTypeConfiguration<House> {
   public void Configure(EntityTypeBuilder<House> builder) {
     builder.HasKey(x => x.Id);

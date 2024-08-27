@@ -7,22 +7,25 @@ public class UserBidServiceTests {
   private readonly Mock<IHouseRepository> _houseRepositoryMock;
   private readonly Mock<IMapper> _mapperMock;
   private readonly UserBidService _userBidService;
+  private readonly Mock<IHttpContextAccessor> _contextAccessorMock;
 
   public UserBidServiceTests() {
     _bidRepositoryMock = new Mock<IBidRepository>();
     _houseRepositoryMock = new Mock<IHouseRepository>();
     _mapperMock = new Mock<IMapper>();
+    _contextAccessorMock = new Mock<IHttpContextAccessor>();
     _userBidService = new UserBidService(
       _bidRepositoryMock.Object,
       _houseRepositoryMock.Object,
-      _mapperMock.Object
+      _mapperMock.Object,
+      _contextAccessorMock.Object
     );
   }
 
   [Fact]
   public async Task Create_ShouldThrowException_WhenHouseNotFound() {
     // Arrange
-    var createDto = new UserBidCreateDto("user", 1, 100000);
+    var createDto = new UserBidCreateDto(1, 100000);
 
     _houseRepositoryMock
       .Setup(repo => repo.GetAsync(It.IsAny<Expression<Func<House, bool>>>()))
@@ -36,7 +39,7 @@ public class UserBidServiceTests {
   [Fact]
   public async Task Create_ShouldThrowException_WhenAmountIsLessThanOrEqualToHighestBid() {
     // Arrange
-    var createDto = new UserBidCreateDto("user", 1, 50000);
+    var createDto = new UserBidCreateDto(1, 50000);
 
     _houseRepositoryMock
       .Setup(repo => repo.GetAsync(It.IsAny<Expression<Func<House, bool>>>()))
@@ -54,7 +57,7 @@ public class UserBidServiceTests {
   [Fact]
   public async Task Create_ShouldAddBid_WhenValid() {
     // Arrange
-    var createDto = new UserBidCreateDto("user", 1, 150000);
+    var createDto = new UserBidCreateDto(1, 150000);
 
     _houseRepositoryMock
       .Setup(repo => repo.GetAsync(It.IsAny<Expression<Func<House, bool>>>()))

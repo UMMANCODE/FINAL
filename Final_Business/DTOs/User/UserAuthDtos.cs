@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace Final_Business.DTOs.User;
+﻿namespace Final_Business.DTOs.User;
 
 public record UserLoginDto(
   string UserName, string? Password, bool RememberMe, bool ExternalLogin
@@ -24,4 +22,18 @@ public record UserForgetPasswordDto(
 
 public record UserResetPasswordDto(
     string Email, string Token, string Password, string ConfirmPassword
+);
+
+public record UserCreateAdminDto(
+  string Email,
+  string FullName,
+  string UserName,
+  string Password,
+  string ConfirmPassword,
+  IFormFile? Avatar,
+  string Nationality
+);
+
+public record UserForceChangePasswordDto(
+  string OldPassword, string NewPassword, string ConfirmPassword
 );

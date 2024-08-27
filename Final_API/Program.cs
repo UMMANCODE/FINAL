@@ -1,10 +1,8 @@
 using AutoMapper;
 using Final_API.Filters;
 using Final_API.Middlewares;
-using Final_Business.Exceptions;
 using Final_Business.Profiles;
 using Final_Business.Services.Implementations;
-using Final_Business.Services.Interfaces;
 using Final_Business.Validators;
 using Final_Core.Entities;
 using Final_Data;
@@ -15,21 +13,22 @@ using FluentValidation.AspNetCore;
 using Hangfire;
 using Hangfire.MemoryStorage;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using Serilog;
+using System.Net;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Example of bypassing SSL certificate validation (use with caution)
+ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+
 // Add services to the container.
-builder.Services.AddControllers().ConfigureApiBehaviorOptions(options => {
-  options.InvalidModelStateResponseFactory = context => {
+builder.Services.AddControllers().ConfigureApiBehaviorOptions(opt => {
+  opt.InvalidModelStateResponseFactory = context => {
     var errors = context.ModelState.Where(x => x.Value!.Errors.Count > 0)
     .Select(x => new RestExceptionError(x.Key, x.Value!.Errors.First().ErrorMessage)).ToList();
     return new BadRequestObjectResult(new { message = "", errors });
@@ -37,8 +36,6 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options => {
 });
 
 builder.Services.AddDbContext<AppDbContext>(option => {
-  //option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-  //option.UseSqlServer(builder.Configuration.GetConnectionString("DGKConnection"));
   option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
@@ -141,6 +138,7 @@ builder.Services.AddScoped<IDiscountRepository, DiscountRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IChartService, ChartService>();
 
 //builder.Services.AddScoped<RedisCacheFilter>();
 
@@ -155,43 +153,41 @@ builder.Host.UseSerilog((hostingContext, loggerConfiguration) => {
 builder.Services.AddFluentValidationRulesToSwagger();
 
 // Cashing
-//builder.Services.AddStackExchangeRedisCache(options => {
-//  options.Configuration = builder.Configuration.GetConnectionString("RedisConnection");
-//  options.InstanceName = "MyApp_";
+//builder.Services.AddStackExchangeRedisCache(opt => {
+//  opt.Configuration = builder.Configuration.GetConnectionString("RedisConnection");
+//  opt.InstanceName = "MyApp_";
 //});
 
 builder.Services.AddResponseCaching();
 
 
-// Configure JWT Authentication
+// Configure JWT and Google Authentication
 builder.Services.AddAuthentication(opt => {
   opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
   opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
   opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(opt => {
+})
+.AddJwtBearer(opt => {
   opt.TokenValidationParameters = new TokenValidationParameters {
     ValidAudience = builder.Configuration.GetSection("JWT:Audience").Value,
     ValidIssuer = builder.Configuration.GetSection("JWT:Issuer").Value,
     IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration.GetSection("JWT:Secret").Value!))
   };
-});
-
-
-// Configure Google Authentication
-builder.Services.AddAuthentication(options => {
-  options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-  options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
 })
-.AddCookie(options => {
-  options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+.AddCookie(opt => {
+  opt.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 })
-.AddGoogle(options => {
-  options.ClientId = builder.Configuration.GetSection("Google:ClientId").Value!;
-  options.ClientSecret = builder.Configuration.GetSection("Google:ClientSecret").Value!;
-  options.SaveTokens = true;
-  options.Scope.Add("https://www.googleapis.com/auth/userinfo.profile");
-  options.Scope.Add("https://www.googleapis.com/auth/userinfo.email");
-  options.Events.OnRedirectToAuthorizationEndpoint = context => {
+.AddGoogle(opt => {
+  opt.ClientId = builder.Configuration.GetSection("Google:ClientId").Value!;
+  opt.ClientSecret = builder.Configuration.GetSection("Google:ClientSecret").Value!;
+  opt.SaveTokens = true;
+  opt.Scope.Add("profile");
+  opt.Events.OnCreatingTicket = (context) => {
+    var picture = context.User.GetProperty("picture").GetString();
+    if (picture != null) context.Identity?.AddClaim(new Claim("picture", picture));
+    return Task.CompletedTask;
+  };
+  opt.Events.OnRedirectToAuthorizationEndpoint = context => {
     context.HttpContext.Response.Redirect(context.RedirectUri);
     return Task.CompletedTask;
   };
@@ -208,8 +204,8 @@ builder.Services.AddHangfire(config =>
 builder.Services.AddHangfireServer();
 
 // Configure CORS
-builder.Services.AddCors(options => {
-  options.AddPolicy("AllowAll", conf => {
+builder.Services.AddCors(opt => {
+  opt.AddPolicy("AllowAll", conf => {
     conf.AllowAnyOrigin()
     .AllowAnyMethod()
     .AllowAnyHeader();
@@ -217,6 +213,8 @@ builder.Services.AddCors(options => {
 });
 
 var app = builder.Build();
+
+await ApplyMigrationsAndSeedData(app.Services);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment()) {
@@ -232,9 +230,9 @@ if (app.Environment.IsDevelopment()) {
   });
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
-app.UseCors();
+app.UseCors("AllowAll");
 
 app.UseResponseCaching();
 
@@ -251,8 +249,6 @@ RecurringJob.AddOrUpdate<EmailService>("send-discount-notification-email",
  service => service.SendNotificationEmail(),
   "00 12 * * *"); // Cron expression for 16:00 PM daily
 
-app.UseStaticFiles();
-
 app.MapControllers();
 
 // Custom Middlewares
@@ -260,4 +256,18 @@ app.UseMiddleware<ExceptionHandlerMiddleware>();
 //app.UseMiddleware<RedisResponseCacheMiddleware>();
 
 app.Run();
+return;
 
+static async Task ApplyMigrationsAndSeedData(IServiceProvider serviceProvider) {
+  // Create a scope to resolve scoped services
+  using var scope = serviceProvider.CreateScope();
+  var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+  var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+  var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+  // Apply migrations
+  await dbContext.Database.MigrateAsync();
+
+  // Seed data
+  await DbInitializer.SeedData(scope.ServiceProvider);
+}

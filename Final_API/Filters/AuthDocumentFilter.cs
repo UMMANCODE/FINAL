@@ -1,7 +1,4 @@
-﻿using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerGen;
-
-namespace Final_API.Filters;
+﻿namespace Final_API.Filters;
 
 public class AuthDocumentFilter : IDocumentFilter {
   public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context) {

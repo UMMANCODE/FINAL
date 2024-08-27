@@ -1,7 +1,4 @@
-﻿using Final_Business.DTOs.User;
-using Final_Business.Helpers;
-
-namespace Final_Business.Services.Interfaces;
+﻿namespace Final_Business.Services.Interfaces;
 public interface IUserHouseService {
   public Task<BaseResponse> Create(UserHouseCreateDto createDto);
   public Task<BaseResponse> GetPaginated(int pageNumber = 1, int pageSize = 1);

@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\Final_UI.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_UI\\wwwroot\\assets\\css\\custom\\google.css",
+      "PackagePath": "staticwebassets\\assets\\css\\custom\\google.css"
+    },
+    {
       "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_UI\\wwwroot\\assets\\css\\maps\\style.css.map",
       "PackagePath": "staticwebassets\\assets\\css\\maps\\style.css.map"
     },
@@ -195,6 +199,10 @@
     {
       "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_UI\\wwwroot\\assets\\images\\carousel\\banner_9.jpg",
       "PackagePath": "staticwebassets\\assets\\images\\carousel\\banner_9.jpg"
+    },
+    {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_UI\\wwwroot\\assets\\images\\custom\\google.png",
+      "PackagePath": "staticwebassets\\assets\\images\\custom\\google.png"
     },
     {
       "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_UI\\wwwroot\\assets\\images\\dashboard\\Group126@2x.png",
@@ -827,6 +835,10 @@
     {
       "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_UI\\wwwroot\\assets\\js\\custom\\alert.js",
       "PackagePath": "staticwebassets\\assets\\js\\custom\\alert.js"
+    },
+    {
+      "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_UI\\wwwroot\\assets\\js\\custom\\chart.js",
+      "PackagePath": "staticwebassets\\assets\\js\\custom\\chart.js"
     },
     {
       "Id": "C:\\Users\\user\\Desktop\\Code Academy\\FInal App\\Final_UI\\wwwroot\\assets\\js\\custom\\mytoast.js",

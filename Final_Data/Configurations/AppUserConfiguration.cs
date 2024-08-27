@@ -1,8 +1,4 @@
-﻿using Final_Core.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace Final_Data.Configurations;
+﻿namespace Final_Data.Configurations;
 public class AppUserConfiguration : IEntityTypeConfiguration<AppUser> {
   public void Configure(EntityTypeBuilder<AppUser> builder) {
     builder.HasKey(x => x.Id);

@@ -1,0 +1,152 @@
+[
+  {
+    "ImageLink": "house1.jpeg",
+    "HouseId": 1,
+    "IsMain": true
+  },
+  {
+    "ImageLink": "house2.jpeg",
+    "HouseId": 1,
+    "IsMain": false
+  },
+  {
+    "ImageLink": "house3.jpeg",
+    "HouseId": 2,
+    "IsMain": false
+  },
+  {
+    "ImageLink": "house4.jpeg",
+    "HouseId": 2,
+    "IsMain": true
+  },
+  {
+    "ImageLink": "house5.jpeg",
+    "HouseId": 3,
+    "IsMain": false
+  },
+  {
+    "ImageLink": "house6.jpeg",
+    "HouseId": 3,
+    "IsMain": true
+  },
+  {
+    "ImageLink": "house7.jpeg",
+    "HouseId": 4,
+    "IsMain": false
+  },
+  {
+    "ImageLink": "house8.jpeg",
+    "HouseId": 4,
+    "IsMain": true
+  },
+  {
+    "ImageLink": "house9.jpeg",
+    "HouseId": 5,
+    "IsMain": false
+  },
+  {
+    "ImageLink": "house10.jpeg",
+    "HouseId": 5,
+    "IsMain": true
+  },
+  {
+    "ImageLink": "house11.jpeg",
+    "HouseId": 6,
+    "IsMain": false
+  },
+  {
+    "ImageLink": "house12.jpeg",
+    "HouseId": 6,
+    "IsMain": true
+  },
+  {
+    "ImageLink": "house13.jpeg",
+    "HouseId": 7,
+    "IsMain": false
+  },
+  {
+    "ImageLink": "house14.jpeg",
+    "HouseId": 7,
+    "IsMain": true
+  },
+  {
+    "ImageLink": "house15.jpeg",
+    "HouseId": 8,
+    "IsMain": false
+  },
+  {
+    "ImageLink": "house16.jpeg",
+    "HouseId": 8,
+    "IsMain": true
+  },
+  {
+    "ImageLink": "house17.jpeg",
+    "HouseId": 9,
+    "IsMain": false
+  },
+  {
+    "ImageLink": "house18.jpeg",
+    "HouseId": 9,
+    "IsMain": true
+  },
+  {
+    "ImageLink": "house19.jpeg",
+    "HouseId": 10,
+    "IsMain": false
+  },
+  {
+    "ImageLink": "house20.jpeg",
+    "HouseId": 10,
+    "IsMain": true
+  },
+  {
+    "ImageLink": "house21.jpeg",
+    "HouseId": 11,
+    "IsMain": false
+  },
+  {
+    "ImageLink": "house22.jpeg",
+    "HouseId": 11,
+    "IsMain": true
+  },
+  {
+    "ImageLink": "house23.jpeg",
+    "HouseId": 12,
+    "IsMain": false
+  },
+  {
+    "ImageLink": "house24.jpeg",
+    "HouseId": 12,
+    "IsMain": true
+  },
+  {
+    "ImageLink": "house25.jpeg",
+    "HouseId": 13,
+    "IsMain": false
+  },
+  {
+    "ImageLink": "house26.jpeg",
+    "HouseId": 13,
+    "IsMain": true
+  },
+  {
+    "ImageLink": "house27.jpg",
+    "HouseId": 14,
+    "IsMain": false
+  },
+  {
+    "ImageLink": "house28.jpg",
+    "HouseId": 14,
+    "IsMain": true
+  },
+  {
+    "ImageLink": "house29.jpg",
+    "HouseId": 15,
+    "IsMain": false
+  },
+  {
+    "ImageLink": "house30.jpg",
+    "HouseId": 15,
+    "IsMain": true
+  }
+]

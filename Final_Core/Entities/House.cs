@@ -1,6 +1,4 @@
-﻿using Final_Core.Enums;
-
-namespace Final_Core.Entities;
+﻿namespace Final_Core.Entities;
 public class House : AuditEntity {
   public string Name { get; set; }
   public string? Location { get; set; }

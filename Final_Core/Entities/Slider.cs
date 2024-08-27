@@ -1,6 +1,4 @@
-﻿using Final_Core.Enums;
-
-namespace Final_Core.Entities;
+﻿namespace Final_Core.Entities;
 
 public class Slider : AuditEntity {
   public string? Title { get; set; }

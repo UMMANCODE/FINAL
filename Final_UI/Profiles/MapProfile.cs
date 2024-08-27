@@ -1,8 +1,4 @@
-﻿using AutoMapper;
-using Final_UI.Models.Requests;
-using Final_UI.Models.Responses;
-
-namespace Final_UI.Profiles;
+﻿namespace Final_UI.Profiles;
 
 public class MapProfile : Profile {
 

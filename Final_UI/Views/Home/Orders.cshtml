@@ -45,8 +45,8 @@
                     <div class="badge @GetStyle(order.Status)">@order.Status.ToString()</div>
                   </td>
                   <td>
-                    <a asp-action="UpdateOrderStatus" asp-route-id="@order.Id" asp-route-status="Accepted" class='btn btn-success mr-3 @(order.Status.ToString() != "Pending" ? "disabled" : "")'>Accept</a>
-                    <a asp-action="UpdateOrderStatus" asp-route-id="@order.Id" asp-route-status="Rejected" class='btn btn-danger @(order.Status.ToString() != "Pending" ? "disabled" : "")'>Reject</a>
+                    <a asp-action="UpdateOrderStatus" asp-route-id="@order.Id" asp-route-status="Accepted" asp-route-userId="@order.AppUserId" class='btn btn-success mr-3 @(order.Status.ToString() != "Pending" ? "disabled" : "")'>Accept</a>
+                    <a asp-action="UpdateOrderStatus" asp-route-id="@order.Id" asp-route-status="Rejected" asp-route-userId="@order.AppUserId" class='btn btn-danger @(order.Status.ToString() != "Pending" ? "disabled" : "")'>Reject</a>
                   </td>
                 </tr>
               }

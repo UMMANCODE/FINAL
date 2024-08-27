@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Final_UI.Models.Requests;
+﻿namespace Final_UI.Models.Requests;
 
 public class DiscountCreateRequest {
   [Required]

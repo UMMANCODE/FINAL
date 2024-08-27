@@ -1,7 +1,4 @@
-﻿using Final_Business.DTOs.Admin;
-using Final_Business.Helpers;
-
-namespace Final_Business.Services.Interfaces;
+﻿namespace Final_Business.Services.Interfaces;
 public interface IAdminHouseService {
   public Task<BaseResponse> Create(AdminHouseCreateDto createDto);
   public Task<BaseResponse> GetPaginated(int pageNumber = 1, int pageSize = 1);
