@@ -29,6 +29,8 @@ public class HouseCreateRequest {
   [AllowedFileTypes("image/jpeg", "image/png")] [MaxSize(2 * 1024 * 1024)] [ImageCount(0, 5)]
   public List<IFormFile> Images { get; set; } = [];
   public bool IsAdmin { get; set; } = true;
+  [Required] 
+  public List<int> SelectedFeatures { get; set; } = [];
 }
 
 public class HouseUpdateRequest {
@@ -68,5 +70,6 @@ public class HouseUpdateRequest {
   [ImageCount(0, 5)]
   public List<IFormFile> Images { get; set; } = [];
   public List<int> IdsToDelete { get; set; } = [];
+  public List<int> SelectedFeatures { get; set; } = [];
   public bool IsAdmin { get; set; } = true;
 }

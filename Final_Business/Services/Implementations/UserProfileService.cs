@@ -1,8 +1,9 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 
 namespace Final_Business.Services.Implementations;
-public class UserProfileService(UserManager<AppUser> userManager, IHttpContextAccessor accessor, IWebHostEnvironment env)
+public class UserProfileService(UserManager<AppUser> userManager, IHttpContextAccessor accessor, IWebHostEnvironment env, IConfiguration configuration)
   : IUserProfileService {
   public async Task<BaseResponse> GetProfile() {
     var token = accessor.HttpContext!.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last()
@@ -11,11 +12,19 @@ public class UserProfileService(UserManager<AppUser> userManager, IHttpContextAc
     var user = await userManager.FindByIdAsync(JwtHelper.GetClaimFromJwt(token, ClaimTypes.NameIdentifier)!) 
                ?? throw new RestException(StatusCodes.Status404NotFound, "User not found!");
 
-    var uploadedFilePath = new Uri(
-      $"{accessor.HttpContext!.Request.Scheme}://{accessor.HttpContext!.Request.Host}/images/users/{user.AvatarLink ?? "default.png"}"
-    );
+    var uriBuilder = new UriBuilder(accessor.HttpContext!.Request.Scheme, accessor.HttpContext.Request.Host.Host, accessor.HttpContext.Request.Host.Port ?? -1);
+    if (uriBuilder.Uri.IsDefaultPort) uriBuilder.Port = -1;
+    var baseUrl = uriBuilder.Uri.AbsoluteUri;
 
-    user.AvatarLink = uploadedFilePath.ToString();
+    var isDocker = configuration.GetValue<bool>("IsDocker");
+
+    if (isDocker) {
+      baseUrl = baseUrl.Replace("final.api", "localhost");
+    }
+
+    if (user.AvatarLink != null && !user.AvatarLink.Contains("google"))
+      user.AvatarLink = $"{baseUrl.Replace("/api", "/")}images/users/{user.AvatarLink}";
+
     return new BaseResponse(200, "Success", user, []);
   }
 

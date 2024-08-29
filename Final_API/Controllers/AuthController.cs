@@ -52,7 +52,7 @@ public class AuthController(
 
   [HttpGet("login-google")]
   public IActionResult Login() {
-    var props = new AuthenticationProperties { RedirectUri = "api/auth/signin-google" };
+    var props = new AuthenticationProperties { RedirectUri = "https://localhost:8081/api/auth/signin-google" };
     return Challenge(props, GoogleDefaults.AuthenticationScheme);
   }
 
@@ -79,7 +79,7 @@ public class AuthController(
     else {
       var guidPassword = new Guid();
       var password = guidPassword.ToString()[..8];
-      var registerDto = new UserRegisterDto(email, fullName, userName, password, password, null, location);
+      var registerDto = new UserRegisterDto(email, fullName, userName, password, password, null, location, true);
       var registerResult = await userAuthService.Register(registerDto);
 
       if (registerResult.StatusCode == 201) {
@@ -91,8 +91,14 @@ public class AuthController(
     var userEntity = await userManager.FindByEmailAsync(email);
     userEntity!.AvatarLink = profilePicture;
     await userManager.UpdateAsync(userEntity);
+    
+    var clientUrl = configuration.GetSection("Client:URL").Value!;
 
-    var redirectUrl = $"{configuration.GetSection("Client:URL").Value}Account/ExternalLoginCallback?token={result.Data}";
+    if (clientUrl.Contains("final.ui")) {
+      clientUrl = clientUrl.Replace("final.ui", "localhost");
+    }
+
+    var redirectUrl = $"{clientUrl}Account/ExternalLoginCallback?token={result.Data}";
     return Redirect(redirectUrl);
   }
 

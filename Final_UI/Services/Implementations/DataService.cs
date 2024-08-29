@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using Final_UI.Helpers;
 using Microsoft.Net.Http.Headers;
 
 namespace Final_UI.Services.Implementations;
@@ -6,6 +7,7 @@ namespace Final_UI.Services.Implementations;
 public class DataService(IHttpContextAccessor contextAccessor, IConfiguration configuration) : IDataService {
   private readonly HttpClient _client = new();
   private readonly string _apiUrl = configuration.GetSection("APIEndpoint").Value!;
+  private readonly string _staticApiUrl = configuration.GetSection("StaticAPIEndpoint").Value!;
 
   private void AddAuthorizationHeader() {
     var token = contextAccessor.HttpContext!.Request.Cookies["token"];
@@ -44,11 +46,36 @@ public class DataService(IHttpContextAccessor contextAccessor, IConfiguration co
     if (orders == null) return orders;
     foreach (var order in orders.Where(order => !string.IsNullOrEmpty(order.AppUserAvatarLink))) {
       if (!order.AppUserAvatarLink.Contains("google"))
-        order.AppUserAvatarLink = $"{_apiUrl.Replace("/api", "/")}images/users/{order.AppUserAvatarLink}";
+        order.AppUserAvatarLink = $"{_staticApiUrl.Replace("/api", "/")}images/users/{order.AppUserAvatarLink}";
     }
 
     return orders;
   }
+
+  public async Task<List<OrderStatistic>> GetOrderStatistics() {
+    var orders = await GetOrders();
+    var orderStatistics = new List<OrderStatistic> { new(), new(), new() };
+
+    if (orders == null) return orderStatistics;
+
+    foreach (var order in orders) {
+      if (order.Status == OrderStatus.Pending) {
+        orderStatistics[0].Count++;
+        orderStatistics[0].TotalPrice += order.Price;
+      }
+      else if (order.Status == OrderStatus.Accepted) {
+        orderStatistics[1].Count++;
+        orderStatistics[1].TotalPrice += order.Price;
+      }
+      else if (order.Status == OrderStatus.Rejected) {
+        orderStatistics[2].Count++;
+        orderStatistics[2].TotalPrice += order.Price;
+      }
+    }
+
+    return orderStatistics;
+  }
+
 
   public async Task<List<CommentResponse>?> GetComments() {
     AddAuthorizationHeader();
@@ -68,7 +95,7 @@ public class DataService(IHttpContextAccessor contextAccessor, IConfiguration co
     if (comments == null) return comments;
     foreach (var comment in comments.Where(comment => !string.IsNullOrEmpty(comment.AppUserAvatarLink))) {
       if (!comment.AppUserAvatarLink.Contains("google"))
-        comment.AppUserAvatarLink = $"{_apiUrl.Replace("/api", "/")}images/users/{comment.AppUserAvatarLink}";
+        comment.AppUserAvatarLink = $"{_staticApiUrl.Replace("/api", "/")}images/users/{comment.AppUserAvatarLink}";
     }
 
     return comments;

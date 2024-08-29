@@ -12,6 +12,7 @@ services:
       - JWT__Issuer=http://final.api:8080/
       - JWT__Audience=http://final.api:8080/
       - Client__URL=http://final.ui/
+      - IsDocker=true
     ports:
       - "8080:8080"
       - "8081:8081"
@@ -28,6 +29,8 @@ services:
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
       - APIEndpoint=http://final.api:8080/api
+      - StaticAPIEndpoint=http://localhost:8080/api
+      - IsDocker=true
     ports:
       - "80:8080"
     # - "443:8081"
@@ -53,3 +56,5 @@ services:
     ports:
       - "8379:6379"
     restart: always
+    volumes:
+      - redis_data:/data

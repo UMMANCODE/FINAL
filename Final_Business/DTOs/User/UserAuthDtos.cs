@@ -5,7 +5,7 @@ public record UserLoginDto(
 );
 
 public record UserRegisterDto(
-   string Email, string FullName, string UserName, string Password, string ConfirmPassword, IFormFile? Avatar, string Nationality
+   string Email, string FullName, string UserName, string Password, string ConfirmPassword, IFormFile? Avatar, string Nationality, bool ExternalLogin
 );
 
 public record UserVerifyEmailDto(

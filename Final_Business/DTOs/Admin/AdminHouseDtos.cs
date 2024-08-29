@@ -17,6 +17,8 @@ public record AdminHouseGetOneDto(
   List<CommentGetDto> Comments,
   List<UserBidGetDto> Bids,
   List<DiscountGetDto> Discounts,
+  List<HouseFeatureGetDto> Features,
+  List<OrderGetDto> Orders,
   PropertyStatus Status,
   PropertyType Type,
   PropertyState State
@@ -27,6 +29,8 @@ public record AdminHouseGetAllDto(
   string Location,
   string Name,
   decimal Price,
+  PropertyStatus Status,
+  List<DiscountGetDto> Discounts,
   List<HouseImageGetDto> HouseImages
 );
 
@@ -45,6 +49,7 @@ public record AdminHouseCreateDto(
   PropertyType Type,
   PropertyState State,
   List<IFormFile> Images,
+  List<int> SelectedFeatures,
   bool IsAdmin = true
 );
 
@@ -63,6 +68,7 @@ public record AdminHouseUpdateDto(
   PropertyType Type,
   PropertyState State,
   List<IFormFile>? Images,
+  List<int> SelectedFeatures,
   List<int>? IdsToDelete,
   bool IsAdmin = true
 );

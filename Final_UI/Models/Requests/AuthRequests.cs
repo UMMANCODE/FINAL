@@ -27,6 +27,7 @@ public class RegisterRequest {
   public IFormFile? Avatar { get; set; }
   [Required]
   public string? Nationality { get; set; }
+  public bool ExternalLogin { get; set; }
 }
 
 public class VerifyEmailRequest {

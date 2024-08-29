@@ -2,7 +2,6 @@
 [Route("api/trait/[controller]")]
 [ApiController]
 public class ProfileController(IUserProfileService userProfileService) : ControllerBase {
-
   [HttpGet]
   [Authorize]
   public async Task<IActionResult> GetProfile() {

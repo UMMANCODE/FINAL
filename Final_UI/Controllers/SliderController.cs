@@ -2,7 +2,7 @@
 
 [ServiceFilter(typeof(AuthFilter))]
 [ServiceFilter(typeof(AdminOrSuperAdminFilter))]
-public class SliderController(ICrudService crudService, IConfiguration configuration, IMapper mapper)  : Controller {
+public class SliderController(ICrudService crudService, IConfiguration configuration, IMapper mapper) : Controller {
   private readonly string _apiUrl = configuration.GetSection("APIEndpoint").Value!;
 
   public async Task<IActionResult> Index(int page = 1) {
@@ -23,6 +23,14 @@ public class SliderController(ICrudService crudService, IConfiguration configura
   [HttpPost]
   public async Task<IActionResult> Create([FromForm] SliderCreateRequest createRequest) {
     if (!ModelState.IsValid) {
+      return View(createRequest);
+    }
+
+    var sliders = await crudService.GetAsync<List<SliderResponse>>($"{_apiUrl}/Sliders/admin/all")
+      ?? [];
+
+    if (sliders.Any(s => s.Order == createRequest.Order)) {
+      ModelState.AddModelError("Order", "Order already exists!");
       return View(createRequest);
     }
 
@@ -50,6 +58,14 @@ public class SliderController(ICrudService crudService, IConfiguration configura
   [HttpPost]
   public async Task<IActionResult> Edit(int id, [FromForm] SliderUpdateRequest editRequest) {
     if (!ModelState.IsValid) {
+      return View(editRequest);
+    }
+
+    var sliders = await crudService.GetAsync<List<SliderResponse>>($"{_apiUrl}/Sliders/admin/all")
+                  ?? [];
+
+    if (sliders.Any(s => s.Order == editRequest.Order)) {
+      ModelState.AddModelError("Order", "Order already exists!");
       return View(editRequest);
     }
 

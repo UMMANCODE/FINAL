@@ -16,37 +16,38 @@
           <div class="table-responsive">
             <table class="table table-bordered">
               <thead>
-                <tr d-fk>
-                  <th class="text-center"> # </th>
-                  <th class="text-center"> Code </th>
-                  <th class="text-center"> Amount </th>
-                  <th class="text-center"> ExpiryDate </th>
-                  <th class="text-center"> HouseId </th>
-                  <th class="text-center"> Action </th>
-                </tr>
+              <tr d-fk>
+                <th class="text-center"> # </th>
+                <th class="text-center"> Code </th>
+                <th class="text-center"> Amount </th>
+                <th class="text-center"> ExpiryDate </th>
+                <th class="text-center"> HouseId </th>
+                <th class="text-center"> Action </th>
+              </tr>
               </thead>
               <tbody>
-                @foreach (var item in Model.Items) {
-                  <tr>
-                    <td class="text-center"> @(++order) </td>
-                    <td class="text-center"> @item.Code </td>
-                    <td class="text-center"> @item.Amount </td>
-                    <td class="text-center"> @item.ExpiryDate </td>
-                    <td class="text-center"> @item.HouseId </td>
-                    <td class="text-center">
-                      <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger delete-btn">Delete</a>
-                    </td>
-                  </tr>
-                }
+              @foreach (var item in Model.Items) {
+                <tr>
+                  <td class="text-center"> @(++order) </td>
+                  <td class="text-center"> @item.Code </td>
+                  <td class="text-center"> @item.Amount </td>
+                  <td class="text-center"> @item.ExpiryDate </td>
+                  <td class="text-center"> @item.HouseId </td>
+                  <td class="text-center">
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger delete-btn">Delete</a>
+                  </td>
+                </tr>
+              }
               </tbody>
             </table>
           </div>
         </div>
         <div class="row mx-auto">
-          @Html.Partial("_PaginatedListPartial", Model)
+          @await Html.PartialAsync("_PaginatedListPartial", Model)
         </div>
       </div>
     </div>
+    @await Html.PartialAsync("_Footer")
   </div>
 </div>
 

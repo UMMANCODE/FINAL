@@ -11,6 +11,7 @@ public class House : AuditEntity {
   public byte Bathrooms { get; set; }
   public int BuiltYear { get; set; }
   public List<HouseImage> HouseImages { get; set; } = [];
+  public List<HouseFeature> Features { get; set; } = [];
   public List<Comment> Comments { get; set; } = [];
   public List<Bid> Bids { get; set; } = [];
   public List<Discount> Discounts { get; set; } = [];

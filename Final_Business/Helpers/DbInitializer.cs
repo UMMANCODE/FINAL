@@ -26,6 +26,7 @@ public static class DbInitializer {
 
     // Seed default users
     var admin = new AppUser {
+      Id = "4ba6d714-eb0b-41a6-9a58-bdb3977694e8",
       FullName = "Admin",
       UserName = "admin",
       Email = "admin@quarter.est.com",
@@ -34,6 +35,7 @@ public static class DbInitializer {
       EmailConfirmed = true
     };
     var member = new AppUser {
+      Id = "f64d8b52-6bc8-4bcf-92be-d0fa2ac38c56",
       FullName = "Member",
       UserName = "member",
       Email = "member@quarter.est.com",
@@ -42,6 +44,7 @@ public static class DbInitializer {
       EmailConfirmed = true
     };
     var superAdmin = new AppUser {
+      Id = "538160f4-a16b-402f-922d-80e3c657d07f",
       FullName = "SuperAdmin",
       UserName = "superadmin",
       Email = "superadmin@quarter.est.com",

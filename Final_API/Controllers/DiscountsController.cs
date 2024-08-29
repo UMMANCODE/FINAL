@@ -1,10 +1,12 @@
-﻿namespace Final_API.Controllers;
+﻿using Final_API.Filters;
+
+namespace Final_API.Controllers;
 [Route("api/trait/[controller]")]
 [ApiController]
 public class DiscountsController(IDiscountService discountService) : ControllerBase {
   [HttpGet]
   [Authorize]
-  // [TypeFilter(typeof(RedisCacheFilter))]
+  [TypeFilter(typeof(RedisCacheFilter))]
   public async Task<IActionResult> GetPaginated(int pageNumber = 1, int pageSize = 1) {
     var response = await discountService.GetPaginated(pageNumber, pageSize);
     return StatusCode(response.StatusCode, response);
@@ -12,7 +14,7 @@ public class DiscountsController(IDiscountService discountService) : ControllerB
 
   [HttpGet("all")]
   [Authorize]
-  // [TypeFilter(typeof(RedisCacheFilter))]
+  [TypeFilter(typeof(RedisCacheFilter))]
   public async Task<IActionResult> GetAll() {
     var response = await discountService.GetAll();
     return StatusCode(response.StatusCode, response);
@@ -20,7 +22,7 @@ public class DiscountsController(IDiscountService discountService) : ControllerB
 
   [HttpGet("{id:int}")]
   [Authorize]
-  // [TypeFilter(typeof(RedisCacheFilter))]
+  [TypeFilter(typeof(RedisCacheFilter))]
   public async Task<IActionResult> GetById(int id) {
     var response = await discountService.GetById(id);
     return StatusCode(response.StatusCode, response);

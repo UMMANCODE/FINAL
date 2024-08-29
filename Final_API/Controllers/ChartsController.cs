@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace Final_API.Controllers;
+﻿namespace Final_API.Controllers;
 [Route("api/trait/[controller]")]
 [ApiController]
 public class ChartsController(IChartService chartService) : ControllerBase {
@@ -20,6 +17,18 @@ public class ChartsController(IChartService chartService) : ControllerBase {
   [HttpGet("bar")]
   public async Task<IActionResult> GetBarChart() {
     var response = await chartService.GetBarChart();
+    return StatusCode(response.StatusCode, response);
+  }
+
+  [HttpGet("pie1")]
+  public async Task<IActionResult> GetPieChart1() {
+    var response = await chartService.GetPieChart1();
+    return StatusCode(response.StatusCode, response);
+  }
+
+  [HttpGet("pie2")]
+  public async Task<IActionResult> GetPieChart2() {
+    var response = await chartService.GetPieChart2();
     return StatusCode(response.StatusCode, response);
   }
 }

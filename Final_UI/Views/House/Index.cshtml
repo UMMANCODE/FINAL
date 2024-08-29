@@ -17,43 +17,44 @@
           <div class="table-responsive">
             <table class="table table-bordered">
               <thead>
-                <tr d-fk>
-                  <th class="text-center"> # </th>
-                  <th class="text-center"> Name </th>
-                  <th class="text-center"> Location </th>
-                  <th class="text-center"> Price </th>
-                  <th class="text-center"> Image </th>
-                  <th class="text-center"> Action </th>
-                </tr>
+              <tr d-fk>
+                <th class="text-center"> # </th>
+                <th class="text-center"> Name </th>
+                <th class="text-center"> Location </th>
+                <th class="text-center"> Price </th>
+                <th class="text-center"> Image </th>
+                <th class="text-center"> Action </th>
+              </tr>
               </thead>
               <tbody>
-                @foreach (var item in Model.Items) {
-                  <tr>
-                    <td class="text-center"> @(++order) </td>
-                    <td class="text-center"> @item.Name </td>
-                    <td class="text-center"> @item.Location </td>
-                    <td class="text-center"> @item.Price </td>
-                    <td class="text-center">
-                      @if (images is { Count: > 0 }) {
-                        var image = images.FirstOrDefault(x => x.HouseId == item.Id);
-                        <img src="@image?.ImageLink" alt="image" style="width: 100px; height: 100px;">
-                      }
-                    </td>
-                    <td class="text-center">
-                      <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning mr-3">Edit</a>
-                      <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger delete-btn">Delete</a>
-                    </td>
-                  </tr>
-                }
+              @foreach (var item in Model.Items) {
+                <tr>
+                  <td class="text-center"> @(++order) </td>
+                  <td class="text-center"> @item.Name </td>
+                  <td class="text-center"> @item.Location </td>
+                  <td class="text-center"> @item.Price </td>
+                  <td class="text-center">
+                    @if (images is { Count: > 0 }) {
+                      var image = images.FirstOrDefault(x => x.HouseId == item.Id);
+                      <img src="@image?.ImageLink" alt="image" style="width: 100px; height: 100px;">
+                    }
+                  </td>
+                  <td class="text-center">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning mr-3">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger delete-btn">Delete</a>
+                  </td>
+                </tr>
+              }
               </tbody>
             </table>
           </div>
         </div>
         <div class="row mx-auto">
-          @Html.Partial("_PaginatedListPartial", Model)
+          @await Html.PartialAsync("_PaginatedListPartial", Model)
         </div>
       </div>
     </div>
+    @await Html.PartialAsync("_Footer")
   </div>
 </div>
 

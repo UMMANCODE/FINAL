@@ -1,0 +1,65 @@
+﻿@inject IConfiguration Configuration
+@{
+  ViewBag.Title = "Charts";
+
+  var isDocker = Configuration.GetValue<bool>("IsDocker");
+
+  var apiEndpoint = Configuration.GetSection("APIEndpoint").Value!;
+
+  if (isDocker) {
+    apiEndpoint = Configuration.GetSection("StaticAPIEndpoint").Value!;
+  }
+}
+
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <input id="api-url" type="hidden" value="@apiEndpoint">
+      <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Monthly Orders</h4>
+            <canvas id="lineChart" style="height:250px"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Seasonal Users</h4>
+            <canvas id="barChart" style="height:230px"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Orders Status</h4>
+            <canvas id="pieChart1" style="height:250px"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Houses Status</h4>
+            <canvas id="doughnutChart" style="height:250px"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Comments Status</h4>
+            <canvas id="pieChart2" style="height:250px"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    @await Html.PartialAsync("_Footer")
+  </div>
+</div>
+
+@section Scripts {
+  <script src="~/assets/js/custom/chart.js"></script>
+}

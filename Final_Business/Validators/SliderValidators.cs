@@ -7,6 +7,7 @@ public class SliderCreateValidator : AbstractValidator<SliderCreateDto> {
     RuleFor(x => x.Description).NotEmpty().MaximumLength(500);
     RuleFor(x => x.BtnText1).MaximumLength(20);
     RuleFor(x => x.BtnText2).MaximumLength(20);
+    RuleFor(x => x.Order).GreaterThanOrEqualTo(1);
     RuleFor(x => x.Image)
       .Must(BeAValidImage).WithMessage("Only JPEG and PNG images are allowed")
       .Must(BeAValidImageSize).WithMessage("Image must be less than or equal to 2MB");
@@ -35,6 +36,7 @@ public class SliderUpdateValidator : AbstractValidator<SliderUpdateDto> {
     RuleFor(x => x.Description).NotEmpty().MaximumLength(500);
     RuleFor(x => x.BtnText1).MaximumLength(20);
     RuleFor(x => x.BtnText2).MaximumLength(20);
+    RuleFor(x => x.Order).GreaterThanOrEqualTo(1);
     RuleFor(x => x.Image)
       .Must(BeAValidImage).WithMessage("Only JPEG and PNG images are allowed")
       .Must(BeAValidImageSize).WithMessage("Image must be less than or equal to 2MB");

@@ -3,6 +3,7 @@ using Final_UI.Profiles;
 using Final_UI.Services.Implementations;
 using Microsoft.AspNetCore.SignalR;
 using System.Net;
+using Final_UI.Helpers.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,13 +46,12 @@ else {
   app.UseDeveloperExceptionPage();
 }
 
-// app.UseExceptionHandler("/Error/InternalServerError");
+app.UseExceptionHandler("/Error/InternalServerError");
 
-// app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-// app.UseStatusCodePagesWithReExecute("/Home/Error", "?statusCode={0}");
+app.UseStatusCodePagesWithReExecute("/Home/Error", "?statusCode={0}");
 
-// app.UseHttpsRedirection();
 
 // app.UseHttpsRedirection();
 app.UseStaticFiles();

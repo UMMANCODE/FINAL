@@ -4,7 +4,13 @@
   Layout = null;
   ViewBag.Title = "Login";
   var returnUrl = ViewBag.ReturnUrl as string;
-  var googleLoginUrl = $"{Configuration.GetSection("APIEndpoint").Value!}/Auth/login-google";
+  var apiEndpoint = Configuration.GetSection("APIEndpoint").Value!;
+
+  if (apiEndpoint.Contains("final.api")) {
+    apiEndpoint = apiEndpoint.Replace("final.api", "localhost");
+  }
+
+  var googleLoginUrl = $"{apiEndpoint}/Auth/login-google";
 }
 
 <!DOCTYPE html>

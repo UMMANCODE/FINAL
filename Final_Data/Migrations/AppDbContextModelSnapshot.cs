@@ -661,13 +661,13 @@ namespace Final_Data.Migrations
             modelBuilder.Entity("Final_Core.Entities.HouseFeature", b =>
                 {
                     b.HasOne("Final_Core.Entities.Feature", "Feature")
-                        .WithMany()
+                        .WithMany("Houses")
                         .HasForeignKey("FeatureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Final_Core.Entities.House", "House")
-                        .WithMany()
+                        .WithMany("Features")
                         .HasForeignKey("HouseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -769,6 +769,11 @@ namespace Final_Data.Migrations
                     b.Navigation("Orders");
                 });
 
+            modelBuilder.Entity("Final_Core.Entities.Feature", b =>
+                {
+                    b.Navigation("Houses");
+                });
+
             modelBuilder.Entity("Final_Core.Entities.House", b =>
                 {
                     b.Navigation("Bids");
@@ -776,6 +781,8 @@ namespace Final_Data.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("Discounts");
+
+                    b.Navigation("Features");
 
                     b.Navigation("HouseImages");
 

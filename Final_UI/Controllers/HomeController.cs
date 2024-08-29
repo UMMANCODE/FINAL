@@ -28,6 +28,10 @@ public class HomeController(
     return RedirectToAction("InternalServerError", "Error");
   }
 
+  public IActionResult Charts() {
+    return View();
+  }
+
   public async Task<IActionResult> Comments() {
     var comments = await dataService.GetComments();
     return View(comments);

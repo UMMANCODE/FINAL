@@ -54,7 +54,9 @@ public class UserAuthService(UserManager<AppUser> userManager, IHttpContextAcces
 
     var token = new JwtSecurityTokenHandler().WriteToken(securityToken);
 
-    return user.ShouldChangePassword ? new BaseResponse(200, "Login successful! Change Password.", token, []) : new BaseResponse(200, "Login successful!", token, []);
+    return user.ShouldChangePassword
+      ? new BaseResponse(200, "Login successful! Change Password.", token, [])
+      : new BaseResponse(200, "Login successful!", token, []);
   }
 
   public async Task<BaseResponse> Register(UserRegisterDto registerDto) {
@@ -76,14 +78,21 @@ public class UserAuthService(UserManager<AppUser> userManager, IHttpContextAcces
       }
 
       await userManager.AddToRoleAsync(user, "Admin");
-      var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
-      // Send url to user email
-      var url = new Uri($"{configuration.GetSection("Client:URL").Value}Account/VerifyEmail?email={user.Email}&token={WebUtility.UrlEncode(token)}");
-      emailService.Send(user.Email!, "Email Verification", EmailTemplates.GetVerifyEmailTemplate(url.ToString()));
+
+      if (!registerDto.ExternalLogin) {
+        var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+        // Send url to user email
+        var clientUrl = configuration.GetSection("Client:URL").Value!;
+        if (clientUrl.Contains("final.ui")) {
+          clientUrl = clientUrl.Replace("final.ui", "localhost");
+        }
+        var url = new Uri($"{clientUrl}Account/VerifyEmail?email={user.Email}&token={WebUtility.UrlEncode(token)}");
+        emailService.Send(user.Email!, "Email Verification", EmailTemplates.GetVerifyEmailTemplate(url.ToString()));
+      }
 
       scope.Complete();
 
-      return new BaseResponse(201, "User registered successfully!", new { user.Id }, []);
+      return new BaseResponse(200, "User registered successfully!", new { user.Id }, []);
     }
     catch {
 
@@ -102,7 +111,11 @@ public class UserAuthService(UserManager<AppUser> userManager, IHttpContextAcces
                ?? throw new RestException(StatusCodes.Status404NotFound, "User not found!");
     var token = await userManager.GeneratePasswordResetTokenAsync(user);
     // Send url to user email
-    var url = new Uri($"{configuration.GetSection("Client:URL").Value}Account/ResetPassword?email={user.Email}&token={WebUtility.UrlEncode(token)}");
+    var clientUrl = configuration.GetSection("Client:URL").Value!;
+    if (clientUrl.Contains("final.ui")) {
+      clientUrl = clientUrl.Replace("final.ui", "localhost");
+    }
+    var url = new Uri($"{clientUrl}Account/ResetPassword?email={user.Email}&token={WebUtility.UrlEncode(token)}");
     emailService.Send(user.Email!, "Password Reset", EmailTemplates.GetForgetPasswordTemplate(url.ToString()));
 
     return new BaseResponse(200, "Password reset link sent to your email!", token, []);
@@ -123,7 +136,11 @@ public class UserAuthService(UserManager<AppUser> userManager, IHttpContextAcces
 
     var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
     // Send url to user email
-    var url = new Uri($"{configuration.GetSection("Client:URL").Value}Account/VerifyEmail?email={user.Email}&token={WebUtility.UrlEncode(token)}");
+    var clientUrl = configuration.GetSection("Client:URL").Value!;
+    if (clientUrl.Contains("final.ui")) {
+      clientUrl = clientUrl.Replace("final.ui", "localhost");
+    }
+    var url = new Uri($"{clientUrl}Account/VerifyEmail?email={user.Email}&token={WebUtility.UrlEncode(token)}");
     emailService.Send(user.Email!, "Email Verification", EmailTemplates.GetVerifyEmailTemplate(url.ToString()));
 
     return new BaseResponse(200, "Verification email sent successfully!", token, []);
@@ -153,7 +170,7 @@ public class UserAuthService(UserManager<AppUser> userManager, IHttpContextAcces
 
       scope.Complete();
 
-      return new BaseResponse(201, "Admin created successfully!", new { user.Id }, []);
+      return new BaseResponse(200, "Admin created successfully!", new { user.Id }, []);
     }
     catch {
 
@@ -203,6 +220,12 @@ public class UserAuthService(UserManager<AppUser> userManager, IHttpContextAcces
     var uriBuilder = new UriBuilder(accessor.HttpContext!.Request.Scheme, accessor.HttpContext.Request.Host.Host, accessor.HttpContext.Request.Host.Port ?? -1);
     if (uriBuilder.Uri.IsDefaultPort) uriBuilder.Port = -1;
     var baseUrl = uriBuilder.Uri.AbsoluteUri;
+
+    var isDocker = configuration.GetValue<bool>("IsDocker");
+
+    if (isDocker) {
+      baseUrl = baseUrl.Replace("final.api", "localhost");
+    }
 
     var users = await userManager.Users.ToListAsync();
 

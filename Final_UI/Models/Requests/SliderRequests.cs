@@ -41,5 +41,6 @@ public class SliderUpdateRequest {
   public string? BtnLink1 { get; set; }
   public string? BtnLink2 { get; set; }
   public ImagePosition ImagePosition { get; set; }
+  [Range(1, int.MaxValue)]
   public int Order { get; set; }
 }

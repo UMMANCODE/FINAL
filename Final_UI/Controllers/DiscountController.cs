@@ -41,6 +41,9 @@ public class DiscountController(ICrudService crudService, IConfiguration configu
 
   private async Task PopulateHouses() {
     var houses = await crudService.GetAsync<List<HouseResponse>>($"{_apiUrl}/Houses/admin/all");
+    if (houses == null) return;
+    houses = houses.Where(h => h.Status == PropertyStatus.ForSale).ToList();
+    houses = houses.Where(h => h.Discounts.Count == 0).ToList();
     ViewBag.Houses = new SelectList(houses, "Id", "Name");
   }
 }

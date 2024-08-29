@@ -101,6 +101,13 @@
                 <span class="text-danger" asp-validation-for="State"></span>
               </div>
             </div>
+            
+            <div class="form-group">
+              <label asp-for="SelectedFeatures">Features</label>
+              <select asp-for="SelectedFeatures" class="form-control" asp-items="ViewBag.Features" multiple="multiple">
+              </select>
+              <span class="text-danger" asp-validation-for="SelectedFeatures"></span>
+            </div>
 
             <div class="form-group">
               <label asp-for="Images">Images</label>
@@ -120,6 +127,7 @@
         </div>
       </div>
     </div>
+    @await Html.PartialAsync("_Footer")
   </div>
 </div>
 

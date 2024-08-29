@@ -29,6 +29,7 @@ services:
 
 volumes:
   mssql_data:
+  redis_data:
 
 networks:
   my-network:

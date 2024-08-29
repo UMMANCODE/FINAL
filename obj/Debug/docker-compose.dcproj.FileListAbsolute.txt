@@ -73,3 +73,6 @@ C:\Users\user\Desktop\Code Academy\FInal App\bin\Debug\Final_API.pdb
 C:\Users\user\Desktop\Code Academy\FInal App\bin\Debug\Final_Business.pdb
 C:\Users\user\Desktop\Code Academy\FInal App\bin\Debug\Final_Core.pdb
 C:\Users\user\Desktop\Code Academy\FInal App\bin\Debug\Final_Data.pdb
+C:\Users\user\Desktop\Code Academy\FInal App\bin\Debug\Microsoft.Extensions.Caching.StackExchangeRedis.dll
+C:\Users\user\Desktop\Code Academy\FInal App\bin\Debug\StackExchange.Redis.dll
+C:\Users\user\Desktop\Code Academy\FInal App\bin\Debug\Pipelines.Sockets.Unofficial.dll

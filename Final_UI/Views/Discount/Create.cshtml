@@ -31,7 +31,9 @@
 
             <div class="form-group">
               <label asp-for="HouseId">House</label>
-              <select asp-for="HouseId" class="form-control" asp-items="@ViewBag.Houses" placeholder="ExpiryDate"></select>
+              <select asp-for="HouseId" class="form-control" asp-items="@ViewBag.Houses" placeholder="ExpiryDate">
+                <option value="">-- Select House --</option>
+              </select>
               <span class="text-danger" asp-validation-for="HouseId"></span>
             </div>
 
@@ -41,6 +43,7 @@
         </div>
       </div>
     </div>
+    @await Html.PartialAsync("_Footer")
   </div>
 </div>
 

@@ -51,8 +51,12 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(opt => {
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSingleton(provider => new MapperConfiguration(cfg => {
-  cfg.AddProfile(new MapProfile(provider.GetService<IHttpContextAccessor>()!));
+  var accessor = provider.GetRequiredService<IHttpContextAccessor>();
+  var configuration = provider.GetRequiredService<IConfiguration>();
+
+  cfg.AddProfile(new MapProfile(accessor, configuration));
 }).CreateMapper());
+
 
 //Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -136,6 +140,7 @@ builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<IBidRepository, BidRepository>();
 builder.Services.AddScoped<IDiscountRepository, DiscountRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IHouseFeatureRepository, HouseFeatureRepository>();
 
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IChartService, ChartService>();
@@ -153,10 +158,10 @@ builder.Host.UseSerilog((hostingContext, loggerConfiguration) => {
 builder.Services.AddFluentValidationRulesToSwagger();
 
 // Cashing
-//builder.Services.AddStackExchangeRedisCache(opt => {
-//  opt.Configuration = builder.Configuration.GetConnectionString("RedisConnection");
-//  opt.InstanceName = "MyApp_";
-//});
+builder.Services.AddStackExchangeRedisCache(opt => {
+  opt.Configuration = builder.Configuration.GetConnectionString("RedisConnection");
+  opt.InstanceName = "MyApp_";
+});
 
 builder.Services.AddResponseCaching();
 
@@ -253,7 +258,8 @@ app.MapControllers();
 
 // Custom Middlewares
 app.UseMiddleware<ExceptionHandlerMiddleware>();
-//app.UseMiddleware<RedisResponseCacheMiddleware>();
+app.UseMiddleware<RedisResponseCacheMiddleware>();
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 app.Run();
 return;

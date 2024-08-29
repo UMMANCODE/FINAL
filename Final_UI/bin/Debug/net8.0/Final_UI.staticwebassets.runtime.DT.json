@@ -1819,6 +1819,14 @@
                     },
                     "Patterns": null
                   },
+                  "chart.js": {
+                    "Children": null,
+                    "Asset": {
+                      "ContentRootIndex": 0,
+                      "SubPath": "assets/js/custom/chart.js"
+                    },
+                    "Patterns": null
+                  },
                   "mytoast.js": {
                     "Children": null,
                     "Asset": {

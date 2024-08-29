@@ -1,4 +1,6 @@
-﻿namespace Final_UI.Controllers;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace Final_UI.Controllers;
 
 [ServiceFilter(typeof(AuthFilter))]
 [ServiceFilter(typeof(AdminOrSuperAdminFilter))]
@@ -20,22 +22,31 @@ public class HouseController(ICrudService crudService, IConfiguration configurat
     return View(data);
   }
 
-  public Task<IActionResult> Create() {
-    return Task.FromResult<IActionResult>(View());
+  public async Task<IActionResult> Create() {
+    ViewBag.Features = await PopulateFeatures();
+    return View();
   }
 
   [HttpPost]
+  [ValidateAntiForgeryToken]
   public async Task<IActionResult> Create([FromForm] HouseCreateRequest createRequest) {
     if (!ModelState.IsValid) {
+      ViewBag.Features = await PopulateFeatures();
       return View(createRequest);
     }
 
-    if (createRequest.Images!.Any(file => UploadExtension.IsValidImage(file) == false)) {
+    if (createRequest.Images!.Any(file => !UploadExtension.IsValidImage(file))) {
       ModelState.AddModelError("Images", "Not a valid image type!");
+      ViewBag.Features = await PopulateFeatures();
       return View(createRequest);
+    }
+
+    if (createRequest.SelectedFeatures.Count != 0) {
+      createRequest.SelectedFeatures = createRequest.SelectedFeatures;
     }
 
     await crudService.CreateAsync<HouseCreateRequest, HouseResponse>(createRequest, $"{_apiUrl}/Houses/admin");
+
     return RedirectToAction("Index");
   }
 
@@ -47,6 +58,9 @@ public class HouseController(ICrudService crudService, IConfiguration configurat
 
     var request = mapper.Map<HouseUpdateRequest>(house);
 
+    ViewBag.Features = await PopulateFeatures();
+    ViewBag.SelectedFeatures = house.Features;
+
     ViewBag.Images = house.HouseImages;
     ViewBag.Ids = house.HouseImages.Select(x => x.Id).ToList();
 
@@ -54,6 +68,7 @@ public class HouseController(ICrudService crudService, IConfiguration configurat
   }
 
   [HttpPost]
+  [ValidateAntiForgeryToken]
   public async Task<IActionResult> Edit(int id, [FromForm] HouseUpdateRequest editRequest) {
     if (!ModelState.IsValid) {
       var house = await crudService.GetAsync<HouseResponse>($"{_apiUrl}/Houses/admin/{id}");
@@ -62,6 +77,9 @@ public class HouseController(ICrudService crudService, IConfiguration configurat
         return RedirectToAction("Index");
 
       var request = mapper.Map<HouseUpdateRequest>(house);
+
+      ViewBag.Features = await PopulateFeatures();
+      ViewBag.SelectedFeatures = house.Features;
 
       ViewBag.Images = house.HouseImages;
       ViewBag.Ids = house.HouseImages.Select(x => x.Id).ToList();
@@ -81,5 +99,14 @@ public class HouseController(ICrudService crudService, IConfiguration configurat
   public async Task<IActionResult> Delete(int id) {
     await crudService.DeleteAsync<HouseResponse>($"{_apiUrl}/Houses/admin/{id}");
     return RedirectToAction("Index");
+  }
+
+  private async Task<List<SelectListItem>> PopulateFeatures() {
+    var features = await crudService.GetAsync<List<FeatureResponse>>($"{_apiUrl}/Features/admin/all") ?? [];
+
+    return features.Select(x => new SelectListItem {
+      Value = x.Id.ToString(),
+      Text = x.Name
+    }).ToList();
   }
 }

@@ -9,6 +9,7 @@
     @(await Html.PartialAsync("_ChangePassword", Model.ChangePasswordRequest))
     <input id="temp-message" type="hidden" value='@TempData["Message"]'>
     <input id="temp-type" type="hidden" value='@TempData["Type"]'>
+    @await Html.PartialAsync("_Footer")
   </div>
 </div>
 

@@ -1,12 +1,19 @@
-﻿namespace Final_Business.Profiles;
+﻿using Microsoft.Extensions.Configuration;
+
+namespace Final_Business.Profiles;
 
 public class MapProfile : Profile {
-  public MapProfile(IHttpContextAccessor accessor) {
+  public MapProfile(IHttpContextAccessor accessor, IConfiguration configuration) {
     var context = accessor.HttpContext;
+    var isDocker = configuration.GetValue<bool>("IsDocker");
 
     var uriBuilder = new UriBuilder(context!.Request.Scheme, context.Request.Host.Host, context.Request.Host.Port ?? -1);
     if (uriBuilder.Uri.IsDefaultPort) uriBuilder.Port = -1;
     var baseUrl = uriBuilder.Uri.AbsoluteUri;
+
+    if (isDocker) {
+      baseUrl = baseUrl.Replace("final.api", "localhost");
+    }
 
     CreateMap<House, AdminHouseUpdateDto>().ReverseMap()
       .ForMember(dest => dest.HouseImages, opt => opt.Ignore());
@@ -43,6 +50,10 @@ public class MapProfile : Profile {
       .ForMember(dest => dest.AppUserUserName, opt => opt.MapFrom(src => src.AppUser.UserName))
       .ReverseMap();
     CreateMap<Order, OrderCreateDto>().ReverseMap();
+
+    CreateMap<HouseFeature, HouseFeatureGetDto>()
+      .ForCtorParam("Id", opt => opt.MapFrom(src => src.FeatureId))
+      .ReverseMap();
 
     CreateMap<Bid, UserBidGetDto>().ReverseMap();
     CreateMap<Bid, UserBidCreateDto>().ReverseMap();

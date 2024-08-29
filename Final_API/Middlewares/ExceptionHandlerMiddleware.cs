@@ -13,9 +13,11 @@ public class ExceptionHandlerMiddleware(RequestDelegate next) {
         response.StatusCode = rex.Code;
         response.Message = rex.Message;
         response.Errors = rex.Errors;
+        response.Data = null;
         context.Response.StatusCode = rex.Code;
       }
 
+      context.Response.ContentType = "application/json";
       await context.Response.WriteAsJsonAsync(response);
     }
   }

@@ -14,6 +14,8 @@ public class HouseResponse {
   public byte Bathrooms { get; set; }
   public int BuiltYear { get; set; }
   public List<HouseImageResponse> HouseImages { get; set; } = [];
+  public List<DiscountResponse> Discounts { get; set; } = [];
+  public List<HouseFeatureResponse> Features { get; set; } = [];
   public PropertyStatus Status { get; set; }
   public PropertyType Type { get; set; }
   public PropertyState State { get; set; }

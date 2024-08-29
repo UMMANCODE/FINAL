@@ -1,4 +1,5 @@
-﻿using Microsoft.Net.Http.Headers;
+﻿using System.Net;
+using Microsoft.Net.Http.Headers;
 using System.Text.Json;
 
 namespace Final_UI.Controllers;
@@ -15,6 +16,9 @@ public class AccountController(IConfiguration configuration, ICrudService crudSe
 
   [HttpPost]
   public async Task<IActionResult> Login(LoginRequest loginRequest, string? returnUrl) {
+    if (!ModelState.IsValid) {
+      return View(loginRequest);
+    }
     var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
     var content = new StringContent(JsonSerializer.Serialize(loginRequest, options), System.Text.Encoding.UTF8, "application/json");
 
@@ -49,12 +53,15 @@ public class AccountController(IConfiguration configuration, ICrudService crudSe
       return RedirectToAction("Index", "Home");
     }
 
+
+
     // ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
     switch (response.StatusCode) {
-      case System.Net.HttpStatusCode.BadRequest:
+      case HttpStatusCode.BadRequest:
         ModelState.AddModelError("", "UserName or Password incorrect!");
         return View();
-      case System.Net.HttpStatusCode.Unauthorized:
+      case HttpStatusCode.Unauthorized:
+      case HttpStatusCode.Forbidden:
         ModelState.AddModelError("", apiResponse?.Message ?? "Something went wrong!");
 
         if (!apiResponse!.Message!.Contains("Email not verified!")) return View();
@@ -85,18 +92,15 @@ public class AccountController(IConfiguration configuration, ICrudService crudSe
     var content = crudService.CreateMultipartContent(registerRequest);
 
     using var response = await _client.PostAsync($"{_apiUrl}/Auth/register", content);
+    var jsonResponse = await response.Content.ReadAsStringAsync();
+    var apiResponse = JsonSerializer.Deserialize<BaseResponse>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
     if (!response.IsSuccessStatusCode) {
-      TempData["Error"] = $"Something went wrong: {response.ReasonPhrase}";
+      TempData["Error"] = apiResponse?.Message;
       return View(registerRequest);
     }
 
     var bodyStr = await response.Content.ReadAsStringAsync();
-
-    if (string.IsNullOrEmpty(bodyStr)) {
-      TempData["Error"] = "Received an empty response from the server.";
-      return View(registerRequest);
-    }
 
     var baseResponse = JsonSerializer.Deserialize<BaseResponse>(bodyStr, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
@@ -136,18 +140,15 @@ public class AccountController(IConfiguration configuration, ICrudService crudSe
     var content = crudService.CreateMultipartContent(createAdminRequest);
 
     using var response = await _client.PostAsync($"{_apiUrl}/Auth/create-super", content);
+    var jsonResponse = await response.Content.ReadAsStringAsync();
+    var apiResponse = JsonSerializer.Deserialize<BaseResponse>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
     if (!response.IsSuccessStatusCode) {
-      TempData["Error"] = $"Something went wrong: {response.ReasonPhrase}";
+      TempData["Error"] = apiResponse?.Message;
       return View(createAdminRequest);
     }
 
     var bodyStr = await response.Content.ReadAsStringAsync();
-
-    if (string.IsNullOrEmpty(bodyStr)) {
-      TempData["Error"] = "Received an empty response from the server.";
-      return View(createAdminRequest);
-    }
 
     var baseResponse = JsonSerializer.Deserialize<BaseResponse>(bodyStr, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
@@ -169,6 +170,10 @@ public class AccountController(IConfiguration configuration, ICrudService crudSe
 
   [HttpPost]
   public async Task<IActionResult> ForgetPassword(ForgetPasswordRequest forgetPasswordRequest) {
+    if (!ModelState.IsValid) {
+      return View(forgetPasswordRequest);
+    }
+
     var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
     var content = new StringContent(JsonSerializer.Serialize(forgetPasswordRequest, options), System.Text.Encoding.UTF8, "application/json");
 
@@ -180,7 +185,7 @@ public class AccountController(IConfiguration configuration, ICrudService crudSe
 
     var jsonResponse = await response.Content.ReadAsStringAsync();
     var apiResponse = JsonSerializer.Deserialize<BaseResponse>(jsonResponse, options);
-    TempData["Error"] = $"Something went wrong: {apiResponse?.Message}";
+    TempData["Error"] = apiResponse?.Message;
     return View();
   }
 
@@ -190,6 +195,10 @@ public class AccountController(IConfiguration configuration, ICrudService crudSe
 
   [HttpPost]
   public async Task<IActionResult> ResetPassword(ResetPasswordRequest resetPasswordRequest) {
+    if (!ModelState.IsValid) {
+      return View(resetPasswordRequest);
+    }
+
     var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
     var content = new StringContent(JsonSerializer.Serialize(resetPasswordRequest, options), System.Text.Encoding.UTF8, "application/json");
 
@@ -202,7 +211,7 @@ public class AccountController(IConfiguration configuration, ICrudService crudSe
       return RedirectToAction("Login");
     }
 
-    TempData["Error"] = $"Something went wrong: {apiResponse?.Message}";
+    TempData["Error"] = apiResponse?.Message;
     return View();
   }
 
@@ -212,6 +221,10 @@ public class AccountController(IConfiguration configuration, ICrudService crudSe
 
   [HttpPost]
   public async Task<IActionResult> VerifyEmail(VerifyEmailRequest verifyEmailRequest) {
+    if (!ModelState.IsValid) {
+      return View(verifyEmailRequest);
+    }
+
     var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
     var content = new StringContent(JsonSerializer.Serialize(verifyEmailRequest, options), System.Text.Encoding.UTF8, "application/json");
 
@@ -224,7 +237,7 @@ public class AccountController(IConfiguration configuration, ICrudService crudSe
       return RedirectToAction("Login");
     }
 
-    TempData["Error"] = $"Something went wrong: {apiResponse?.Message}";
+    TempData["Error"] = apiResponse?.Message;
     return View();
   }
 
@@ -234,6 +247,10 @@ public class AccountController(IConfiguration configuration, ICrudService crudSe
 
   [HttpPost]
   public async Task<IActionResult> SendVerifyEmail(SendVerifyEmailRequest sendVerifyEmailRequest) {
+    if (!ModelState.IsValid) {
+      return View(sendVerifyEmailRequest);
+    }
+
     var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
     var content = new StringContent(JsonSerializer.Serialize(sendVerifyEmailRequest, options), System.Text.Encoding.UTF8, "application/json");
 
@@ -246,7 +263,7 @@ public class AccountController(IConfiguration configuration, ICrudService crudSe
       return RedirectToAction("VerifyEmail");
     }
 
-    TempData["Error"] = $"Something went wrong: {apiResponse?.Message}";
+    TempData["Error"] = apiResponse?.Message;
     return View();
   }
 
@@ -301,7 +318,7 @@ public class AccountController(IConfiguration configuration, ICrudService crudSe
       return RedirectToAction("Index", "Home");
     }
 
-    TempData["Error"] = $"Something went wrong: {apiResponse?.Message}";
+    TempData["Error"] = apiResponse?.Message;
     return View();
   }
 }

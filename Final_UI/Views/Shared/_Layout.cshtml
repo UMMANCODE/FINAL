@@ -103,7 +103,7 @@
       <span class="nav-link">Navigation</span>
     </li>
     <li class="nav-item menu-items">
-      <a class="nav-link" asp-controller="Home">
+      <a class="nav-link" asp-controller="Home" asp-action="Index">
         <span class="menu-icon">
           <i class="mdi mdi-speedometer"></i>
         </span>
@@ -146,15 +146,16 @@
       <div class="collapse" id="auth">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" asp-controller="Home" asp-action="Members"> Members </a></li>
-          @if (UserService.GetRole() == "SuperAdmin")
-          {
+          @if (UserService.GetRole() == "SuperAdmin") {
             <li class="nav-item"> <a class="nav-link" asp-controller="Home" asp-action="Admins"> Admins </a></li>
           }
+          <li class="nav-item"> <a class="nav-link" asp-controller="Home" asp-action="Orders"> Orders </a></li>
+          <li class="nav-item"> <a class="nav-link" asp-controller="Home" asp-action="Comments"> Comments </a></li>
         </ul>
       </div>
     </li>
     <li class="nav-item menu-items">
-      <a class="nav-link" href="https://example.com">
+          <a class="nav-link" href="https://demo.bootstrapdash.com/corona-new/docs/documentation.html">
         <span class="menu-icon">
           <i class="mdi mdi-file-document-box"></i>
         </span>
@@ -229,7 +230,7 @@
                     <img src="@comments[i].AppUserAvatarLink" alt="image" class="rounded-circle profile-pic">
                   </div>
                   <div class="preview-item-content">
-                    <p class="preview-subject ellipsis mb-1">@comments[i].AppUserUserName send you a message</p>
+                    <p class="preview-subject ellipsis mb-1">@comments[i].AppUserUserName commented</p>
                     <p class="text-muted mb-0"> @minutes Minutes ago </p>
                   </div>
                 </a>
