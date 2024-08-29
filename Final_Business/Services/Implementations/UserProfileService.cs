@@ -5,6 +5,9 @@ using Microsoft.Extensions.Configuration;
 namespace Final_Business.Services.Implementations;
 public class UserProfileService(UserManager<AppUser> userManager, IHttpContextAccessor accessor, IWebHostEnvironment env, IConfiguration configuration)
   : IUserProfileService {
+
+  private readonly string _host = configuration.GetSection("HOST").Value!;
+
   public async Task<BaseResponse> GetProfile() {
     var token = accessor.HttpContext!.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last()
                 ?? throw new RestException(StatusCodes.Status401Unauthorized, "Unauthorized");
@@ -19,7 +22,7 @@ public class UserProfileService(UserManager<AppUser> userManager, IHttpContextAc
     var isDocker = configuration.GetValue<bool>("IsDocker");
 
     if (isDocker) {
-      baseUrl = baseUrl.Replace("final.api", "localhost");
+      baseUrl = baseUrl.Replace("final.api", _host);
     }
 
     if (user.AvatarLink != null && !user.AvatarLink.Contains("google"))

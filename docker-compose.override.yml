@@ -13,6 +13,7 @@ services:
       - JWT__Audience=http://final.api:8080/
       - Client__URL=http://final.ui/
       - IsDocker=true
+      - HOST=localhost
     ports:
       - "8080:8080"
       - "8081:8081"
@@ -31,6 +32,7 @@ services:
       - APIEndpoint=http://final.api:8080/api
       - StaticAPIEndpoint=http://localhost:8080/api
       - IsDocker=true
+      - HOST=localhost
     ports:
       - "80:8080"
     # - "443:8081"

@@ -10,6 +10,9 @@ using System.Text;
 namespace Final_Business.Services.Implementations;
 public class UserAuthService(UserManager<AppUser> userManager, IHttpContextAccessor accessor, IConfiguration configuration, IEmailService emailService, IWebHostEnvironment env, IMapper mapper)
   : IUserAuthService {
+
+  private readonly string _host = configuration.GetSection("HOST").Value!;
+
   public async Task<BaseResponse> Login(UserLoginDto loginDto) {
     var user = loginDto.ExternalLogin ? await userManager.FindByEmailAsync(loginDto.UserName) : await userManager.FindByNameAsync(loginDto.UserName);
 
@@ -84,7 +87,7 @@ public class UserAuthService(UserManager<AppUser> userManager, IHttpContextAcces
         // Send url to user email
         var clientUrl = configuration.GetSection("Client:URL").Value!;
         if (clientUrl.Contains("final.ui")) {
-          clientUrl = clientUrl.Replace("final.ui", "localhost");
+          clientUrl = clientUrl.Replace("final.ui", _host);
         }
         var url = new Uri($"{clientUrl}Account/VerifyEmail?email={user.Email}&token={WebUtility.UrlEncode(token)}");
         emailService.Send(user.Email!, "Email Verification", EmailTemplates.GetVerifyEmailTemplate(url.ToString()));
@@ -113,7 +116,7 @@ public class UserAuthService(UserManager<AppUser> userManager, IHttpContextAcces
     // Send url to user email
     var clientUrl = configuration.GetSection("Client:URL").Value!;
     if (clientUrl.Contains("final.ui")) {
-      clientUrl = clientUrl.Replace("final.ui", "localhost");
+      clientUrl = clientUrl.Replace("final.ui", _host);
     }
     var url = new Uri($"{clientUrl}Account/ResetPassword?email={user.Email}&token={WebUtility.UrlEncode(token)}");
     emailService.Send(user.Email!, "Password Reset", EmailTemplates.GetForgetPasswordTemplate(url.ToString()));
@@ -138,7 +141,7 @@ public class UserAuthService(UserManager<AppUser> userManager, IHttpContextAcces
     // Send url to user email
     var clientUrl = configuration.GetSection("Client:URL").Value!;
     if (clientUrl.Contains("final.ui")) {
-      clientUrl = clientUrl.Replace("final.ui", "localhost");
+      clientUrl = clientUrl.Replace("final.ui", _host);
     }
     var url = new Uri($"{clientUrl}Account/VerifyEmail?email={user.Email}&token={WebUtility.UrlEncode(token)}");
     emailService.Send(user.Email!, "Email Verification", EmailTemplates.GetVerifyEmailTemplate(url.ToString()));
@@ -224,7 +227,7 @@ public class UserAuthService(UserManager<AppUser> userManager, IHttpContextAcces
     var isDocker = configuration.GetValue<bool>("IsDocker");
 
     if (isDocker) {
-      baseUrl = baseUrl.Replace("final.api", "localhost");
+      baseUrl = baseUrl.Replace("final.api", _host);
     }
 
     var users = await userManager.Users.ToListAsync();

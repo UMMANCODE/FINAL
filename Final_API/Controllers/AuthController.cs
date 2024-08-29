@@ -14,6 +14,8 @@ public class AuthController(
   IConfiguration configuration)
   : ControllerBase {
 
+  private readonly string _host = configuration.GetSection("HOST").Value!;
+
   [HttpPost("register")]
   public async Task<IActionResult> Register([FromForm] UserRegisterDto registerDto) {
     var response = await userAuthService.Register(registerDto);
@@ -52,7 +54,7 @@ public class AuthController(
 
   [HttpGet("login-google")]
   public IActionResult Login() {
-    var props = new AuthenticationProperties { RedirectUri = "https://localhost:8081/api/auth/signin-google" };
+    var props = new AuthenticationProperties { RedirectUri = $"http://{_host}:8080/api/auth/signin-google" };
     return Challenge(props, GoogleDefaults.AuthenticationScheme);
   }
 
@@ -95,7 +97,7 @@ public class AuthController(
     var clientUrl = configuration.GetSection("Client:URL").Value!;
 
     if (clientUrl.Contains("final.ui")) {
-      clientUrl = clientUrl.Replace("final.ui", "localhost");
+      clientUrl = clientUrl.Replace("final.ui", _host);
     }
 
     var redirectUrl = $"{clientUrl}Account/ExternalLoginCallback?token={result.Data}";
