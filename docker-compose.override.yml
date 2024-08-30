@@ -1,8 +1,12 @@
-version: '3.4'
+# version: '3.4'
 
 services:
   final.api:
+    networks:
+      - my-network
+    container_name: final.api
     environment:
+      - APPDATA=/appdata
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ConnectionStrings__DefaultConnection=Server=db;Database=FinalApp;User Id=sa;Password=Your_password123;TrustServerCertificate=true;
@@ -12,35 +16,37 @@ services:
       - JWT__Audience=http://final.api:8080/
       - Client__URL=http://final.ui/
       - IsDocker=true
-      - HOST=localhost
+      - HOST=codeacademy.westus2.cloudapp.azure.com
       - PORT=8080
-      - PROTOCOL=http 
+      - PROTOCOL=http
     ports:
       - "8080:8080"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
     depends_on:
       - db
       - redis
 
   final.ui:
+    image: umman2005/finalui:latest
+    networks:
+      - my-network
+    container_name: final.ui
     environment:
+      - APPDATA=/appdata
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - APIEndpoint=http://final.api:8080/api
-      - StaticAPIEndpoint=http://localhost:8080/api
+      - StaticAPIEndpoint=http://codeacademy.westus2.cloudapp.azure.com:8080/api
       - IsDocker=true
-      - HOST=localhost
+      - HOST=codeacademy.westus2.cloudapp.azure.com
     ports:
       - "80:8080"
     depends_on:
       - final.api
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
 
   db:
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
+    networks:
+      - my-network
     container_name: db
     environment:
       SA_PASSWORD: "Your_password123"
@@ -52,9 +58,20 @@ services:
       - mssql_data:/var/opt/mssql
 
   redis:
+    image: "redis:latest"
+    networks:
+      - my-network
     container_name: redis
     ports:
       - "8379:6379"
     restart: always
     volumes:
       - redis_data:/data
+
+volumes:
+  mssql_data:
+  redis_data:
+
+networks:
+  my-network:
+    driver: bridge
