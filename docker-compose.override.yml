@@ -7,7 +7,7 @@ services:
     container_name: final.api
     environment:
       - APPDATA=/appdata
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_HTTP_PORTS=8080
       - ConnectionStrings__DefaultConnection=Server=db;Database=FinalApp;User Id=sa;Password=Your_password123;TrustServerCertificate=true;
       - ConnectionStrings__RedisConnection=redis:6379
@@ -32,7 +32,7 @@ services:
     container_name: final.ui
     environment:
       - APPDATA=/appdata
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_HTTP_PORTS=8080
       - APIEndpoint=http://final.api:8080/api
       - StaticAPIEndpoint=http://codeazure.westus2.cloudapp.azure.com:8080/api
