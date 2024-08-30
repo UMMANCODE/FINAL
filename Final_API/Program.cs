@@ -180,7 +180,8 @@ builder.Services.AddAuthentication(opt => {
   };
 })
 .AddCookie(opt => {
-  opt.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+  opt.Cookie.SecurePolicy = CookieSecurePolicy.None;
+  opt.Cookie.SameSite = SameSiteMode.Lax;
 })
 .AddGoogle(opt => {
   opt.ClientId = builder.Configuration.GetSection("Google:ClientId").Value!;
@@ -210,12 +211,14 @@ builder.Services.AddHangfireServer();
 
 // Configure CORS
 builder.Services.AddCors(opt => {
-  opt.AddPolicy("AllowAll", conf => {
-    conf.AllowAnyOrigin()
-    .AllowAnyMethod()
-    .AllowAnyHeader();
-  });
+    opt.AddPolicy("AllowSpecificOrigin", conf => {
+        conf.WithOrigins("http://codeazure.westus2.cloudapp.azure.com")  // Replace with your MVC app's domain
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials();  // Allow credentials (cookies)
+    });
 });
+
 
 var app = builder.Build();
 
@@ -237,7 +240,7 @@ if (app.Environment.IsDevelopment()) {
 
 // app.UseHttpsRedirection();
 
-app.UseCors("AllowAll");
+app.UseCors("AllowSpecificOrigin");
 
 app.UseResponseCaching();
 
