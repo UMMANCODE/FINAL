@@ -15,6 +15,8 @@ public class AuthController(
   : ControllerBase {
 
   private readonly string _host = configuration.GetSection("HOST").Value!;
+  private readonly string _port = configuration.GetSection("PORT").Value!;
+  private readonly string _protocol = configuration.GetSection("PROTOCOL").Value!;
 
   [HttpPost("register")]
   public async Task<IActionResult> Register([FromForm] UserRegisterDto registerDto) {
@@ -54,7 +56,7 @@ public class AuthController(
 
   [HttpGet("login-google")]
   public IActionResult Login() {
-    var props = new AuthenticationProperties { RedirectUri = $"http://{_host}:8080/api/auth/signin-google" };
+    var props = new AuthenticationProperties { RedirectUri = $"{_protocol}://{_host}:{_port}/api/auth/signin-google" };
     return Challenge(props, GoogleDefaults.AuthenticationScheme);
   }
 

@@ -14,6 +14,8 @@ services:
       - Client__URL=http://final.ui/
       - IsDocker=true
       - HOST=localhost
+      - PORT=8080
+      - PROTOCOL=http 
     ports:
       - "8080:8080"
       - "8081:8081"

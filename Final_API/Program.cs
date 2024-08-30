@@ -145,8 +145,6 @@ builder.Services.AddScoped<IHouseFeatureRepository, HouseFeatureRepository>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IChartService, ChartService>();
 
-//builder.Services.AddScoped<RedisCacheFilter>();
-
 builder.Services.AddLogging();
 
 builder.Host.UseSerilog((hostingContext, loggerConfiguration) => {
@@ -164,6 +162,8 @@ builder.Services.AddStackExchangeRedisCache(opt => {
 });
 
 builder.Services.AddResponseCaching();
+
+builder.Services.AddScoped<RedisCacheFilter>();
 
 
 // Configure JWT and Google Authentication
@@ -257,8 +257,6 @@ RecurringJob.AddOrUpdate<EmailService>("send-discount-notification-email",
 app.MapControllers();
 
 // Custom Middlewares
-app.UseMiddleware<ExceptionHandlerMiddleware>();
-app.UseMiddleware<RedisResponseCacheMiddleware>();
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 app.Run();

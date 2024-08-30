@@ -400,6 +400,22 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\images\houses\bcc50f6b-5240-4644-afd8-7499b258d1c31_44KZRAupREHKCL1zIjjDig.png))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\images\houses\d6d460b6-b772-454c-b779-f2535c1bfd691_44KZRAupREHKCL1zIjjDig.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>Final_API</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Final_API</BasePath>
+      <RelativePath>images/houses/d6d460b6-b772-454c-b779-f2535c1bfd691_44KZRAupREHKCL1zIjjDig.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\images\houses\d6d460b6-b772-454c-b779-f2535c1bfd691_44KZRAupREHKCL1zIjjDig.png))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\images\houses\e0dfc8cb-4860-4403-8cc0-a570e3fce27a1_44KZRAupREHKCL1zIjjDig.png))">
       <SourceType>Package</SourceType>
       <SourceId>Final_API</SourceId>

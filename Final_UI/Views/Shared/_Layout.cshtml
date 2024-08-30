@@ -1,8 +1,6 @@
-﻿@inject IHttpContextAccessor HttpContextAccessor
-@inject IUserService UserService
+﻿@inject IUserService UserService
 @inject IDataService DataService
 @{
-  var context = HttpContextAccessor?.HttpContext;
   var user = await DataService.GetProfile();
 
   var comments = await DataService.GetComments();
