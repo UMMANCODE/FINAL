@@ -24,6 +24,7 @@ services:
     depends_on:
       - db
       - redis
+    user: root  
 
   final.ui:
     networks:
@@ -41,6 +42,7 @@ services:
       - "80:8080"
     depends_on:
       - final.api
+    user: root  
 
   db:
     image: "mcr.microsoft.com/mssql/server:2019-latest"
