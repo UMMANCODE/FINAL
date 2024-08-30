@@ -2,7 +2,6 @@
 
 services:
   final.api:
-    image: ${DOCKER_REGISTRY-}finalapi
     networks:
       - my-network
     build:
@@ -10,7 +9,6 @@ services:
       dockerfile: Final_API/Dockerfile
 
   final.ui:
-    image: ${DOCKER_REGISTRY-}finalui
     networks:
       - my-network
     build:
