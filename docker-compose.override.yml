@@ -26,7 +26,6 @@ services:
       - redis
 
   final.ui:
-    image: umman2005/finalui:latest
     networks:
       - my-network
     container_name: final.ui
