@@ -16,7 +16,7 @@ services:
       - JWT__Audience=http://final.api:8080/
       - Client__URL=http://final.ui/
       - IsDocker=true
-      - HOST=codeacademy.westus2.cloudapp.azure.com
+      - HOST=codeazure.westus2.cloudapp.azure.com
       - PORT=8080
       - PROTOCOL=http
     ports:
@@ -34,9 +34,9 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - APIEndpoint=http://final.api:8080/api
-      - StaticAPIEndpoint=http://codeacademy.westus2.cloudapp.azure.com:8080/api
+      - StaticAPIEndpoint=http://codeazure.westus2.cloudapp.azure.com:8080/api
       - IsDocker=true
-      - HOST=codeacademy.westus2.cloudapp.azure.com
+      - HOST=codeazure.westus2.cloudapp.azure.com
     ports:
       - "80:8080"
     depends_on:
