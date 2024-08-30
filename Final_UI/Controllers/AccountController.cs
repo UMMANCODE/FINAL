@@ -37,7 +37,8 @@ public class AccountController(IConfiguration configuration, ICrudService crudSe
 
       var cookieOptions = new CookieOptions {
         HttpOnly = true,
-        Secure = true,
+        Secure = false,
+        SameSite = SameSiteMode.Lax,
         Expires = loginRequest.RememberMe ? DateTimeOffset.UtcNow.AddDays(7) : DateTimeOffset.UtcNow.AddDays(1)
       };
 
