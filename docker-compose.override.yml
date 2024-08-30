@@ -5,7 +5,6 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8081
       - ConnectionStrings__DefaultConnection=Server=db;Database=FinalApp;User Id=sa;Password=Your_password123;TrustServerCertificate=true;
       - ConnectionStrings__RedisConnection=redis:6379
       - JWT__Secret=7E2A1F8D5C6B7A4E9F6B4C7A1F8D2E3F4D5A6C9B7E3F1A8D2B4E6F9E8D3C1A8F6B4A8D4A7F1B1F8A6C8D3F2A94A4B49D
@@ -18,7 +17,6 @@ services:
       - PROTOCOL=http 
     ports:
       - "8080:8080"
-      - "8081:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
@@ -30,14 +28,12 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8081
       - APIEndpoint=http://final.api:8080/api
       - StaticAPIEndpoint=http://localhost:8080/api
       - IsDocker=true
       - HOST=localhost
     ports:
       - "80:8080"
-    # - "443:8081"
     depends_on:
       - final.api
     volumes:
