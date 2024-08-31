@@ -24,4 +24,6 @@ RUN dotnet publish "./Final_UI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+# Copy the certificate into the container
+COPY certs/ayazumman.pfx /https/ayazumman.pfx
 ENTRYPOINT ["dotnet", "Final_UI.dll"]
