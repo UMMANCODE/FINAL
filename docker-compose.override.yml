@@ -40,6 +40,8 @@ services:
       - StaticAPIEndpoint=https://ayazumman.xyz:444/api
       - IsDocker=true
       - HOST=ayazumman.xyz
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/ayazumman.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=ayazumman
     ports:
       - "443:8081"
     volumes:
