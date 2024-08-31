@@ -1,5 +1,3 @@
-# version: '3.4'
-
 services:
   final.api:
     networks:
@@ -9,18 +7,23 @@ services:
       - APPDATA=/appdata
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
       - ConnectionStrings__DefaultConnection=Server=db;Database=FinalApp;User Id=sa;Password=Your_password123;TrustServerCertificate=true;
       - ConnectionStrings__RedisConnection=redis:6379
       - JWT__Secret=7E2A1F8D5C6B7A4E9F6B4C7A1F8D2E3F4D5A6C9B7E3F1A8D2B4E6F9E8D3C1A8F6B4A8D4A7F1B1F8A6C8D3F2A94A4B49D
-      - JWT__Issuer=http://final.api:8080/
-      - JWT__Audience=http://final.api:8080/
-      - Client__URL=http://final.ui/
+      - JWT__Issuer=https://ayazumman.xyz/
+      - JWT__Audience=https://ayazumman.xyz/
+      - Client__URL=https://ayazumman.xyz/
       - IsDocker=true
       - HOST=ayazumman.xyz
-      - PORT=8080
-      - PROTOCOL=http
+      - PORT=443
+      - PROTOCOL=https
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/ayazumman.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=ayazumman
     ports:
-      - "8080:8080"
+      - "443:8081"
+    volumes:
+      - ./certs:/https:ro
     depends_on:
       - db
       - redis
@@ -34,8 +37,9 @@ services:
       - APPDATA=/appdata
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_HTTP_PORTS=8080
-      - APIEndpoint=http://final.api:8080/api
-      - StaticAPIEndpoint=http://ayazumman.xyz:8080/api
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - APIEndpoint=https://final.api:8081/api
+      - StaticAPIEndpoint=https://ayazumman.xyz/api
       - IsDocker=true
       - HOST=ayazumman.xyz
     ports:
