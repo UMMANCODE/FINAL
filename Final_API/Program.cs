@@ -23,9 +23,7 @@ using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.ListenAnyIP(8080);
+builder.WebHost.ConfigureKestrel(options => {
     options.ListenAnyIP(8081, listenOptions =>
     {
         listenOptions.UseHttps("/https/ayazumman.pfx", "ayazumman");
