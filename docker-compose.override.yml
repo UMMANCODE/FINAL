@@ -10,9 +10,9 @@ services:
       - ConnectionStrings__DefaultConnection=Server=db;Database=FinalApp;User Id=sa;Password=Your_password123;TrustServerCertificate=true;
       - ConnectionStrings__RedisConnection=redis:6379
       - JWT__Secret=7E2A1F8D5C6B7A4E9F6B4C7A1F8D2E3F4D5A6C9B7E3F1A8D2B4E6F9E8D3C1A8F6B4A8D4A7F1B1F8A6C8D3F2A94A4B49D
-      - JWT__Issuer=https://ayazumman.xyz/
-      - JWT__Audience=https://ayazumman.xyz/
-      - Client__URL=https://ayazumman.xyz/
+      - JWT__Issuer=https://final.api:8081/
+      - JWT__Audience=https://final.api:8081/
+      - Client__URL=https://final.ui/
       - IsDocker=true
       - HOST=ayazumman.xyz
       - PORT=444
