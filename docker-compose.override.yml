@@ -15,12 +15,12 @@ services:
       - Client__URL=https://ayazumman.xyz/
       - IsDocker=true
       - HOST=ayazumman.xyz
-      - PORT=443
+      - PORT=444
       - PROTOCOL=https
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/ayazumman.pfx
       - ASPNETCORE_Kestrel__Certificates__Default__Password=ayazumman
     ports:
-      - "443:8081"
+      - "444:8081"
     volumes:
       - ./certs:/https:ro
     depends_on:
@@ -36,14 +36,14 @@ services:
       - APPDATA=/appdata
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_HTTPS_PORTS=8081
-      - APIEndpoint=https://ayazumman.xyz/api
-      - StaticAPIEndpoint=https://ayazumman.xyz/api
+      - APIEndpoint=https://ayazumman.xyz:444/api
+      - StaticAPIEndpoint=https://ayazumman.xyz:444/api
       - IsDocker=true
       - HOST=ayazumman.xyz
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/ayazumman.pfx
       - ASPNETCORE_Kestrel__Certificates__Default__Password=ayazumman
     ports:
-      - "444:8081"
+      - "443:8081"
     volumes:
       - ./certs:/https:ro
     depends_on:
