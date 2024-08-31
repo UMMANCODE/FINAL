@@ -183,8 +183,7 @@ builder.Services.AddAuthentication(opt => {
   };
 })
 .AddCookie(opt => {
-  opt.Cookie.SecurePolicy = CookieSecurePolicy.None;
-  opt.Cookie.SameSite = SameSiteMode.Lax;
+  opt.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 })
 .AddGoogle(opt => {
   opt.ClientId = builder.Configuration.GetSection("Google:ClientId").Value!;
