@@ -36,7 +36,7 @@ services:
       - APPDATA=/appdata
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_HTTPS_PORTS=8081
-      - APIEndpoint=https://final.api:8081/api
+      - APIEndpoint=https://ayazumman.xyz/api
       - StaticAPIEndpoint=https://ayazumman.xyz/api
       - IsDocker=true
       - HOST=ayazumman.xyz
