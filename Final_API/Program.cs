@@ -23,8 +23,14 @@ using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Example of bypassing SSL certificate validation (use with caution)
-ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(8080);
+    options.ListenAnyIP(8081, listenOptions =>
+    {
+        listenOptions.UseHttps("/https/ayazumman.pfx", "ayazumman");
+    });
+});
 
 // Add services to the container.
 builder.Services.AddControllers().ConfigureApiBehaviorOptions(opt => {
