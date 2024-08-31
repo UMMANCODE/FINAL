@@ -29,6 +29,4 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 # Copy the certificate into the container
 COPY certs/ayazumman.pfx /https/ayazumman.pfx
-ENV ASPNETCORE_Kestrel__Certificates__Default__Path=/https/ayazumman.pfx
-ENV ASPNETCORE_Kestrel__Certificates__Default__Password=ayazumman
 ENTRYPOINT ["dotnet", "Final_API.dll"]
