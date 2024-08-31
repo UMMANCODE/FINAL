@@ -213,12 +213,13 @@ builder.Services.AddHangfireServer();
 
 // Configure CORS
 builder.Services.AddCors(opt => {
-    opt.AddPolicy("AllowSpecificOrigin", conf => {
-        conf.WithOrigins("http://codeazure.westus2.cloudapp.azure.com")  // Replace with your MVC app's domain
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .AllowCredentials();  // Allow credentials (cookies)
-    });
+  opt.AddPolicy("AllowSpecificOrigin", conf => {
+    var clientUrl = builder.Configuration.GetSection("Client:URL").Value!;
+    conf.WithOrigins(clientUrl)  // Replace with your MVC app's domain
+      .AllowAnyMethod()
+      .AllowAnyHeader()
+      .AllowCredentials();  // Allow credentials (cookies)
+  });
 });
 
 
