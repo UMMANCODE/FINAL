@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using Microsoft.Net.Http.Headers;
 using System.Text.Json;
-using SameSiteMode = Microsoft.AspNetCore.Http.SameSiteMode;
 
 namespace Final_UI.Controllers;
 
@@ -39,7 +38,6 @@ public class AccountController(IConfiguration configuration, ICrudService crudSe
       var cookieOptions = new CookieOptions {
         HttpOnly = true,
         Secure = true,
-        SameSite = SameSiteMode.Lax,
         Expires = loginRequest.RememberMe ? DateTimeOffset.UtcNow.AddDays(7) : DateTimeOffset.UtcNow.AddDays(1)
       };
 
