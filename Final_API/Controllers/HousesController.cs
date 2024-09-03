@@ -94,4 +94,13 @@ public class HousesController(IAdminHouseService adminHouseService, IUserHouseSe
     var response = await userHouseService.Delete(id);
     return StatusCode(response.StatusCode, response);
   }
+  
+  [Authorize(Roles = "Member")]
+  [HttpGet("user/filter")]
+  [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any, NoStore = false)]
+  public async Task<IActionResult> UserFilter([FromQuery] PropertyStatus? status = null,
+    [FromQuery] PropertyType? type = null, [FromQuery] PropertyState? state = null) {
+    var response = await userHouseService.Filter(status, type, state);
+    return StatusCode(response.StatusCode, response);
+  }
 }
