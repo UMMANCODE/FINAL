@@ -30,7 +30,7 @@ public class DiscountsController(IDiscountService discountService) : ControllerB
 
   [HttpPost]
   [Authorize]
-  public async Task<IActionResult> CreateDiscount([FromForm] DiscountCreateDto discountCreateDto) {
+  public async Task<IActionResult> CreateDiscount(DiscountCreateDto discountCreateDto) {
     var response = await discountService.Create(discountCreateDto);
     return StatusCode(response.StatusCode, response);
   }
