@@ -1,4 +1,6 @@
-﻿namespace Final_API.Controllers;
+using Final_Core.Enums;
+
+namespace Final_API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
