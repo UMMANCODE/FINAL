@@ -5,7 +5,7 @@ services:
     container_name: final.api
     environment:
       - APPDATA=/appdata
-      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTPS_PORTS=8081
       - ConnectionStrings__DefaultConnection=Server=db;Database=FinalApp;User Id=sa;Password=Your_password123;TrustServerCertificate=true;
       - ConnectionStrings__RedisConnection=redis:6379
@@ -34,7 +34,7 @@ services:
     container_name: final.ui
     environment:
       - APPDATA=/appdata
-      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTPS_PORTS=8081
       - APIEndpoint=https://ayazumman.xyz:444/api
       - StaticAPIEndpoint=https://ayazumman.xyz:444/api
