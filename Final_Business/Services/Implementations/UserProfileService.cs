@@ -13,7 +13,7 @@ public class UserProfileService(UserManager<AppUser> userManager, IHttpContextAc
                 ?? throw new RestException(StatusCodes.Status401Unauthorized, "Unauthorized");
 
     var user = await userManager.FindByIdAsync(JwtHelper.GetClaimFromJwt(token, ClaimTypes.NameIdentifier)!) 
-               ?? throw new RestException(StatusCodes.Status404NotFound, "User not found!");
+               ?? throw new RestException(StatusCodes.Status404NotFound, "User not found.");
 
     var uriBuilder = new UriBuilder(accessor.HttpContext!.Request.Scheme, accessor.HttpContext.Request.Host.Host, accessor.HttpContext.Request.Host.Port ?? -1);
     if (uriBuilder.Uri.IsDefaultPort) uriBuilder.Port = -1;
@@ -28,7 +28,9 @@ public class UserProfileService(UserManager<AppUser> userManager, IHttpContextAc
     if (user.AvatarLink != null && !user.AvatarLink.Contains("google"))
       user.AvatarLink = $"{baseUrl.Replace("/api", "/")}images/users/{user.AvatarLink}";
 
-    return new BaseResponse(200, "Success", user, []);
+    var profile = mapper.Map<UserProfileDto>(user);
+
+    return new BaseResponse(200, "Success", profile, []);
   }
 
   public async Task<BaseResponse> UpdateProfile(UserChangeDetailsDto userChangeDetailsDto) {
