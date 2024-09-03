@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 
 namespace Final_Business.Services.Implementations;
-public class UserProfileService(UserManager<AppUser> userManager, IHttpContextAccessor accessor, IWebHostEnvironment env, IConfiguration configuration)
+public class UserProfileService(UserManager<AppUser> userManager, IHttpContextAccessor accessor, IWebHostEnvironment env, IConfiguration configuration, IMapper mapper)
   : IUserProfileService {
 
   private readonly string _host = configuration.GetSection("HOST").Value!;
