@@ -151,4 +151,12 @@
       }
     }
   }
+
+  public async Task<BaseResponse> Filter(PropertyStatus? status = null, PropertyType? type = null, PropertyState? state = null) {
+    var houses = await houseRepository.GetAllAsync(x => !x.IsDeleted);
+
+    var filteredHouses = houses.Where(x => (status == null || x.Status == status) && (type == null || x.Type == type) && (state == null || x.State == state)).ToList();
+
+    return new BaseResponse(200, "Success", mapper.Map<List<UserHouseGetAllDto>>(filteredHouses), []);
+  }
 }
