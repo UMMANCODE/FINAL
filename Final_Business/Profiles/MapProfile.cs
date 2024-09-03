@@ -30,7 +30,9 @@ public class MapProfile : Profile {
 
     CreateMap<House, UserHouseCreateDto>().ReverseMap()
       .ForMember(dest => dest.HouseImages, opt => opt.Ignore());
-
+    
+    CreateMap<AppUser, UserProfileDto>().ReverseMap();
+    
     CreateMap<House, UserHouseGetAllDto>().ReverseMap();
     CreateMap<House, UserHouseGetOneDto>().ReverseMap();
 
