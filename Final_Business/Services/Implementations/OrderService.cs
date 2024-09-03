@@ -36,20 +36,6 @@ public class OrderService(IOrderRepository orderRepository, IHouseRepository hou
     return new BaseResponse(200, "Success", data, []);
   }
 
-  public async Task<BaseResponse> GetPaginated(int pageNumber = 1, int pageSize = 1) {
-    var orders = await orderRepository.GetPaginatedAsync(x => true, pageNumber, pageSize, "AppUser", "House");
-    var paginated = PaginatedList<Order>.Create(orders, pageNumber, pageSize);
-
-    var data = new PaginatedList<OrderGetDto>(
-      mapper.Map<List<OrderGetDto>>(paginated.Items),
-      paginated.TotalPages,
-      pageNumber,
-      pageSize
-    );
-
-    return new BaseResponse(200, "Success", data, []);
-  }
-
   public async Task<BaseResponse> GetAll() {
     var orders = await orderRepository.GetAllAsync(x => true, "AppUser", "House");
 
