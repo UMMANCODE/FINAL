@@ -2,17 +2,20 @@
 
 namespace Final_Business.Profiles;
 
-public class MapProfile : Profile {
-  public MapProfile(IHttpContextAccessor accessor, IConfiguration configuration) {
+public class MapProfile : Profile
+{
+  public MapProfile(IHttpContextAccessor accessor, IConfiguration configuration)
+  {
     var context = accessor.HttpContext;
     var isDocker = configuration.GetValue<bool>("IsDocker");
     var host = configuration.GetSection("HOST").Value!;
 
-  var uriBuilder = new UriBuilder(context!.Request.Scheme, context.Request.Host.Host, context.Request.Host.Port ?? -1);
+    var uriBuilder = new UriBuilder(context!.Request.Scheme, context.Request.Host.Host, context.Request.Host.Port ?? -1);
     if (uriBuilder.Uri.IsDefaultPort) uriBuilder.Port = -1;
     var baseUrl = uriBuilder.Uri.AbsoluteUri;
 
-    if (isDocker) {
+    if (isDocker)
+    {
       baseUrl = baseUrl.Replace("final.api", host);
     }
 

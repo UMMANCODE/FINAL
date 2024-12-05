@@ -20,7 +20,8 @@ This project contains 3 main project.
 - **Favorites System**: Allows users to save and manage their favorite listings.
 - **Client UI**: Profile update, Live auctions, Promo codes, Stripe payment.
 - **Admin Dashboard**: Elegant UI to administrate all functionality like estates, sliders, discounts, orders, comments. Listing users and admins (only SuperAdmin), Creating Admin (only SuperAdmin), Excel reporting and so on.
-- **Unique Features**: Background jobs with Hangfire, Real-Time payment with Stripe, CI/CD with CircleCI
+- **Unique Features**: Background jobs with Hangfire, Real-Time payment with Stripe, CI/CD with CircleCI.
+- **Testing**: There are a lot of test written in XUnit to make sure application working properly.
 
 ---
 
@@ -74,7 +75,19 @@ Step-by-step instructions for setting up the project locally and with Docker:
 
    3. Set up environment variables in `appsettings.Development.json` file.
 
-   4. Run the application:
+   4. Build the application:
+
+   ```bash
+   dotnet Build
+   ```
+
+   5. Test the application:
+
+   ```bash
+   dotnet test
+   ```
+
+   6. Run the application:
 
    ```bash
    dotnet run
@@ -174,5 +187,3 @@ Contributions are welcome! Follow these steps to contribute:
 - **Name**: Umman Mammadov
 - **Email**: [ummanmemmedov2005@gmail.com](mailto:ummanmemmedov2005@gmail.com)
 - **LinkedIn**: [LinkedIn](https://www.linkedin.com/in/umman-mammadov)
-
----
