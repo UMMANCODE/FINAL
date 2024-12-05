@@ -203,6 +203,7 @@ public class UserAuthService(UserManager<AppUser> userManager, IHttpContextAcces
 
     if (result.Succeeded) {
       user.ShouldChangePassword = false;
+      await userManager.UpdateAsync(user);
       return new BaseResponse(200, "Password changed successfully", null, []);
     }
 

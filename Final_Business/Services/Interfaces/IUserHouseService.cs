@@ -5,5 +5,6 @@ public interface IUserHouseService {
   public Task<BaseResponse> GetAll();
   public Task<BaseResponse> GetById(int id);
   public Task<BaseResponse> Update(int id, UserHouseUpdateDto updateDto);
-  public Task<BaseResponse> Delete(int id);
+  public Task<BaseResponse> Delete(int id); 
+  public Task<BaseResponse> Filter(PropertyStatus? status = null, PropertyType? type = null, PropertyState? state = null);
 }

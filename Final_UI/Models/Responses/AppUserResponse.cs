@@ -7,5 +7,6 @@ public class AppUserResponse {
   public string AvatarLink { get; set; }
   public string Email { get; set; }
   public string Nationality { get; set; }
+  public bool ShouldChangePassword { get; set; }
   public List<string> Roles { get; set; } = [];
 }

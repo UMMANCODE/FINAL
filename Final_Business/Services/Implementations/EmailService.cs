@@ -29,6 +29,8 @@ public class EmailService(IConfiguration configuration, AppDbContext context, Us
   }
 
   public void SendNotificationEmail() {
+    const string emailSubject = "Last chance to get these houses discounted!";
+    var data = new List<NotificationData>();
     var now = DateTime.UtcNow;
     var expirationThreshold = now.AddDays(7);
 
@@ -38,24 +40,24 @@ public class EmailService(IConfiguration configuration, AppDbContext context, Us
       .Where(h => h.Discounts.Any(d => d.ExpiryDate >= DateTime.Now && d.ExpiryDate <= expirationThreshold))
       .ToList();
 
-
-    if (houses.Count <= 0) return;
-    // Create email content
-    const string emailSubject = "Last chance to get these houses discounted!";
-    var data = houses.Select(house => new NotificationData {
-      HouseName = house.Name,
-      OldPrice = house.Price,
-      NewPrice = house.Price - house.Discounts.First().Amount,
-      Url = new Uri($"{configuration.GetSection("JWT:Audience").Value}api/Houses/user/{house.Id}").ToString()
-    }).ToList();
-
-    // Send email
-    var subscribers = userManager.Users;
-    foreach (var subscriber in subscribers) {
-      var emailBody = EmailTemplates.GetDiscountInfoEmail(subscriber.Email!, data);
-      Send(subscriber.Email!, emailSubject, emailBody);
+    if (houses.Count > 0) {
+      data = houses.Select(house => new NotificationData {
+        HouseName = house.Name,
+        OldPrice = house.Price,
+        NewPrice = house.Price - house.Discounts.First().Amount,
+        Url = new Uri($"{configuration.GetSection("JWT:Audience").Value}api/Houses/user/{house.Id}").ToString()
+      }).ToList();
     }
-    //var emailBody = EmailTemplates.GetDiscountInfoEmail(Me, data);
-    //Send(Me, emailSubject, emailBody);
+
+    // Send email to me
+    var myEmailBody = EmailTemplates.GetDiscountInfoEmail(Me, data ?? []);
+    Send(Me, emailSubject, myEmailBody);
+    
+    // Send email
+    //var subscribers = userManager.Users;
+    //foreach (var subscriber in subscribers) {
+    //  var emailBody = EmailTemplates.GetDiscountInfoEmail(subscriber.Email!, data);
+    //  Send(subscriber.Email!, emailSubject, emailBody);
+    //}
   }
 }

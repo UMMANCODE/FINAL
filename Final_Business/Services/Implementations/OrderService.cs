@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 
 namespace Final_Business.Services.Implementations;
-public class OrderService(IOrderRepository orderRepository, IMapper mapper, IHttpContextAccessor httpContextAccessor)
+public class OrderService(IOrderRepository orderRepository, IHouseRepository houseRepository, IMapper mapper, IHttpContextAccessor httpContextAccessor)
   : IOrderService {
   public async Task<BaseResponse> Create(OrderCreateDto createDto) {
     var order = mapper.Map<Order>(createDto);
@@ -11,8 +11,16 @@ public class OrderService(IOrderRepository orderRepository, IMapper mapper, IHtt
 
     order.AppUserId = JwtHelper.GetClaimFromJwt(token, ClaimTypes.NameIdentifier)!;
 
+    var house = await houseRepository.GetAsync(x => x.Id == createDto.HouseId && x.Status == PropertyStatus.ForSale)
+      ?? throw new RestException(StatusCodes.Status404NotFound, "House not found or is not for sale");
+
+    house.Status = PropertyStatus.Sold;
+
+    order.Price = house.Price;
+
     await orderRepository.AddAsync(order);
     await orderRepository.SaveAsync();
+    await houseRepository.SaveAsync();
 
     return new BaseResponse(201, "Created successfully!", mapper.Map<OrderGetDto>(order), []);
   }

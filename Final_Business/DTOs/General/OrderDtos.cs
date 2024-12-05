@@ -13,7 +13,6 @@ public record OrderGetDto(
 );
 
 public record OrderCreateDto(
-  decimal Price,
   string Address,
   int HouseId
 );

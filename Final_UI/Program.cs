@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 //});
 
 // Example of bypassing SSL certificate validation (use with caution)
-ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+// ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
 
 
 // Add services to the container.

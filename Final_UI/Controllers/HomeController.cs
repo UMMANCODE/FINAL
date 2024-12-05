@@ -10,7 +10,17 @@ public class HomeController(
   ICrudService crudService, IHubContext<NotificationHub> hubContext, IExcelReportService reportService
   ) : Controller {
   private readonly string _apiUrl = configuration.GetSection("APIEndpoint").Value!;
-  public IActionResult Index() {
+  public async Task<IActionResult> Index() {
+    var profile = await dataService.GetProfile();
+
+    if (profile == null) {
+      return RedirectToAction("Login", "Account");
+    }
+
+    if (profile.ShouldChangePassword) {
+      return RedirectToAction("ChangePassword", "Account");
+    }
+
     return View();
   }
 

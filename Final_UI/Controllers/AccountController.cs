@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using Microsoft.Net.Http.Headers;
 using System.Text.Json;
+using Microsoft.AspNet.SignalR;
 
 namespace Final_UI.Controllers;
 
@@ -84,7 +85,7 @@ public class AccountController(IConfiguration configuration, ICrudService crudSe
       return View(registerRequest);
     }
 
-    if (!UploadExtension.IsValidImage(registerRequest.Avatar)) {
+    if (registerRequest.Avatar is not null && !UploadExtension.IsValidImage(registerRequest.Avatar)) {
       ModelState.AddModelError("Avatar", "Not a valid image type!");
       return View(registerRequest);
     }
@@ -116,11 +117,13 @@ public class AccountController(IConfiguration configuration, ICrudService crudSe
     return RedirectToAction("VerifyEmail");
   }
 
+  [ServiceFilter(typeof(SuperAdminFilter))]
   public IActionResult CreateAdmin() {
     return View();
   }
 
   [HttpPost]
+  [ServiceFilter(typeof(SuperAdminFilter))]
   public async Task<IActionResult?> CreateAdmin([FromForm] CreateAdminRequest createAdminRequest) {
     // Add Authorization header
     var token = contextAccessor.HttpContext!.Request.Cookies["token"];
