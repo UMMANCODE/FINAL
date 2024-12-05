@@ -15,16 +15,16 @@ using Hangfire.MemoryStorage;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
-using System.Net;
 using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Example of bypassing SSL certificate validation (use with caution)
-ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+// ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
 
 // Add services to the container.
 builder.Services.AddControllers().ConfigureApiBehaviorOptions(opt => {
@@ -147,10 +147,10 @@ builder.Services.AddScoped<IChartService, ChartService>();
 
 builder.Services.AddLogging();
 
-builder.Host.UseSerilog((hostingContext, loggerConfiguration) => {
-  loggerConfiguration
-  .ReadFrom.Configuration(hostingContext.Configuration);
-});
+  builder.Host.UseSerilog((hostingContext, loggerConfiguration) => {
+    loggerConfiguration
+    .ReadFrom.Configuration(hostingContext.Configuration);
+  });
 
 // Micro-elements
 builder.Services.AddFluentValidationRulesToSwagger();
@@ -247,7 +247,9 @@ app.UseAuthorization();
 app.UseStaticFiles();
 
 // Hangfire Dashboard
-app.UseHangfireDashboard();
+app.UseHangfireDashboard("/hangfire", new DashboardOptions {
+  Authorization = new[] { new NoAuthorizationFilter() }
+});
 
 // Schedule the daily email job
 RecurringJob.AddOrUpdate<EmailService>("send-discount-notification-email",
